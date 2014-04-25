@@ -46,14 +46,12 @@ group :development do
 end
 
 group :test do
-  # gem 'timecop', '~> 0.7' # TODO setup
-  # gem 'webmock', '~> 1.17' # TODO setup
-  # gem 'vcr', '~> 2.9' # TODO setup
-  gem 'shoulda-matchers', '~> 2.6', require: false # TODO setup https://github.com/thoughtbot/shoulda-matchers#rspec
-  gem 'simplecov', '~> 0.8', :require => false # TODO setup
-  # require: false para silenciar warning do minitest
-  # https://github.com/rspec/rspec-rails/pull/772#issuecomment-35805617
-  gem 'codeclimate-test-reporter', '~> 0.3', require: nil # TODO setup
+  gem 'timecop', '~> 0.7'
+  gem 'webmock', '~> 1.17'
+  gem 'vcr', '~> 2.9'
+  # require: false because of https://github.com/rspec/rspec-rails/pull/772#issuecomment-35805617
+  gem 'shoulda-matchers', '~> 2.6', require: false
+  gem 'codeclimate-test-reporter', '~> 0.3', require: nil
 end
 
 group :development, :test do
