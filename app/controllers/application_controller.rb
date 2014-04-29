@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
   private
 
+  # TODO set locale from logged in user's locale as first option
   def set_locale
     I18n.locale = http_accept_language.compatible_language_from(I18n.available_locales)
   end
