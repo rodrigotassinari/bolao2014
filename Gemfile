@@ -28,6 +28,8 @@ gem 'jbuilder', '2.0.6'
 # fix security issue https://www.ruby-lang.org/en/news/2014/03/29/heap-overflow-in-yaml-uri-escape-parsing-cve-2014-2525/
 # gem 'psych', '2.0.5'
 
+gem 'http_accept_language', '2.0.1'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', '~> 0.4.0'
