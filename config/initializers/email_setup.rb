@@ -12,4 +12,6 @@ Rails.application.configure do
     :enable_starttls_auto => (ENV['EMAIL_SMTP_ENABLE_STARTTLS_AUTO'] == 'true')
   }
 
+  config.action_mailer.default_options = { from: ENV['EMAIL_FROM'] }
+
 end
