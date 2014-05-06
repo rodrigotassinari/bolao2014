@@ -11,21 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140429143011) do
+ActiveRecord::Schema.define(version: 20140506025426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "users", force: true do |t|
     t.string   "name"
-    t.string   "email",      null: false
-    t.string   "time_zone",  null: false
-    t.string   "locale",     null: false
+    t.string   "email",                           null: false
+    t.string   "time_zone",                       null: false
+    t.string   "locale",                          null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "remember_me_token",               null: false
+    t.string   "authentication_token"
+    t.datetime "authentication_token_expires_at"
   end
 
+  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
+  add_index "users", ["remember_me_token"], name: "index_users_on_remember_me_token", unique: true, using: :btree
 
 end

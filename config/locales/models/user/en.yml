@@ -12,3 +12,6 @@ en:
         locale: Language
         created_at: Created at
         updated_at: Updated at
+        remember_me_token: Remember Me token
+        authentication_token: Authentication token
+        authentication_token_expires_at: Authentication token expires at
