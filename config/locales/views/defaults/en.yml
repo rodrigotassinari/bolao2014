@@ -1,2 +1,4 @@
 en:
   hello_world: 'Hello, world!'
+  common:
+    submit: "Submit"

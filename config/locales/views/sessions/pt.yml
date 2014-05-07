@@ -1,0 +1,10 @@
+pt:
+  sessions:
+    new:
+      welcome: "Bem vindo ao Bolão 2014"
+      whats_your_email: "Digite seu email abaixo para entrar no Bolão 2014:"
+    # TODO move to a new controller
+    one_time_token:
+      welcome: "Muito bem! Um email foi enviado pra você!"
+      type_your_auth_code: "Cheque seu email e digite abaixo o código de 8 caracteres que consta no email que você recebeu:"
+      or_click_the_link: "Alternativamente, simplesmente clique no link que também consta no email que foi enviado para você."

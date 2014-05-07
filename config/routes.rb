@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root 'dashboard#index'
 
   get '/login' => 'sessions#new', as: 'login'
+  post '/one_time_token' => 'sessions#one_time_token', as: 'one_time_token' # TODO move to new controller
   post '/login' => 'sessions#create'
 
   get '/logout' => 'sessions#destroy', as: 'logout'

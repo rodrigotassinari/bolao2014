@@ -1,0 +1,14 @@
+<h2><%= t '.welcome' %></h2>
+<p><%= t '.type_your_auth_code' %></p>
+
+<%= form_tag login_path, method: :post do %>
+  <%= label_tag :email, t('activerecord.attributes.user.email') %>
+  <%= text_field_tag :email, @email %>
+
+  <%= label_tag :authentication_token, t('activerecord.attributes.user.authentication_token') %>
+  <%= text_field_tag :authentication_token %>
+
+  <%= submit_tag t('common.submit') %>
+<% end %>
+
+<p><%= t '.or_click_the_link' %></p>

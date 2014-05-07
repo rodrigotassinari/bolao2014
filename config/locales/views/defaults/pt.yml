@@ -1,2 +1,4 @@
 pt:
   hello_world: 'Olá, mundo!'
+  common:
+    submit: "Enviar"
