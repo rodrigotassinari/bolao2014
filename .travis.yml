@@ -1,0 +1,11 @@
+language: ruby
+bundler_args: --without development
+rvm:
+  - 2.1.1
+env:
+  - SECRET_KEY_BASE=test-key APP_NAME=bolao-test
+script:
+  - RAILS_ENV=test bundle exec rake --trace db:schema:load
+  - RAILS_ENV=test bundle exec rake --trace spec
+before_script:
+  - psql -c 'create database bolao2014_test;' -U postgres
