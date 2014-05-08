@@ -15,9 +15,11 @@ class OneTimeLogin
     errors.empty?
   end
 
+  # TODO spec
   def send_authentication_check!
     if valid?
       token = user.generate_authentication_token!
+      SessionsMailer.one_time_login(user, token).deliver
       true
     else
       false

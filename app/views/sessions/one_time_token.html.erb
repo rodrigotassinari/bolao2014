@@ -6,8 +6,11 @@
   <%= @email %>
   <%= hidden_field_tag :email, @email %>
 
-  <%= label_tag :authentication_token, t('activerecord.attributes.user.authentication_token') %>
-  <%= text_field_tag :authentication_token %>
+  <%= label_tag :password, t('activerecord.attributes.user.authentication_token') %>
+  <%= text_field_tag :password %>
+
+  <%= check_box_tag :remember_me, true, @remember_me %>
+  <%= label_tag :remember_me, t('.remember_me') %>
 
   <%= submit_tag t('common.submit') %>
 <% end %>

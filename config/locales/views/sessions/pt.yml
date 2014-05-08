@@ -9,4 +9,12 @@ pt:
         email_required_error: 'Você precisa informar o seu email'
         email_invalid_error: 'O email informado não é válido'
       welcome: 'Muito bem! Um email foi enviado pra você!'
-      type_your_auth_code: 'Cheque seu email e digite abaixo o código de 8 caracteres que consta no email que você recebeu:'
+      type_your_auth_code: 'Cheque seu email e digite abaixo o código de acesso de 8 caracteres que consta no email que você recebeu:'
+      remember_me: 'Este é meu computador pessoal, me mantenha logado até que eu faça logout'
+    create:
+      flash:
+        authentication_success: 'Autenticado com sucesso!'
+        authentication_failed: 'Código de Acesso errado ou expirado.'
+    destroy:
+      flash:
+        logged_out: 'Até a próxima!'

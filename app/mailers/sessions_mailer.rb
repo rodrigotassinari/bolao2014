@@ -1,5 +1,4 @@
 class SessionsMailer < ActionMailer::Base
-  default from: ENV['EMAIL_FROM']
   layout 'emails'
 
   def one_time_login(user, clear_text_temporary_password)

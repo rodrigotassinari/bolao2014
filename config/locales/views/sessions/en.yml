@@ -7,5 +7,14 @@ en:
     one_time_token:
       flash:
         email_required_error: ''
+        email_invalid_error: ''
       welcome: ''
       type_your_auth_code: ''
+      remember_me: ''
+    create:
+      flash:
+        authentication_success: ''
+        authentication_failed: ''
+    destroy:
+      flash:
+        logged_out: ''
