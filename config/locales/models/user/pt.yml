@@ -13,5 +13,5 @@ pt:
         created_at: Criado em
         updated_at: Atualizado em
         remember_me_token: Código de Lembrar de Mim
-        authentication_token: Código de Autenticação
-        authentication_token_expires_at: Código de Autenticação expira em
+        authentication_token: Código de Acesso
+        authentication_token_expires_at: Código de Acesso expira em

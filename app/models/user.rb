@@ -38,6 +38,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  # TODO spec
+  def name_or_email
+    self.name.present? ? self.name : self.email
+  end
+
   def authentication_token_exists?
     self.authentication_token.present? && self.authentication_token_expires_at.present?
   end
