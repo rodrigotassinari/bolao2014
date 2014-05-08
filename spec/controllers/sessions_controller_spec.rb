@@ -36,9 +36,9 @@ describe SessionsController do
         expect(response).to_not be_success
         expect(response).to redirect_to(login_path)
       end
-      it 'sets a flash error message' do
+      it 'sets a flash error message', locale: :pt do
         post :one_time_token, params
-        expect(flash[:error]).to eql(I18n.t('sessions.one_time_token.flash.email_invalid_error'))
+        expect(flash[:error]).to eql('Email não é válido')
       end
     end
     context 'when no email is given' do
@@ -48,9 +48,9 @@ describe SessionsController do
         expect(response).to_not be_success
         expect(response).to redirect_to(login_path)
       end
-      it 'sets a flash error message' do
+      it 'sets a flash error message', locale: :en do
         post :one_time_token, params
-        expect(flash[:error]).to eql(I18n.t('sessions.one_time_token.flash.email_required_error'))
+        expect(flash[:error]).to eql("Email can't be blank")
       end
     end
   end

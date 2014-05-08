@@ -46,13 +46,22 @@ describe User do
   end
 
   describe '#generate_authentication_token!' do
-    it 'sets a new, unique, 8 character, not ambiguous random token' do
+    it 'returns a new, 8 character, not ambiguous random temporary password' do
+      user = FactoryGirl.build(:user)
+      clear_text_password = user.generate_authentication_token!
+      expect(clear_text_password).to_not be_blank
+      expect(clear_text_password.size).to eq(8)
+    end
+    it 'sets a unique authentication_token' do
       user = FactoryGirl.create(:user)
       expect(user.authentication_token).to be_nil
       user.generate_authentication_token!
-      expect(user.authentication_token).to_not be_blank
-      expect(user.authentication_token.size).to eq(8)
       expect(User.where(authentication_token: user.authentication_token).count).to eq(1)
+    end
+    it 'sets a authentication_token compatible with the temporary password' do
+      user = FactoryGirl.create(:user)
+      clear_text_password = user.generate_authentication_token!
+      expect(user.validate_authentication_token!(clear_text_password)).to be_true
     end
     it 'sets a token expiration date 15 minutes in the future' do
       user = FactoryGirl.create(:user)
@@ -64,6 +73,89 @@ describe User do
     it 'saves the user' do
       user = FactoryGirl.build(:user)
       expect { user.generate_authentication_token! }.to change(User, :count).by(1)
+    end
+  end
+
+  describe '#authentication_token_expired?' do
+    let!(:expiration) { Time.zone.now }
+    context 'when user has no authentication_token' do
+      let!(:user) { FactoryGirl.build(:user, authentication_token: nil, authentication_token_expires_at: nil) }
+      it 'raises an error' do
+        expect { user.authentication_token_expired? }.to raise_error(RuntimeError, 'authentication_token not set')
+      end
+    end
+    context 'when user has an authentication_token' do
+      let!(:user) { FactoryGirl.build(:user, authentication_token: 'foobar', authentication_token_expires_at: expiration) }
+      it 'returns false if authentication_token_expires_at is in the future' do
+        Timecop.freeze(expiration - 14.minutes) do
+          expect(user.authentication_token_expired?).to be_false
+        end
+      end
+      it 'returns false if authentication_token_expires_at is now' do
+        Timecop.freeze(expiration) do
+          expect(user.authentication_token_expired?).to be_false
+        end
+      end
+      it 'returns true if authentication_token_expires_at is in the past' do
+        Timecop.freeze(expiration + 1.second) do
+          expect(user.authentication_token_expired?).to be_true
+        end
+      end
+    end
+  end
+
+  describe '#validate_authentication_token!' do
+    let(:user) { FactoryGirl.create(:user, authentication_token: nil, authentication_token_expires_at: nil) }
+    context 'when user has no authentication_token' do
+      it 'returns false' do
+        expect(user.validate_authentication_token!('any password')).to be_false
+      end
+    end
+    context 'when user has an authentication_token' do
+      before(:each) do
+        @clear_text_password = user.generate_authentication_token!
+      end
+      context 'when authentication_token is valid (has not expired)' do
+        before(:each) do
+          user.should_receive(:authentication_token_expired?).and_return(false)
+          expect(user.authentication_token_exists?).to be_true
+        end
+        it 'returns false with the wrong password and resets the token' do
+          expect(user.validate_authentication_token!('wrong password')).to be_false
+          expect(user.authentication_token_exists?).to be_false
+        end
+        it 'returns true with the correct password and resets the token' do
+          expect(user.validate_authentication_token!(@clear_text_password)).to be_true
+          expect(user.authentication_token_exists?).to be_false
+        end
+      end
+      context 'when authentication_token is invalid (has expired)' do
+        before(:each) do
+          user.should_receive(:authentication_token_expired?).and_return(true)
+          expect(user.authentication_token_exists?).to be_true
+        end
+        it 'returns false with the wrong password and resets the token' do
+          expect(user.validate_authentication_token!('wrong password')).to be_false
+          expect(user.authentication_token_exists?).to be_false
+        end
+        it 'returns false with the correct password and resets the token' do
+          expect(user.validate_authentication_token!(@clear_text_password)).to be_false
+          expect(user.authentication_token_exists?).to be_false
+        end
+      end
+    end
+  end
+
+  describe '#set_defaults' do
+    it 'sets the user locale to the current locale', locale: :en do
+      expect(subject.locale).to be_nil
+      subject.set_defaults
+      expect(subject.locale).to eq('en')
+    end
+    it 'sets the user time_zone to the current time_zone', time_zone: 'Auckland' do
+      expect(subject.time_zone).to be_nil
+      subject.set_defaults
+      expect(subject.time_zone).to eq('Auckland')
     end
   end
 

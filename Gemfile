@@ -20,7 +20,7 @@ gem 'turbolinks', '2.2.2'
 gem 'jbuilder', '2.0.7'
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '3.1.7'
 
 # Use unicorn as the app server
 # gem 'unicorn'
