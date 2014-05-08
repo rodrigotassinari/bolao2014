@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.1.1'
 
-gem 'rails', '4.1.0'
+gem 'rails', '4.1.1'
 gem 'pg', '0.17.1'
 # Use SCSS for stylesheets
 gem 'sass-rails', '4.0.3'
@@ -15,9 +15,9 @@ gem 'uglifier', '2.5.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '3.1.0'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks', '2.2.1'
+gem 'turbolinks', '2.2.2'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '2.0.6'
+gem 'jbuilder', '2.0.7'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -39,7 +39,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring', '~> 1.1.2'
 
-  gem 'foreman', '~> 0.63'
+  gem 'foreman', '~> 0.64'
   gem 'better_errors', '~> 1.1'
   gem 'binding_of_caller', '~> 0.7'
 
