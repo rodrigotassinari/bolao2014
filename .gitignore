@@ -21,7 +21,6 @@
 .env
 .envrc
 .project
-.rspec
 .ruby-version
 .rvmrc
 .sass-cache
