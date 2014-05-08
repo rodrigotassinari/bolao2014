@@ -10,4 +10,3 @@ pt:
         email_invalid_error: 'O email informado não é válido'
       welcome: 'Muito bem! Um email foi enviado pra você!'
       type_your_auth_code: 'Cheque seu email e digite abaixo o código de 8 caracteres que consta no email que você recebeu:'
-      or_click_the_link: 'Alternativamente, simplesmente clique no link que também consta no email que foi enviado para você.'
