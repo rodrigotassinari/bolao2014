@@ -37,7 +37,8 @@ end
 
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring', '~> 1.1.2'
+  gem 'spring', '~> 1.1'
+  gem 'spring-commands-rspec', '~> 1.0'
 
   gem 'foreman', '~> 0.64'
   gem 'better_errors', '~> 1.1'
