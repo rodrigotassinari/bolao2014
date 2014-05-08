@@ -4,6 +4,7 @@ bolao2014
 Bolão PiTTlândia Copa do Mundo 2014
 
 [![Build Status](https://travis-ci.org/rtopitt/bolao2014.svg?branch=master)](https://travis-ci.org/rtopitt/bolao2014)
+[![Code Climate](https://codeclimate.com/github/rtopitt/bolao2014.png)](https://codeclimate.com/github/rtopitt/bolao2014)
 
 TODO: improve this README to to cover:
 
