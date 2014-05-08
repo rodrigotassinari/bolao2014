@@ -9,7 +9,13 @@ class SessionsController < ApplicationController
   # Via: one_time_token_path
   # TODO move to new controller
   def one_time_token
-    # TODO
+    @email = params[:email]
+    if @email.present? && @email =~ User::EMAIL_REGEX
+      render :one_time_token
+    else
+      flash[:error] = (@email.present? ? t('.flash.email_invalid_error') : t('.flash.email_required_error'))
+      redirect_to login_path
+    end
   end
 
   # POST /login

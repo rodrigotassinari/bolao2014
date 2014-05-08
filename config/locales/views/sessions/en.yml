@@ -1,10 +1,12 @@
 en:
   sessions:
     new:
-      welcome: ""
-      whats_your_email: ""
+      welcome: ''
+      whats_your_email: ''
     # TODO move to a new controller
     one_time_token:
-      welcome: ""
-      type_your_auth_code: ""
-      or_click_the_link: ""
+      flash:
+        email_required_error: ''
+      welcome: ''
+      type_your_auth_code: ''
+      or_click_the_link: ''
