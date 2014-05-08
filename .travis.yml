@@ -3,7 +3,7 @@ bundler_args: --without development
 rvm:
   - 2.1.1
 env:
-  - SECRET_KEY_BASE=test-key APP_NAME=bolao-test
+  - SECRET_KEY_BASE=bolao2014-test-key APP_NAME=bolao2014-test EMAIL_FROM=notifications@bolao2014.test
 script:
   - RAILS_ENV=test bundle exec rake --trace db:schema:load
   - RAILS_ENV=test bundle exec rake --trace spec
