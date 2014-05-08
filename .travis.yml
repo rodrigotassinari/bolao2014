@@ -6,7 +6,7 @@ env:
   matrix:
   - SECRET_KEY_BASE=bolao2014-test-key APP_NAME=bolao2014-test EMAIL_FROM=notifications@bolao2014.test
   global:
-    secure: EcvkSEnMUNDfK6HuMzHMZ0/AlCShhGfLjms1OQ5YZ10EjFwNRbBMDkC/D+gj4Jfv34qSp6k2IwPXskYZlQwCAEaZexOply+iO6NPu9E9FycOWcbmANhQNsFj0BJG1ZBEG7vdAjebc3ETbEICdT9iFYC+B38PXAa8xGQOMd1PVWc=
+  - secure: Dcv/or2/X/CwklcJIXvsQt17UkU5O2C39iBn/qsSkyHzynIheUvkz9SzRZy5yX+Uyz+h+QrCJ6F1G+yqen7xOo3AnkUUlrFqwBXzNbIEVPveg7T8XVrMOhP6LhKt+W2lBjlOmrqXulY6CgVDE3RsGCJs6dcHN34j6qUVCRiboqE=
 script:
 - RAILS_ENV=test bundle exec rake --trace db:schema:load
 - RAILS_ENV=test bundle exec rake --trace spec
