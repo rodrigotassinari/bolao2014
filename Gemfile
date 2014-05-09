@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 ruby '2.1.1'
 
+gem 'dotenv-rails', '0.7.0', :groups => [:production]
+
 gem 'rails', '4.1.1'
 gem 'pg', '0.17.1'
 # Use SCSS for stylesheets
@@ -29,10 +31,6 @@ gem 'unicorn', '4.8.3'
 # gem 'psych', '2.0.5'
 
 gem 'http_accept_language', '2.0.1'
-
-group :production do
-  gem 'dotenv-deployment', '0.0.2'
-end
 
 group :development, :production do
   gem 'rails_stdout_logging', '0.0.3'
