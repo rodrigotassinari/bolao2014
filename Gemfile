@@ -23,7 +23,9 @@ gem 'jbuilder', '2.0.7'
 gem 'bcrypt', '3.1.7'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn', '4.8.3'
+
+gem 'rails_stdout_logging', '0.0.3'
 
 # fix security issue https://www.ruby-lang.org/en/news/2014/03/29/heap-overflow-in-yaml-uri-escape-parsing-cve-2014-2525/
 # gem 'psych', '2.0.5'
