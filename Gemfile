@@ -25,14 +25,18 @@ gem 'bcrypt', '3.1.7'
 # Use unicorn as the app server
 gem 'unicorn', '4.8.3'
 
-group :development, :production do
-  gem 'rails_stdout_logging', '0.0.3'
-end
-
 # fix security issue https://www.ruby-lang.org/en/news/2014/03/29/heap-overflow-in-yaml-uri-escape-parsing-cve-2014-2525/
 # gem 'psych', '2.0.5'
 
 gem 'http_accept_language', '2.0.1'
+
+group :production do
+  gem 'dotenv-deployment', '0.0.2'
+end
+
+group :development, :production do
+  gem 'rails_stdout_logging', '0.0.3'
+end
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
