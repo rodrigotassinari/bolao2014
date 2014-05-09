@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%= I18n.locale %>">
   <head>
-    <title><%= ENV['APP_NAME'] %></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= content_for?(:title) ? yield(:title) : ENV['APP_NAME'] %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : ENV['APP_DESCRIPTION'] %>">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%# Modernizr is required for Zurb Foundation %>
+    <%= javascript_include_tag 'vendor/modernizr', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
   </head>
   <body>
-    <div id="header">
-      <h1><%= ENV['APP_NAME'] %></h1>
-    </div>
-    <div id="main">
-      <%= render partial: 'shared/flash_messages', locals: {flash: flash} %>
-      <%= yield %>
-    </div>
-    <div id="footer">
-      <p><%= ENV['APP_NAME'] %></p>
-    </div>
+    <header>
+      <%= render 'layouts/navigation' %>
+    </header>
+    <main role="main">
+       <%= render 'layouts/messages' %>
+       <%= yield %>
+    </main>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   </body>
 </html>

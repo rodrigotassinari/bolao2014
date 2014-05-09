@@ -32,6 +32,8 @@ gem 'unicorn', '4.8.3'
 
 gem 'http_accept_language', '2.0.1'
 
+gem 'foundation-rails', '5.2.2.0'
+
 group :development, :production do
   gem 'rails_stdout_logging', '0.0.3'
 end
