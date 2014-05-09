@@ -49,7 +49,7 @@ group :development do
   gem 'binding_of_caller', '~> 0.7'
 
   # Use Capistrano for deployment
-  # gem 'capistrano-rails'
+  gem 'capistrano-rails', '~> 1.1'
 end
 
 group :test do
