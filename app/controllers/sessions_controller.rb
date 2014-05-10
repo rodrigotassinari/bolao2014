@@ -5,23 +5,20 @@ class SessionsController < ApplicationController
   # GET /login
   # Via: login_path
   def new
+    @user = User.new(email: params[:email])
   end
 
   # POST /one_time_token
   # Via: one_time_token_path
   # TODO move to new controller
   def one_time_token
-    @email = params[:email]
-    @remember_me = true
-
-    @user = OneTimeLogin.find_user(@email)
-    @one_time_login = OneTimeLogin.new(@user)
-
-    if @user.valid? && @one_time_login.send_authentication_check!
+    @user = OneTimeLogin.find_user(params[:email])
+    one_time_login = OneTimeLogin.new(@user)
+    if @user.valid? && one_time_login.send_authentication_check!
+      @remember_me = true
       render :one_time_token
     else
-      flash[:error] = @user.errors.full_messages.join(',')
-      redirect_to login_path
+      render :new
     end
   end
 

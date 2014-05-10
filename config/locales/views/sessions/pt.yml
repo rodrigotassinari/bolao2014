@@ -1,8 +1,8 @@
 pt:
   sessions:
     new:
-      welcome: 'Bem vindo!'
       whats_your_email: 'Digite seu email abaixo para entrar:'
+      example_email: 'fulano@exemplo.com'
     # TODO move to a new controller
     one_time_token:
       flash:

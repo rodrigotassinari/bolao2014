@@ -1,8 +1,8 @@
 en:
   sessions:
     new:
-      welcome: ''
       whats_your_email: ''
+      example_email: ''
     # TODO move to a new controller
     one_time_token:
       flash:

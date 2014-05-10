@@ -1,10 +1,31 @@
-<% content_for :title do %>Login<% end %>
+<% content_for(:title) { t('common.login') } %>
 
-<h2><%= t '.welcome' %></h2>
-<p><%= t '.whats_your_email' %></p>
+<div class="row">
+  <div class="small-12 column">
+    <h2><%= t 'common.login' %></h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 column">
+    <p><%= t '.whats_your_email' %></p>
+  </div>
+</div>
 
 <%= form_tag one_time_token_path, method: :post do %>
-  <%= label_tag :email, t('activerecord.attributes.user.email') %>
-  <%= text_field_tag :email  %>
-  <%= submit_tag t('common.submit') %>
+  <div class="row">
+    <div class="small-12 column">
+      <%= label_tag :email, t('activerecord.attributes.user.email') %>
+      <%= text_field_tag :email, params[:email], placeholder: t('.example_email'), autofocus: true, class: ('error' if @user.errors.include?(:email)) %>
+      <% if @user.errors.include?(:email) %>
+        <small class="error"><%= @user.errors.get(:email).to_sentence %></small>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="small-12 column">
+      <%= submit_tag t('common.submit'), disable_with: t('common.submiting'), class: 'button radius' %>
+    </div>
+  </div>
 <% end %>

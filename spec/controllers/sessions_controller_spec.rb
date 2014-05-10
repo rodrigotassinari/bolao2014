@@ -7,6 +7,13 @@ describe SessionsController do
       get :new
       expect(response).to be_success
     end
+    it 'assigns a new blank user' do
+      get :new
+      user = assigns(:user)
+      expect(user).to be_present
+      expect(user).to be_new_record
+      expect(user.errors.any?).to be_false
+    end
     it 'renders the new template' do
       get :new
       expect(response).to render_template('new')
@@ -16,41 +23,59 @@ describe SessionsController do
   describe 'POST one_time_token' do
     context 'when user supplies a valid email' do
       let(:params) { {email: 'someone@example.com'} }
-      it 'returns http success' do
+      before(:each) do
         post :one_time_token, params
+      end
+      it 'returns http success' do
         expect(response).to be_success
       end
       it 'renders the one_time_token template' do
-        post :one_time_token, params
         expect(response).to render_template('one_time_token')
       end
-      it 'assigns the email variable' do
-        post :one_time_token, params
-        expect(assigns[:email]).to eq('someone@example.com')
+      it 'assigns the user' do
+        user = assigns(:user)
+        expect(user).to be_present
+        expect(user.email).to eq('someone@example.com')
+        expect(user.errors.any?).to be_false
+      end
+      it 'assigns remember_me' do
+        expect(assigns(:remember_me)).to be_true
       end
     end
     context 'when user supplies an invalid email' do
       let(:params) { {email: 'invalid email'} }
-      it 'redirects to the login page' do
+      before(:each) do
         post :one_time_token, params
-        expect(response).to_not be_success
-        expect(response).to redirect_to(login_path)
       end
-      it 'sets a flash error message', locale: :pt do
-        post :one_time_token, params
-        expect(flash[:error]).to eql('Email não é válido')
+      it 'returns http success' do
+        expect(response).to be_success
+      end
+      it 'renders the new template' do
+        expect(response).to render_template('new')
+      end
+      it 'assigns the user with errors', locale: :pt do
+        user = assigns(:user)
+        expect(user).to be_present
+        expect(user.errors.any?).to be_true
+        expect(user.errors.get(:email)).to eq(['não é válido'])
       end
     end
     context 'when no email is given' do
       let(:params) { {email: ''} }
-      it 'redirects to the login page' do
+      before(:each) do
         post :one_time_token, params
-        expect(response).to_not be_success
-        expect(response).to redirect_to(login_path)
       end
-      it 'sets a flash error message', locale: :en do
-        post :one_time_token, params
-        expect(flash[:error]).to eql("Email can't be blank")
+      it 'returns http success' do
+        expect(response).to be_success
+      end
+      it 'renders the new template' do
+        expect(response).to render_template('new')
+      end
+      it 'assigns the user with errors', locale: :en do
+        user = assigns(:user)
+        expect(user).to be_present
+        expect(user.errors.any?).to be_true
+        expect(user.errors.get(:email)).to eq(["can't be blank"])
       end
     end
   end
