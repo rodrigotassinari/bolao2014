@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140510190055) do
+ActiveRecord::Schema.define(version: 20140510211215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,15 +25,39 @@ ActiveRecord::Schema.define(version: 20140510190055) do
 
   add_index "bets", ["user_id"], name: "index_bets_on_user_id", unique: true, using: :btree
 
+  create_table "matches", force: true do |t|
+    t.integer  "number",                    null: false
+    t.string   "round",                     null: false
+    t.string   "group",           limit: 1
+    t.datetime "played_at",                 null: false
+    t.string   "played_on",                 null: false
+    t.integer  "team_a_id"
+    t.integer  "team_b_id"
+    t.integer  "goals_a"
+    t.integer  "goals_b"
+    t.integer  "penalty_goals_a"
+    t.integer  "penalty_goals_b"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "matches", ["group"], name: "index_matches_on_group", using: :btree
+  add_index "matches", ["number"], name: "index_matches_on_number", unique: true, using: :btree
+  add_index "matches", ["round"], name: "index_matches_on_round", using: :btree
+  add_index "matches", ["team_a_id"], name: "index_matches_on_team_a_id", using: :btree
+  add_index "matches", ["team_b_id"], name: "index_matches_on_team_b_id", using: :btree
+
   create_table "teams", force: true do |t|
     t.string   "name_en",              null: false
     t.string   "name_pt",              null: false
     t.string   "acronym",    limit: 3, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "group",      limit: 1, null: false
   end
 
   add_index "teams", ["acronym"], name: "index_teams_on_acronym", unique: true, using: :btree
+  add_index "teams", ["group"], name: "index_teams_on_group", using: :btree
   add_index "teams", ["name_en"], name: "index_teams_on_name_en", unique: true, using: :btree
   add_index "teams", ["name_pt"], name: "index_teams_on_name_pt", unique: true, using: :btree
 

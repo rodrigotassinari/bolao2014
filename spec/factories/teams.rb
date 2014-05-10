@@ -5,5 +5,13 @@ FactoryGirl.define do
     name_en 'Brazil'
     name_pt 'Brasil'
     acronym 'BRA'
+    group 'A'
+  end
+
+  factory :other_team, class: Team do
+    name_en 'Croatia'
+    name_pt 'Croácia'
+    acronym 'CRO'
+    group 'A'
   end
 end
