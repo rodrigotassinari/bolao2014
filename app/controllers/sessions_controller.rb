@@ -23,6 +23,7 @@ class SessionsController < ApplicationController
 
   # POST /login
   # Via: login_path
+  # TODO spec
   def create
     email = params[:email]
     password = params[:password]
@@ -43,6 +44,7 @@ class SessionsController < ApplicationController
 
   # GET /logout
   # Via: logout_path
+  # TODO spec
   def destroy
     destroy_session
     flash[:notice] = t('.flash.logged_out')
