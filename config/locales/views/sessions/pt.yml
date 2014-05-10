@@ -1,16 +1,16 @@
 pt:
   sessions:
     new:
+      title: 'Entrar'
       whats_your_email: 'Digite seu email abaixo para entrar:'
       example_email: 'fulano@exemplo.com'
-    # TODO move to a new controller
     one_time_token:
-      flash:
-        email_required_error: 'Você precisa informar o seu email'
-        email_invalid_error: 'O email informado não é válido'
+      title: 'Confirme sua identidade'
       welcome: 'Muito bem! Um email foi enviado pra você!'
       type_your_auth_code: 'Cheque seu email e digite abaixo o código de acesso de 8 caracteres que consta no email que você recebeu:'
-      remember_me: 'Este é meu computador pessoal, me mantenha logado até que eu faça logout'
+      remember_me: 'Este é meu computador pessoal'
+      remember_me_help: "Marcando esta caixa, você permanecerá logado para sempre neste computador até que saia via link 'Sair'"
+      change_email: '(alterar)'
     create:
       flash:
         authentication_success: 'Autenticado com sucesso!'

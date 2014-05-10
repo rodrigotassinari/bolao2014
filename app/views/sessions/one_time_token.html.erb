@@ -1,18 +1,50 @@
-<% content_for :title do %>Login / Confirm<% end %>
+<% content_for(:title) { t('.title') } %>
 
-<h2><%= t '.welcome' %></h2>
-<p><%= t '.type_your_auth_code' %></p>
+<div class="row">
+  <div class="small-12 column">
+    <h2><%= t '.title' %></h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 column">
+    <p><%= t '.type_your_auth_code' %></p>
+  </div>
+</div>
 
 <%= form_tag login_path, method: :post do %>
-  <%= label_tag :email, t('activerecord.attributes.user.email') %>
-  <%= @email %>
-  <%= hidden_field_tag :email, @email %>
+  <div class="row">
+    <div class="small-12 column">
+      <%= label_tag :email, t('activerecord.attributes.user.email') %>
+      <%= hidden_field_tag :email, @user.email %>
+      <p>
+        <%= @user.email %>
+        <small><%= link_to t('.change_email'), login_path(email: @user.email) %></small>
+      </p>
+    </div>
+  </div>
 
-  <%= label_tag :password, t('activerecord.attributes.user.authentication_token') %>
-  <%= text_field_tag :password %>
+  <div class="row">
+    <div class="small-12 column">
+      <%= label_tag :password, t('activerecord.attributes.user.authentication_token') %>
+      <%= password_field_tag :password, params[:password], placeholder: 'XXXXXXXX', autofocus: true, class: ('error' if @user.errors.include?(:authentication_token)) %>
+      <% if @user.errors.include?(:authentication_token) %>
+        <small class="error"><%= @user.errors.get(:authentication_token).to_sentence %></small>
+      <% end %>
+    </div>
+  </div>
 
-  <%= check_box_tag :remember_me, true, @remember_me %>
-  <%= label_tag :remember_me, t('.remember_me') %>
+  <div class="row">
+    <div class="small-12 column">
+      <%= check_box_tag(:remember_me, true, @remember_me) %>
+      <%= label_tag :remember_me, t('.remember_me') %>
+      <span data-tooltip class="has-tip tip-bottom radius" title="<%= t('.remember_me_help') %>">(?)</span>
+    </div>
+  </div>
 
-  <%= submit_tag t('common.submit') %>
+  <div class="row">
+    <div class="small-12 column">
+      <%= submit_tag t('common.submit'), disable_with: t('common.submiting'), class: 'button radius' %>
+    </div>
+  </div>
 <% end %>

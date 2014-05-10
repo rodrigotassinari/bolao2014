@@ -1,16 +1,16 @@
 en:
   sessions:
     new:
+      title: ''
       whats_your_email: ''
       example_email: ''
-    # TODO move to a new controller
     one_time_token:
-      flash:
-        email_required_error: ''
-        email_invalid_error: ''
+      title: ''
       welcome: ''
       type_your_auth_code: ''
       remember_me: ''
+      remember_me_help: ''
+      change_email: ''
     create:
       flash:
         authentication_success: ''

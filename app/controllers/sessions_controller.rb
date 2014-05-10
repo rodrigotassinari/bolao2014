@@ -10,7 +10,6 @@ class SessionsController < ApplicationController
 
   # POST /one_time_token
   # Via: one_time_token_path
-  # TODO move to new controller
   def one_time_token
     @user = OneTimeLogin.find_user(params[:email])
     one_time_login = OneTimeLogin.new(@user)
