@@ -1,4 +1,10 @@
 pt:
   hello_world: 'Olá, mundo!'
   common:
-    submit: "Enviar"
+    submit: 'Enviar'
+    submiting: 'Enviando...'
+    save: 'Salvar'
+    saving: 'Salvando...'
+    login: 'Entrar'
+    logout: 'Sair'
+    settings: 'Configurações'
