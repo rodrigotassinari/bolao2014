@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SessionsMailer do
   describe 'one_time_login' do
     let(:user) do
-      FactoryGirl.build(:user,
+      build(:user,
         name: 'Some Guy',
         email: 'some@guy.com',
         authentication_token_expires_at: 15.minutes.from_now
