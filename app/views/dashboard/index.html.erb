@@ -1,12 +1,7 @@
-<% content_for :title do %>Dashboard<% end %>
+<% content_for(:title) { t('.title', app_name: ENV['APP_NAME']) } %>
 
-<h2>Dashboard#index</h2>
-<p><%= t 'hello_world' %></p>
-<p><%= l Time.zone.now %></p>
-
-<% if logged_in? %>
-  <p><%= current_user.email %></p>
-  <p><%= link_to 'Logout', logout_path %></p>
-<% else %>
-  <p><%= link_to 'Login', login_path %></p>
-<% end %>
+<div class="row">
+  <div class="small-12 column">
+    <h2><%= t '.welcome' %></h2>
+  </div>
+</div>

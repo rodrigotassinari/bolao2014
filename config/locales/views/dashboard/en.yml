@@ -1,0 +1,5 @@
+end:
+  dashboard:
+    index:
+      title: '%{app_name}'
+      welcome: ''

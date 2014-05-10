@@ -1,0 +1,5 @@
+pt:
+  dashboard:
+    index:
+      title: '%{app_name}'
+      welcome: 'Bem-vindo!'
