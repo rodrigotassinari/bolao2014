@@ -15,4 +15,7 @@ class Player < ActiveRecord::Base
     presence: true,
     inclusion: { in: POSITIONS, allow_blank: true }
 
+  scope :goalkeepers, -> { where(position: 'goalkeeper') }
+  scope :fielders, -> { where(position: 'field') }
+
 end
