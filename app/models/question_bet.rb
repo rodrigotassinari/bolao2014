@@ -1,33 +1,26 @@
-class Question < ActiveRecord::Base
+class QuestionBet < ActiveRecord::Base
 
-  ANSWER_TYPES = %w( team player boolean )
+  belongs_to :bet
+  belongs_to :question
 
-  has_many :question_bets
-
-  validates :body_en,
-    presence: true,
-    uniqueness: { case_insensitive: true }
-
-  validates :body_pt,
-    presence: true,
-    uniqueness: { case_insensitive: true }
-
-  validates :played_at,
+  validates :bet,
     presence: true
 
-  validates :answer_type,
+  validates :question,
+    presence: true
+
+  validates :answer,
+    presence: true
+
+  validates :points,
     presence: true,
-    inclusion: { in: ANSWER_TYPES, allow_blank: true }
+    numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
 
   validate :answer_must_match_answer_type
 
-  def body
-    self.send("body_#{I18n.locale}".to_sym)
-  end
-
   def answer_object
     return if self.answer.blank?
-    case self.answer_type
+    case self.question.answer_type
     when 'team'
       Team.find(Integer(self.answer))
     when 'player'
@@ -40,8 +33,8 @@ class Question < ActiveRecord::Base
   private
 
   def answer_must_match_answer_type
-    if !self.answer.blank? && !self.answer_type.blank?
-      case self.answer_type
+    if self.answer.present? && self.question.present?
+      case self.question.answer_type
       when 'team'
         errors.add(:answer, :invalid) unless (Team.count > 0 && Team.where(id: Integer(self.answer)).count == 1)
       when 'player'

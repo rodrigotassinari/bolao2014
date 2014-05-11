@@ -2,6 +2,7 @@ class Bet < ActiveRecord::Base
 
   belongs_to :user
   has_many :match_bets
+  has_many :question_bets
 
   validates :user,
     presence: true

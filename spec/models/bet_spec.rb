@@ -5,6 +5,7 @@ describe Bet do
   context 'associations' do
     it { should belong_to(:user) }
     it { should have_many(:match_bets) }
+    it { should have_many(:question_bets) }
   end
 
   context 'validations' do
