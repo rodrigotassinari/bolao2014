@@ -6,6 +6,8 @@ describe Team do
     it { should have_many(:matches_as_a).class_name('Match').with_foreign_key('team_a_id') }
     it { should have_many(:matches_as_b).class_name('Match').with_foreign_key('team_b_id') }
     # it { should have_many(:matches).class_name('Match') }
+
+    it { should have_many(:players) }
   end
 
   context 'validations' do

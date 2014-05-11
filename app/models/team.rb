@@ -7,6 +7,8 @@ class Team < ActiveRecord::Base
   # has_many :winning_matches, class_name: 'Match', foreign_key: 'winner_id' # TODO add winner_id to matches
   # has_many :losing_matches,  class_name: 'Match', foreign_key: 'loser_id' # TODO add loser_id to matches
 
+  has_many :players
+
   validates :name_en,
     presence: true,
     uniqueness: true
