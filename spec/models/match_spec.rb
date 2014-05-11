@@ -5,6 +5,7 @@ describe Match do
   context 'associations' do
     it { should belong_to(:team_a).class_name('Team') }
     it { should belong_to(:team_b).class_name('Team') }
+    it { should have_many(:match_bets) }
   end
 
   context 'validations' do

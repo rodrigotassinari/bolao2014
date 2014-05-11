@@ -19,6 +19,7 @@ class Match < ActiveRecord::Base
 
   belongs_to :team_a, class_name: 'Team'
   belongs_to :team_b, class_name: 'Team'
+  has_many :match_bets
 
   # belongs_to :winner, :class_name => 'Team' # TODO add winner_id to matches
   # belongs_to :loser, :class_name => 'Team' # TODO add loser_id to matches
