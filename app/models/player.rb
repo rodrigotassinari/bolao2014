@@ -8,7 +8,8 @@ class Player < ActiveRecord::Base
     presence: true
 
   validates :name,
-    presence: true
+    presence: true,
+    uniqueness: { scope: :team_id }
 
   validates :position,
     presence: true,
