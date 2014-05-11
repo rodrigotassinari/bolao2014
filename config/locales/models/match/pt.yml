@@ -1,0 +1,31 @@
+pt:
+  activerecord:
+    models:
+      match:
+        one: Partida
+        other: Partidas
+    attributes:
+      match:
+        number: Número
+        round: Fase
+        group: Grupo
+        played_at: Data
+        played_on: Local
+        team_a_id: Time A
+        team_a: Time A
+        team_b_id: Time B
+        team_b: Time B
+        goals_a: Gols Time A
+        goals_b: Gols Time B
+        penalty_goals_a: Gols (decisão por pênaltys) Time A
+        penalty_goals_b: Gols (decisão por pênaltys) Time B
+        created_at: Cadastrada em
+        updated_at: Atualizada em
+    errors:
+      models:
+        match:
+          attributes:
+            team_b_id:
+              equal_teams: 'não pode ser o mesmo que o outro'
+            group:
+              not_the_same: 'não é o mesmo dos times'

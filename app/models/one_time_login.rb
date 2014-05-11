@@ -5,6 +5,7 @@ class OneTimeLogin
 
   attr_reader :user, :errors
 
+  # TODO spec
   def initialize(user)
     @user = user
     @errors = ActiveModel::Errors.new(self)

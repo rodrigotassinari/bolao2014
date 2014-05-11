@@ -4,7 +4,7 @@ describe OneTimeLogin do
 
   describe '.find_user' do
     context 'when a user with that email exists' do
-      let!(:existing_user) { FactoryGirl.create(:user_en) }
+      let!(:existing_user) { create(:user_en) }
       let(:user) { described_class.find_user(existing_user.email) }
       it 'returns the user, without changing it' do
         expect(user).to be_persisted
@@ -26,7 +26,7 @@ describe OneTimeLogin do
   describe '#valid?' do
     subject { described_class.new(user) }
     context 'with a valid user' do
-      let(:user) { FactoryGirl.build(:user) }
+      let(:user) { build(:user) }
       it 'returns true' do
         expect(subject).to be_valid
       end
@@ -43,7 +43,7 @@ describe OneTimeLogin do
       end
     end
     context 'with an invalid user' do
-      let(:user) { FactoryGirl.build(:user, email: 'invalid email') }
+      let(:user) { build(:user, email: 'invalid email') }
       it 'returns false' do
         expect(subject).to_not be_valid
       end
@@ -53,6 +53,14 @@ describe OneTimeLogin do
         expect(subject.errors.full_messages).to eq(['User is invalid']) # TODO translate
       end
     end
+  end
+
+  describe '.new' do
+    # TODO
+  end
+
+  describe '#send_authentication_check!' do
+    # TODO
   end
 
 end

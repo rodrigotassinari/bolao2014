@@ -1,0 +1,13 @@
+pt:
+  activerecord:
+    models:
+      bet:
+        one: Aposta
+        other: Apostas
+    attributes:
+      bet:
+        user_id: Apostador
+        user: Apostador
+        points: Pontos
+        created_at: Cadastrada em
+        updated_at: Atualizada em

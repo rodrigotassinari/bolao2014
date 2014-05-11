@@ -2,13 +2,8 @@ require 'spec_helper'
 
 describe User do
 
-  context 'factories' do
-    [:user, :user_en, :user_pt].each do |factory_name|
-      subject { FactoryGirl.build(factory_name) }
-      it "has a valid '#{factory_name}' factory" do
-        expect(subject).to be_valid
-      end
-    end
+  context 'associations' do
+    it { should have_one(:bet).dependent(:destroy) }
   end
 
   context 'validations' do
@@ -37,8 +32,8 @@ describe User do
 
   context 'when creating a new user' do
     it 'sets a random remember_me_token' do
-      user = FactoryGirl.build(:user, remember_me_token: nil)
-      # user = FactoryGirl.build(:user)
+      user = build(:user, remember_me_token: nil)
+      # user = build(:user)
       expect(user.remember_me_token).to be_nil
       user.save!
       expect(user.remember_me_token).to_not be_blank
@@ -47,45 +42,54 @@ describe User do
 
   describe '#generate_authentication_token!' do
     it 'returns a new, 8 character, not ambiguous random temporary password' do
-      user = FactoryGirl.build(:user)
+      user = build(:user)
       clear_text_password = user.generate_authentication_token!
       expect(clear_text_password).to_not be_blank
       expect(clear_text_password.size).to eq(8)
     end
     it 'sets a unique authentication_token' do
-      user = FactoryGirl.create(:user)
+      user = create(:user)
       expect(user.authentication_token).to be_nil
       user.generate_authentication_token!
       expect(User.where(authentication_token: user.authentication_token).count).to eq(1)
     end
     it 'sets a authentication_token compatible with the temporary password' do
-      user = FactoryGirl.create(:user)
+      user = create(:user)
       clear_text_password = user.generate_authentication_token!
       expect(user.validate_authentication_token!(clear_text_password)).to be_true
     end
     it 'sets a token expiration date 15 minutes in the future' do
-      user = FactoryGirl.create(:user)
+      user = create(:user)
       expect(user.authentication_token_expires_at).to be_nil
       user.generate_authentication_token!
       expect(user.authentication_token_expires_at).to_not be_nil
       expect(user.authentication_token_expires_at).to be_between(14.minutes.from_now, 16.minutes.from_now)
     end
     it 'saves the user' do
-      user = FactoryGirl.build(:user)
+      user = build(:user, email: 'someoneelse@example.com', locale: nil, time_zone: nil)
+      user.set_defaults
       expect { user.generate_authentication_token! }.to change(User, :count).by(1)
+
+      user = User.find(user.id)
+      expect(user.email).to eql('someoneelse@example.com')
+      expect(user.locale).to eql(I18n.locale.to_s)
+      expect(user.time_zone).to eql(Time.zone.name)
+      expect(user.bet).to_not be_nil
+      expect(user.bet).to be_persisted
+      expect(user.bet.points).to eql(0)
     end
   end
 
   describe '#authentication_token_expired?' do
     let!(:expiration) { Time.zone.now }
     context 'when user has no authentication_token' do
-      let!(:user) { FactoryGirl.build(:user, authentication_token: nil, authentication_token_expires_at: nil) }
+      let!(:user) { build(:user, authentication_token: nil, authentication_token_expires_at: nil) }
       it 'raises an error' do
         expect { user.authentication_token_expired? }.to raise_error(RuntimeError, 'authentication_token not set')
       end
     end
     context 'when user has an authentication_token' do
-      let!(:user) { FactoryGirl.build(:user, authentication_token: 'foobar', authentication_token_expires_at: expiration) }
+      let!(:user) { build(:user, authentication_token: 'foobar', authentication_token_expires_at: expiration) }
       it 'returns false if authentication_token_expires_at is in the future' do
         Timecop.freeze(expiration - 14.minutes) do
           expect(user.authentication_token_expired?).to be_false
@@ -105,7 +109,7 @@ describe User do
   end
 
   describe '#validate_authentication_token!' do
-    let(:user) { FactoryGirl.create(:user, authentication_token: nil, authentication_token_expires_at: nil) }
+    let(:user) { create(:user, authentication_token: nil, authentication_token_expires_at: nil) }
     context 'when user has no authentication_token' do
       it 'returns false' do
         expect(user.validate_authentication_token!('any password')).to be_false
@@ -156,6 +160,20 @@ describe User do
       expect(subject.time_zone).to be_nil
       subject.set_defaults
       expect(subject.time_zone).to eq('Auckland')
+    end
+    it 'builds a Bet associated to the user' do
+      expect(subject.bet).to be_nil
+      subject.set_defaults
+      expect(subject.bet).to_not be_nil
+      expect(subject.bet.points).to eq(0)
+    end
+    it 'does not override any existing bet' do
+      bet = build(:bet, user: subject, points: 42)
+      subject.bet = bet
+      subject.set_defaults
+      expect(subject.bet).to_not be_nil
+      expect(subject.bet).to equal(bet)
+      expect(subject.bet.points).to eq(42)
     end
   end
 

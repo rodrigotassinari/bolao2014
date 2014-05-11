@@ -1,0 +1,15 @@
+pt:
+  activerecord:
+    models:
+      team:
+        one: Time
+        other: Times
+    attributes:
+      team:
+        name: Nome
+        name_en: Nome (inglês)
+        name_pt: Nome (português)
+        acronym: Sigla
+        group: Grupo
+        created_at: Cadastrado em
+        updated_at: Atualizado em

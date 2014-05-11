@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe SessionsController do
 
-  describe 'GET new' do
+  # GET /login
+  describe '#new' do
     it 'returns http success' do
       get :new
       expect(response).to be_success
@@ -20,7 +21,8 @@ describe SessionsController do
     end
   end
 
-  describe 'POST one_time_token' do
+  # POST /one_time_token
+  describe '#one_time_token' do
     context 'when user supplies a valid email' do
       let(:params) { {email: 'someone@example.com'} }
       before(:each) do
@@ -80,7 +82,8 @@ describe SessionsController do
     end
   end
 
-  describe 'POST create' do
+  # POST /login
+  describe '#create' do
     context 'with matching email and authentication_token' do
       # TODO
     end
@@ -88,6 +91,16 @@ describe SessionsController do
       # TODO
     end
     context 'with missing authentication_token' do
+      # TODO
+    end
+  end
+
+  # GET /logout
+  describe '#destroy' do
+    context 'when not logged in' do
+      # TODO
+    end
+    context 'when logged in' do
       # TODO
     end
   end

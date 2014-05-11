@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   EMAIL_REGEX = /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
   PASSWORD_EXPIRATION_MINUTES = 15
 
+  has_one :bet, dependent: :destroy
+
   validates :email,
     presence: true,
     uniqueness: { case_sensitive: false },
@@ -72,6 +74,7 @@ class User < ActiveRecord::Base
   def set_defaults
     self.locale = I18n.locale.to_s
     self.time_zone = Time.zone.name
+    self.build_bet if self.bet.nil?
   end
 
   private
