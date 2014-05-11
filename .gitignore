@@ -31,3 +31,4 @@
 capybara-*.html
 pickle-email-*.html
 rerun.txt
+.DS_Store
