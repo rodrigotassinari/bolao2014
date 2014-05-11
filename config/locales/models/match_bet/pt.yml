@@ -1,0 +1,19 @@
+pt:
+  activerecord:
+    models:
+      match_bet:
+        one: Palpite
+        other: Palpites
+    attributes:
+      match_bet:
+        bet: Aposta
+        bet_id: Aposta
+        match: Partida
+        match_id: Partida
+        goals_a: Gols Time A
+        goals_b: Gols Time B
+        penalty_winner: Vencedor nos Pênaltis
+        penalty_winner_id: Vencedor nos Pênaltis
+        points: Pontos
+        created_at: Cadastrado em
+        updated_at: Atualizado em

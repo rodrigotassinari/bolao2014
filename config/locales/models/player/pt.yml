@@ -1,0 +1,14 @@
+pt:
+  activerecord:
+    models:
+      player:
+        one: Jogador
+        other: Jogadores
+    attributes:
+      player:
+        team: Time
+        team_id: Time
+        name: Nome
+        position: Posição
+        created_at: Cadastrado em
+        updated_at: Atualizado em

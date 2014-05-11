@@ -1,0 +1,16 @@
+pt:
+  activerecord:
+    models:
+      question_bet:
+        one: Resposta
+        other: Respostas
+    attributes:
+      question_bet:
+        bet: Aposta
+        bet_id: Aposta
+        question: Pergunta
+        question_id: Pergunta
+        answer: Resposta
+        points: Pontos
+        created_at: Cadastrada em
+        updated_at: Atualizada em

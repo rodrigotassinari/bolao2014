@@ -1,0 +1,16 @@
+en:
+  activerecord:
+    models:
+      question_bet:
+        one: Question Guess
+        other: Question Guesses
+    attributes:
+      question_bet:
+        bet: Bet
+        bet_id: Bet
+        question: Question
+        question_id: Question
+        answer: Answer
+        points: Points
+        created_at: Created at
+        updated_at: Updated at

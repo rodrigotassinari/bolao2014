@@ -1,0 +1,16 @@
+pt:
+  activerecord:
+    models:
+      question:
+        one: Pergunta
+        other: Perguntas
+    attributes:
+      question:
+        body_en: Texto (inglês)
+        body_pt: Texto (português)
+        played_at: Data
+        answer_type: Tipo de resposta
+        answer: Resposta
+        created_at: Cadastrada em
+        updated_at: Atualizada em
+
