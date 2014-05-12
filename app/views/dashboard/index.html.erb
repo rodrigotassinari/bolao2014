@@ -5,3 +5,12 @@
     <h2><%= t '.welcome' %></h2>
   </div>
 </div>
+
+<div class="row">
+  <div class="small-12 column">
+    <ul class="disc">
+      <li><%= link_to Match.model_name.human(count: 2), matches_path %></li>
+      <li><%= link_to t('bets.show.title'), bet_path %></li>
+    </ul>
+  </div>
+</div>

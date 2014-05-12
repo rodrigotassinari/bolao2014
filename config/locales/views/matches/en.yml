@@ -1,4 +1,8 @@
 en:
   matches:
     match:
-      change: ''
+      view: ''
+    show:
+      previous: ''
+      next: ''
+      all: ''

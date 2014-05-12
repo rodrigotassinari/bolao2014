@@ -1,4 +1,8 @@
 pt:
   matches:
     match:
-      change: 'Alterar'
+      view: 'Visualizar'
+    show:
+      previous: 'Partida anterior'
+      next: 'Próxima partida'
+      all: 'Todas as partidas'

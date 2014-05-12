@@ -48,6 +48,12 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   # TODO spec
+  def current_bet
+    @current_bet ||= current_user.bet if logged_in?
+  end
+  helper_method :current_bet
+
+  # TODO spec
   def logged_in?
     !!current_user
   end

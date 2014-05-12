@@ -1,2 +1,15 @@
-<h1>Matches#show</h1>
-<p>Find me in app/views/matches/show.html.erb</p>
+<% content_for(:title) { "#{Match.model_name.human(count: 1)} ##{@match.number}" } %>
+
+<div class="row">
+  <div class="small-12 column">
+    <h2><%= Match.model_name.human(count: 1) %> #<%= @match.number %></h2>
+  </div>
+</div>
+
+<%= render partial: 'matches/match', object: @match %>
+
+<div class="row">
+  <div class="small-12 column">
+    <p><%= link_to t('.all'), matches_path %> | <%= link_to t('.previous'), '#TODO' %> | <%= link_to t('.next'), '#TODO' %></p>
+  </div>
+</div>

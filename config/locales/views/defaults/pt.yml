@@ -10,3 +10,4 @@ pt:
     settings: 'Configurações'
     login_required: 'Você precisa fazer login para acessar esta página.'
     already_logged_in: 'Você já está autenticado.'
+    back: 'Voltar'

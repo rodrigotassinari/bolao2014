@@ -21,7 +21,9 @@
   </div>
 </div>
 
-<%= render partial: 'matches/match', collection: @matches %>
+<% @matches.each do |match| %>
+  <%= render partial: 'match_bets/match_bet', locals: { match: match } %>
+<% end %>
 
 <div class="row">
   <div class="small-4 column">

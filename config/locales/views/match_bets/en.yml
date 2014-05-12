@@ -1,0 +1,7 @@
+en:
+  match_bets:
+    match_bet:
+      change: ''
+    edit:
+      title: ' #%{match_number}'
+      my_bet: ''

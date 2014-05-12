@@ -8,9 +8,13 @@ Rails.application.routes.draw do
 
   get '/logout' => 'sessions#destroy', as: 'logout'
 
+  resources :matches, only: [:index, :show]
+
   resource :bet, only: [:show]
 
-  resources :matches, only: [:index, :show]
+  get  '/bet/matches/:match_id' => 'match_bets#edit', as: 'match_bet'
+  post '/bet/matches/:match_id' => 'match_bets#create'
+  put  '/bet/matches/:match_id' => 'match_bets#update'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

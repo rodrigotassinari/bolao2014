@@ -1,0 +1,15 @@
+<% content_for(:title) { t('.title', match_number: @match.number) } %>
+
+<div class="row">
+  <div class="small-12 column">
+    <h2><%= t '.my_bet' %></h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 column">
+    <h3><%= Match.model_name.human(count: 1) %> #<%= @match.number %></h3>
+  </div>
+</div>
+
+<%= render partial: 'match_bets/match_bet', locals: { match: @match } %>

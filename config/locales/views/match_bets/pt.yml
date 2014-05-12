@@ -1,0 +1,7 @@
+pt:
+  match_bets:
+    match_bet:
+      change: 'Alterar'
+    edit:
+      title: 'Minha Aposta: Partida #%{match_number}'
+      my_bet: 'Minha Aposta'
