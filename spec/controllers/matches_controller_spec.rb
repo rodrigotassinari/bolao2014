@@ -21,7 +21,7 @@ describe MatchesController do
         get :index
         expect(response).to render_template('index')
       end
-      it 'assigns all matches, in order' do
+      it 'assigns all matches, in order, wrapped in presenter' do
         matches = [mock_model(Match)]
         Match.should_receive(:all_in_order).and_return(matches)
         get :index

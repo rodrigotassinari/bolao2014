@@ -34,6 +34,8 @@ gem 'http_accept_language', '2.0.1'
 
 gem 'foundation-rails', '5.2.2.0'
 
+gem 'simple_presenter', '0.2.3'
+
 group :development, :production do
   gem 'rails_stdout_logging', '0.0.3'
 end
