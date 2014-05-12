@@ -9,3 +9,4 @@ en:
     logout: ''
     settings: ''
     login_required: ''
+    already_logged_in: ''

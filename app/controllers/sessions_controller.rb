@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
 
   skip_before_action :require_login, only: [:new, :one_time_token, :create]
+  before_action :require_guest, except: [:destroy]
 
   # GET /login
   # Via: login_path

@@ -33,6 +33,15 @@ class ApplicationController < ActionController::Base
   end
 
   # TODO spec
+  # before_action
+  def require_guest
+    if logged_in?
+      flash[:notice] = I18n.t('common.already_logged_in')
+      redirect_to root_path
+    end
+  end
+
+  # TODO spec
   def current_user
     @current_user ||= User.find_by_remember_me_token(cookies.signed[:remember_me_token]) if cookies.signed[:remember_me_token]
   end
