@@ -21,8 +21,10 @@
   </div>
 </div>
 
-<% @matches.each do |match| %>
-  <%= render partial: 'match_bets/match_bet', locals: { match: match } %>
+<%# TODO remove logic from view!! %>
+<% @_matches.each do |match| %>
+  <% match_bet = MatchBetPresenter.new(@bet.match_bets.find_or_initialize_by(match: match)) %>
+  <%= render partial: 'match_bets/match_bet', locals: { match_bet: match_bet } %>
 <% end %>
 
 <div class="row">

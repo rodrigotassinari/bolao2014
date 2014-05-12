@@ -6,7 +6,8 @@ class BetsController < ApplicationController
   # Shows a summary of the current user's bet
   def show
     @bet = current_user.bet
-    @matches = Match.all_bettables_in_order
+    @_matches = Match.all_bettables_in_order
+    @matches = MatchPresenter.map(@_matches)
     @questions = Question.all_bettables_in_order
   end
 

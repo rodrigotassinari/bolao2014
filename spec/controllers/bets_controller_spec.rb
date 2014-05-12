@@ -26,11 +26,14 @@ describe BetsController do
         get :show
         expect(assigns(:bet)).to eql(user.bet)
       end
-      it 'assigns all bettable matches, in order' do
+      it 'assigns all bettable matches, in order, wrapped in presenter' do
         matches = [mock_model(Match)]
+        matches_presenters = [double(MatchPresenter)]
         Match.should_receive(:all_bettables_in_order).and_return(matches)
+        MatchPresenter.should_receive(:map).with(matches).and_return(matches_presenters)
         get :show
-        expect(assigns(:matches)).to eql(matches)
+        expect(assigns(:_matches)).to eql(matches)
+        expect(assigns(:matches)).to eql(matches_presenters)
       end
       it 'assigns all bettable questions, in order' do
         questions = [mock_model(Question)]
