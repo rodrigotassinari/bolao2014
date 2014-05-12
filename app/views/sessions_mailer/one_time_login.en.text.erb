@@ -1,6 +1,6 @@
 Hello <%= @user.name_or_email %>,
 
-To access <%= ENV['APP_NAME'] %> just use the following authentication code:
+To access <%= ENV['APP_NAME'].dup.force_encoding('UTF-8') %> just use the following authentication code:
 
   <%= @password %>
 
