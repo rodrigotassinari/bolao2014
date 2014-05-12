@@ -20,7 +20,7 @@ class OneTimeLogin
   def send_authentication_check!
     if valid?
       token = user.generate_authentication_token!
-      SessionsMailer.one_time_login(user, token).deliver
+      EmailWorker.perform_async('SessionsMailer', 'one_time_login', [user.id, token])
       true
     else
       false

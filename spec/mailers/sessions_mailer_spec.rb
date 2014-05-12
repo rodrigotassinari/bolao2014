@@ -4,15 +4,19 @@ describe SessionsMailer do
   describe 'one_time_login' do
     let(:user) do
       build(:user,
+        id: 42,
         name: 'Some Guy',
         email: 'some@guy.com',
         authentication_token_expires_at: 15.minutes.from_now
       )
     end
-    let(:mail) { SessionsMailer.one_time_login(user, '12345678') }
+    let(:mail) { SessionsMailer.one_time_login(user.id, '12345678') }
+    before(:each) do
+      User.should_receive(:find).with(42).and_return(user)
+    end
 
     it 'renders the headers', locale: :pt do
-      expect(mail.subject).to eq("[#{ENV['APP_NAME']}] Seu código de acesso")
+      expect(mail.subject).to eq("[#{ENV['APP_SHORT_NAME']}] Seu código de acesso")
       expect(mail.to).to eq(['some@guy.com'])
       expect(mail.from).to eq([ENV['EMAIL_FROM']])
     end
