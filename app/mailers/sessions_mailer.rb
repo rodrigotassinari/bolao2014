@@ -5,7 +5,7 @@ class SessionsMailer < ActionMailer::Base
     @user = User.find(user_id)
     @password = clear_text_temporary_password
     mail(
-      subject: t('.subject', app_name: ENV['APP_SHORT_NAME'].dup.force_encoding('UTF-8')).force_encoding('UTF-8'),
+      subject: t('.subject', app_name: ENV['APP_SHORT_NAME'].dup.force_encoding('UTF-8')),
       to: @user.email_with_name
     )
   end
