@@ -8,3 +8,4 @@ pt:
     login: 'Entrar'
     logout: 'Sair'
     settings: 'Configurações'
+    login_required: 'Você precisa fazer login para acessar esta página.'

@@ -8,3 +8,4 @@ en:
     login: ''
     logout: ''
     settings: ''
+    login_required: ''

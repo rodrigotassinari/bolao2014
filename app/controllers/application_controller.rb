@@ -12,20 +12,24 @@ class ApplicationController < ActionController::Base
   # TODO spec
   # before_action
   def set_locale
-    # TODO set locale from logged in user's locale as first option
+    # TODO set locale from user's preferences
     I18n.locale = http_accept_language.compatible_language_from(I18n.available_locales)
   end
 
   # TODO spec
   # before_action
   def set_time_zone
-    # TODO
+    # TODO set time zone from user's preferences
   end
 
   # TODO spec
+  # TODO redirect the user to the URL he wanted to access after sign in (return to)
   # before_action
   def require_login
-    # TODO
+    unless logged_in?
+      flash[:notice] = I18n.t('common.login_required')
+      redirect_to login_path
+    end
   end
 
   # TODO spec
