@@ -1,0 +1,35 @@
+<div class="match" id="match_<%= match.id %>">
+  <div class="row">
+    <div class="small-3 column">
+      <p><%= Match.model_name.human(count: 1) %> #<%= match.number %></p>
+    </div>
+    <div class="small-3 column">
+      <p><%= l match.played_at, format: :short %></p>
+    </div>
+    <div class="small-6 column">
+      <p><%= match.played_on_text %></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-4 column">
+      <p>
+        <%= image_tag("flags/#{match.team_a.acronym}.png", width: 42, length: 28) %>
+        <%= match.team_a.name %>
+        <%= match.goals_a || '?' %>
+      </p>
+    </div>
+    <div class="small-1 column">
+      <p>X</p>
+    </div>
+    <div class="small-4 column">
+      <p>
+        <%= match.goals_b || '?' %>
+        <%= match.team_b.name %>
+        <%= image_tag("flags/#{match.team_b.acronym}.png", width: 42, length: 28) %>
+      </p>
+    </div>
+    <div class="small-3 column">
+      <p><%= link_to t('.change'), '#TODO-change-match-bet' %></p>
+    </div>
+  </div>
+</div>

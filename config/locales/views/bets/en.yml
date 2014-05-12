@@ -2,3 +2,4 @@ pt:
   bets:
     show:
       title: 'My Bet'
+      current_score: ''

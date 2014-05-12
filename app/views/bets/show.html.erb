@@ -5,3 +5,29 @@
     <h2><%= t '.title' %></h2>
   </div>
 </div>
+
+<div class="row">
+  <div class="small-12 column">
+    <p><%= t '.current_score' %>: <%= @bet.points %></p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-4 column">
+    <h3><%= Match.model_name.human(count: 2) %></h3>
+  </div>
+  <div class="small-8 column">
+    <p><%= @bet.match_bets.count %> / <%= Match.bettable.count %></p>
+  </div>
+</div>
+
+<%= render partial: 'matches/match', collection: @matches %>
+
+<div class="row">
+  <div class="small-4 column">
+    <h3><%= Question.model_name.human(count: 2) %></h3>
+  </div>
+  <div class="small-8 column">
+    <p><%= @bet.question_bets.count %> / <%= Question.count %></p>
+  </div>
+</div>

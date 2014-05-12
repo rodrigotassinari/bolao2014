@@ -21,6 +21,8 @@ class Question < ActiveRecord::Base
 
   validate :answer_must_match_answer_type
 
+  scope :ordered, -> { order(played_at: :asc, id: :asc) }
+
   def body
     self.send("body_#{I18n.locale}".to_sym)
   end

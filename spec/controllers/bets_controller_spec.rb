@@ -12,7 +12,7 @@ describe BetsController do
       end
     end
     context 'when logged in' do
-      let(:user) { build(:user) }
+      let(:user) { build(:user, bet: build(:bet)) }
       before(:each) { login_user(user) }
       it 'returns http success' do
         get :show
@@ -21,6 +21,16 @@ describe BetsController do
       it 'renders the correct template' do
         get :show
         expect(response).to render_template('show')
+      end
+      it "assigns the logged user's bet" do
+        get :show
+        expect(assigns(:bet)).to eql(user.bet)
+      end
+      it 'assigns all bettable matches, in order' do
+        matches = [mock_model(Match)]
+        Match.should_receive(:all_bettables_in_order).and_return(matches)
+        get :show
+        expect(assigns(:matches)).to eql(matches)
       end
     end
   end

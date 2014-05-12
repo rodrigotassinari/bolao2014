@@ -58,9 +58,16 @@ class Match < ActiveRecord::Base
 
   validate :teams_must_be_of_the_same_group_as_the_match
 
+  scope :ordered, -> { order(played_at: :asc, number: :asc) }
+  scope :bettable, -> { where.not(team_a: nil, team_b: nil) }
+
   def played_on_text
     return nil if self.played_on.blank?
     VENUES[self.played_on]
+  end
+
+  def self.all_bettables_in_order
+    self.ordered.bettable.all
   end
 
   private

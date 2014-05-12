@@ -2,3 +2,4 @@ pt:
   bets:
     show:
       title: 'Minha Aposta'
+      current_score: 'Pontuação atual'
