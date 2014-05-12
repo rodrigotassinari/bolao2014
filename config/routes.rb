@@ -1,3 +1,4 @@
+require 'sidekiq/web'
 Rails.application.routes.draw do
 
   root 'dashboard#index'
@@ -15,6 +16,9 @@ Rails.application.routes.draw do
   get  '/bet/matches/:match_id' => 'match_bets#edit', as: 'match_bet'
   post '/bet/matches/:match_id' => 'match_bets#create'
   put  '/bet/matches/:match_id' => 'match_bets#update'
+
+  # TODO limit access to admins, see https://github.com/mperham/sidekiq/wiki/Monitoring#security
+  mount Sidekiq::Web => '/admin/sidekiq'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
