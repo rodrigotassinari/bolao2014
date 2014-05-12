@@ -3,13 +3,15 @@ class MatchesController < ApplicationController
   # GET /matches
   # Via: matches_path
   def index
-    @matches = MatchPresenter.map(Match.all_in_order)
+    @_matches = Match.all_in_order
+    @matches = MatchPresenter.map(@_matches)
   end
 
   # GET /matches/:id
   # Via: match_path(:id)
   def show
-    @match = MatchPresenter.new(Match.find(params[:id]))
+    @_match = Match.find(params[:id])
+    @match = MatchPresenter.new(@_match)
   end
 
 end

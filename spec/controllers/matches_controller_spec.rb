@@ -21,11 +21,14 @@ describe MatchesController do
         get :index
         expect(response).to render_template('index')
       end
-      it 'assigns all matches, in order, wrapped in presenter' do
+      it 'assigns all matches, in order, wrapped in a presenter' do
         matches = [mock_model(Match)]
+        matches_presenters = [double(MatchPresenter)]
         Match.should_receive(:all_in_order).and_return(matches)
+        MatchPresenter.should_receive(:map).with(matches).and_return(matches_presenters)
         get :index
-        expect(assigns(:matches)).to eql(matches)
+        expect(assigns(:_matches)).to eql(matches)
+        expect(assigns(:matches)).to eql(matches_presenters)
       end
     end
   end
@@ -50,9 +53,12 @@ describe MatchesController do
         get :show, id: match.id
         expect(response).to render_template('show')
       end
-      it 'assigns all matches, in order' do
+      it 'assigns the requested match, wrapped in a presenter' do
+        match_presenter = double(MatchPresenter)
+        MatchPresenter.should_receive(:new).with(match).and_return(match_presenter)
         get :show, id: match.id
-        expect(assigns(:match)).to eql(match)
+        expect(assigns(:_match)).to eql(match)
+        expect(assigns(:match)).to eql(match_presenter)
       end
     end
   end
