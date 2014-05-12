@@ -66,6 +66,12 @@ class Match < ActiveRecord::Base
     VENUES[self.played_on]
   end
 
+  # TODO spec
+  def self.all_in_order
+    self.ordered.all
+  end
+
+  # TODO spec
   def self.all_bettables_in_order
     self.ordered.bettable.all
   end

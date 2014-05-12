@@ -39,6 +39,11 @@ class Question < ActiveRecord::Base
     end
   end
 
+  # TODO spec
+  def self.all_bettables_in_order
+    self.ordered.all
+  end
+
   private
 
   def answer_must_match_answer_type
