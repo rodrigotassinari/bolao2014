@@ -1,7 +1,5 @@
 source 'https://rubygems.org'
 
-ruby '2.1.1'
-
 gem 'dotenv-rails', '0.7.0', :groups => [:production]
 
 gem 'rails', '4.1.1'
