@@ -2,6 +2,7 @@ Rails.application.configure do
 
   unless Rails.env.test?
     config.action_mailer.delivery_method = :smtp
+    config.action_mailer.default_url_options = {host: ENV['APP_HOST']}
     config.action_mailer.smtp_settings = {
       :user_name => ENV['EMAIL_SMTP_USER_NAME'],
       :password => ENV['EMAIL_SMTP_PASSWORD'],
