@@ -36,6 +36,8 @@ gem 'foundation-rails', '5.2.2.0'
 
 gem 'simple_presenter', '0.2.3'
 
+gem 'skylight', '0.3.12'
+
 group :development, :production do
   gem 'rails_stdout_logging', '0.0.3'
 end
