@@ -28,11 +28,15 @@ describe MatchBetPresenter do
   its(:points) { should eql(33) }
   its(:created_at) { should eql('2014-06-12 17:00:00 -0300'.to_time) }
   its(:updated_at) { should eql('2014-06-13 17:00:00 -0300'.to_time) }
-  its(:bet) { should eql(bet) } # TODO wrap in presenter
 
   it 'wraps associated match in a presenter' do
     expect(subject.match).to be_an_instance_of(MatchPresenter)
     expect(subject.match.send(:subject)).to eq(match)
+  end
+
+  it 'wraps associated bet in a presenter' do
+    expect(subject.bet).to be_an_instance_of(BetPresenter)
+    expect(subject.bet.send(:subject)).to eq(bet)
   end
 
 end

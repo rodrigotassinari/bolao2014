@@ -14,12 +14,11 @@ class MatchBetPresenter < Presenter
   end
 
   def bet
-    @subject.bet
-    # @bet_presenter ||= BetPresenter.new(@subject.bet) # TODO
+    @bet_presenter ||= BetPresenter.new(@subject.bet) if @subject.bet
   end
 
   def match
-    @match_presenter ||= MatchPresenter.new(@subject.match)
+    @match_presenter ||= MatchPresenter.new(@subject.match) if @subject.match
   end
 
 end

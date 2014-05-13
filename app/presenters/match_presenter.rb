@@ -7,8 +7,8 @@ class MatchPresenter < Presenter
     :played_at,
     :played_on,
     :played_on_text,
-    :team_a,
-    :team_b,
+    :team_a, # TODO wrap in TeamPresenter
+    :team_b, # TODO wrap in TeamPresenter
     :goals_a,
     :goals_b,
     :penalty_goals_a,
