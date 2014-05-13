@@ -20,4 +20,8 @@ after_fork do |server, worker|
 
   defined?(ActiveRecord::Base) and
     ActiveRecord::Base.establish_connection
+
+  Sidekiq.configure_client do |config|
+    config.redis = { :url => ENV['REDIS_URL'], :namespace => 'bolao2014_sidekiq' }
+  end
 end
