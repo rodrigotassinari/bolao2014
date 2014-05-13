@@ -3,3 +3,7 @@ pt:
     show:
       title: 'Minha Aposta'
       current_score: 'Pontuação atual'
+      matches_betted: 'Partidas preenchidas: %{count}'
+      matches_to_bet: 'Partidas disponíveis para preencher: %{count}'
+      questions_betted: 'Perguntas respondidas: %{count}'
+      questions_to_bet: 'Perguntas disponíveis para responder: %{count}'

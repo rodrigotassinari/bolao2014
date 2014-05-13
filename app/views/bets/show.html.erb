@@ -13,25 +13,27 @@
 </div>
 
 <div class="row">
-  <div class="small-4 column">
+  <div class="small-12 column">
     <h3><%= Match.model_name.human(count: 2) %></h3>
-  </div>
-  <div class="small-8 column">
-    <p><%= @bet.match_bets.count %> / <%= Match.bettable.count %></p>
   </div>
 </div>
 
-<%# TODO remove logic from view!! %>
-<% @_matches.each do |match| %>
-  <% match_bet = MatchBetPresenter.new(@bet.match_bets.find_or_initialize_by(match: match)) %>
-  <%= render partial: 'match_bets/match_bet', locals: { match_bet: match_bet } %>
-<% end %>
+<div class="row">
+  <div class="small-12 column">
+    <p><%= t '.matches_betted', count: @bet.matches_count %> (<%= link_to t('common.view'), bet_matches_path(filter: :betted) %>)</p>
+    <p><%= t '.matches_to_bet', count: @matches.size %> (<%= link_to t('common.view'), bet_matches_path(filter: :to_bet) %>)</p>
+  </div>
+</div>
 
 <div class="row">
-  <div class="small-4 column">
+  <div class="small-12 column">
     <h3><%= Question.model_name.human(count: 2) %></h3>
   </div>
-  <div class="small-8 column">
-    <p><%= @bet.question_bets.count %> / <%= Question.count %></p>
+</div>
+
+<div class="row">
+  <div class="small-12 column">
+    <p><%= t '.questions_betted', count: @bet.questions_count %> (<%= link_to t('common.view'), bet_questions_path(filter: :betted) %>)</p>
+    <p><%= t '.questions_to_bet', count: @questions.size %> (<%= link_to t('common.view'), bet_questions_path(filter: :to_bet) %>)</p>
   </div>
 </div>

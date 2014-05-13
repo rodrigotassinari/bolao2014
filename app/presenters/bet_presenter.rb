@@ -14,4 +14,14 @@ class BetPresenter < Presenter
     @user_presenter ||= UserPresenter.new(@subject.user) if @subject.user
   end
 
+  # TODO spec
+  def matches_count
+    @subject.matches.count
+  end
+
+  # TODO spec
+  def questions_count
+    @subject.questions.count
+  end
+
 end

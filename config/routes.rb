@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   resources :matches, only: [:index, :show]
 
   resource :bet, only: [:show]
+  get  '/bet/matches' => 'bets#matches', as: 'bet_matches'
+  get  '/bet/questions' => 'bets#questions', as: 'bet_questions'
 
   get  '/bet/matches/:match_id' => 'match_bets#edit', as: 'match_bet'
   post '/bet/matches/:match_id' => 'match_bets#create'

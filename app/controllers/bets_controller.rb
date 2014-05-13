@@ -14,4 +14,20 @@ class BetsController < ApplicationController
     @questions = QuestionPresenter.map(@_questions)
   end
 
+  # GET /bet/matches?filter=[betted|to_bet]
+  # Via: bet_matches_path(filter: [:betted|:to_bet])
+  #
+  # List all the matches of the current bet.
+  def matches
+    # TODO
+  end
+
+  # GET /bet/questions?filter=[betted|to_bet]
+  # Via: bet_questions_path(filter: [:betted|:to_bet])
+  #
+  # List all the questions of the current bet.
+  def questions
+    # TODO
+  end
+
 end
