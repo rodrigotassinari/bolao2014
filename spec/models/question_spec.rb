@@ -85,4 +85,54 @@ describe Question do
     end
   end
 
+  describe '#locked?' do
+    let(:question) { build(:boolean_question) }
+    let(:limit) { described_class::HOURS_BEFORE_START_TIME_TO_BET }
+    it 'returns false for more than 1 hour before the question start' do
+      Timecop.freeze(question.played_at - (limit * 60 + 1).minutes) do
+        expect(question).to_not be_locked
+      end
+    end
+    it 'returns true when 1 hour before the question start' do
+      Timecop.freeze(question.played_at - limit.hour) do
+        expect(question).to be_locked
+      end
+    end
+    it 'returns true when less than 1 hour before the question start' do
+      Timecop.freeze(question.played_at - (limit * 60 - 1).minutes) do
+        expect(question).to be_locked
+      end
+    end
+    it 'returns true after the question has started' do
+      Timecop.freeze(question.played_at + 1.minute) do
+        expect(question).to be_locked
+      end
+    end
+  end
+
+  describe '#bettable?' do
+    let(:question) { build(:boolean_question) }
+    let(:limit) { described_class::HOURS_BEFORE_START_TIME_TO_BET }
+    it 'returns true for more than 1 hour before the question start' do
+      Timecop.freeze(question.played_at - (limit * 60 + 1).minutes) do
+        expect(question).to be_bettable
+      end
+    end
+    it 'returns false when 1 hour before the question start' do
+      Timecop.freeze(question.played_at - limit.hour) do
+        expect(question).to_not be_bettable
+      end
+    end
+    it 'returns false when less than 1 hour before the question start' do
+      Timecop.freeze(question.played_at - (limit * 60 - 1).minutes) do
+        expect(question).to_not be_bettable
+      end
+    end
+    it 'returns false after the question has started' do
+      Timecop.freeze(question.played_at + 1.minute) do
+        expect(question).to_not be_bettable
+      end
+    end
+  end
+
 end

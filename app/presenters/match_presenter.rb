@@ -7,8 +7,6 @@ class MatchPresenter < Presenter
     :played_at,
     :played_on,
     :played_on_text,
-    :team_a, # TODO wrap in TeamPresenter
-    :team_b, # TODO wrap in TeamPresenter
     :goals_a,
     :goals_b,
     :penalty_goals_a,
@@ -19,9 +17,17 @@ class MatchPresenter < Presenter
     "matches_#{@subject.id}"
   end
 
+  def team_a
+    @team_a_presenter ||= TeamPresenter.new(@subject.team_a) if @subject.team_a
+  end
+
   # TODO spec
   def team_a_info
     team_info(:a)
+  end
+
+  def team_b
+    @team_b_presenter ||= TeamPresenter.new(@subject.team_b) if @subject.team_b
   end
 
   # TODO spec

@@ -33,7 +33,15 @@ describe MatchPresenter do
   its(:goals_b) { should eql(2) }
   its(:penalty_goals_a) { should eql(4) }
   its(:penalty_goals_b) { should eql(3) }
-  its(:team_a) { should eql(team_a) } # TODO wrap in presenter?
-  its(:team_b) { should eql(team_b) } # TODO wrap in presenter?
+
+  it 'wraps associated team_a in a presenter' do
+    expect(subject.team_a).to be_an_instance_of(TeamPresenter)
+    expect(subject.team_a.send(:subject)).to eq(team_a)
+  end
+
+  it 'wraps associated team_b in a presenter' do
+    expect(subject.team_b).to be_an_instance_of(TeamPresenter)
+    expect(subject.team_b.send(:subject)).to eq(team_b)
+  end
 
 end

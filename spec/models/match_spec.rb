@@ -59,4 +59,79 @@ describe Match do
     end
   end
 
+  describe '#locked?' do
+    let(:match) { build(:match) }
+    let(:limit) { described_class::HOURS_BEFORE_START_TIME_TO_BET }
+    it 'returns false for more than 1 hour before the match start' do
+      Timecop.freeze(match.played_at - (limit * 60 + 1).minutes) do
+        expect(match).to_not be_locked
+      end
+    end
+    it 'returns true when 1 hour before the match start' do
+      Timecop.freeze(match.played_at - limit.hour) do
+        expect(match).to be_locked
+      end
+    end
+    it 'returns true when less than 1 hour before the match start' do
+      Timecop.freeze(match.played_at - (limit * 60 - 1).minutes) do
+        expect(match).to be_locked
+      end
+    end
+    it 'returns true after the match has started' do
+      Timecop.freeze(match.played_at + 1.minute) do
+        expect(match).to be_locked
+      end
+    end
+  end
+
+  describe '#bettable?' do
+    let(:limit) { described_class::HOURS_BEFORE_START_TIME_TO_BET }
+    context 'when both teams are known' do
+      let(:match) { build(:match) }
+      it 'returns false for more than 1 hour before the match start' do
+        Timecop.freeze(match.played_at - (limit * 60 + 1).minutes) do
+          expect(match).to be_bettable
+        end
+      end
+      it 'returns true when 1 hour before the match start' do
+        Timecop.freeze(match.played_at - limit.hour) do
+          expect(match).to_not be_bettable
+        end
+      end
+      it 'returns true when less than 1 hour before the match start' do
+        Timecop.freeze(match.played_at - (limit * 60 - 1).minutes) do
+          expect(match).to_not be_bettable
+        end
+      end
+      it 'returns true after the match has started' do
+        Timecop.freeze(match.played_at + 1.minute) do
+          expect(match).to_not be_bettable
+        end
+      end
+    end
+    context 'when not all teams are known' do
+      let(:match) { build(:match, team_b: nil) }
+      it 'returns false for more than 1 hour before the match start' do
+        Timecop.freeze(match.played_at - (limit * 60 + 1).minutes) do
+          expect(match).to_not be_bettable
+        end
+      end
+      it 'returns false when 1 hour before the match start' do
+        Timecop.freeze(match.played_at - limit.hour) do
+          expect(match).to_not be_bettable
+        end
+      end
+      it 'returns false when less than 1 hour before the match start' do
+        Timecop.freeze(match.played_at - (limit * 60 - 1).minutes) do
+          expect(match).to_not be_bettable
+        end
+      end
+      it 'returns false after the match has started' do
+        Timecop.freeze(match.played_at + 1.minute) do
+          expect(match).to_not be_bettable
+        end
+      end
+    end
+  end
+
 end

@@ -16,6 +16,8 @@ class Match < ActiveRecord::Base
     'rs' => 'Estádio Beira-Rio, Porto Alegre, RS',
     'sp' => 'Arena de São Paulo (Itaquerão), São Paulo, SP',
   }
+  # How long (in hours) to allow bets on a match
+  HOURS_BEFORE_START_TIME_TO_BET = 1
 
   belongs_to :team_a, class_name: 'Team'
   belongs_to :team_b, class_name: 'Team'
@@ -59,7 +61,25 @@ class Match < ActiveRecord::Base
   validate :teams_must_be_of_the_same_group_as_the_match
 
   scope :ordered, -> { order(played_at: :asc, number: :asc) }
-  scope :bettable, -> { where.not(team_a: nil, team_b: nil) }
+  scope :with_known_teams, -> { where.not(team_a: nil, team_b: nil) }
+  scope :locked, -> { where('matches.played_at <= ?', HOURS_BEFORE_START_TIME_TO_BET.hour.from_now) }
+  scope :not_locked, -> { where('matches.played_at > ?', HOURS_BEFORE_START_TIME_TO_BET.hour.from_now) }
+  scope :bettable, -> { with_known_teams.not_locked }
+
+  # A match is locked for betting HOURS_BEFORE_START_TIME_TO_BET hour before it starts.
+  def locked?
+    self.played_at <= HOURS_BEFORE_START_TIME_TO_BET.hour.from_now
+  end
+
+  # A match is bettable up to HOURS_BEFORE_START_TIME_TO_BET hour before it starts,
+  # and must have both teams known.
+  def bettable?
+    self.with_known_teams? && !self.locked?
+  end
+
+  def with_known_teams?
+    self.team_a.present? && self.team_b.present?
+  end
 
   def played_on_text
     return nil if self.played_on.blank?
@@ -73,7 +93,7 @@ class Match < ActiveRecord::Base
 
   # TODO spec
   def self.all_bettables_in_order
-    self.ordered.bettable.all
+    self.ordered.with_known_teams.all
   end
 
   private

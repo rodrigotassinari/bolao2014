@@ -1,6 +1,8 @@
 class Question < ActiveRecord::Base
 
   ANSWER_TYPES = %w( team player boolean )
+  # How long (in hours) to allow bets on a question
+  HOURS_BEFORE_START_TIME_TO_BET = 1
 
   has_many :question_bets
 
@@ -22,6 +24,9 @@ class Question < ActiveRecord::Base
   validate :answer_must_match_answer_type
 
   scope :ordered, -> { order(played_at: :asc, id: :asc) }
+  scope :locked, -> { where('questions.played_at <= ?', HOURS_BEFORE_START_TIME_TO_BET.hour.from_now) }
+  scope :not_locked, -> { where('questions.played_at > ?', HOURS_BEFORE_START_TIME_TO_BET.hour.from_now) }
+  scope :bettable, -> { not_locked }
 
   def body
     self.send("body_#{I18n.locale}".to_sym)
@@ -37,6 +42,16 @@ class Question < ActiveRecord::Base
     when 'boolean'
       self.answer == 'true'
     end
+  end
+
+  # A question is locked for betting HOURS_BEFORE_START_TIME_TO_BET hour before it starts.
+  def locked?
+    self.played_at <= HOURS_BEFORE_START_TIME_TO_BET.hour.from_now
+  end
+
+  # A question is bettable up to HOURS_BEFORE_START_TIME_TO_BET hour before it starts.
+  def bettable?
+    !self.locked?
   end
 
   # TODO spec
