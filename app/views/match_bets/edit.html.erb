@@ -12,4 +12,29 @@
   </div>
 </div>
 
+<%= form_for @_match_bet, url: match_bet_path(@match) do |f| %>
+  <div class="row">
+    <div class="small-4">
+      <div class="row">
+        <div class="small-10 columns">
+          <%= f.label :goals_a, class: 'right inline' %>
+        </div>
+        <div class="small-2 columns">
+          <%= f.text_field :goals_a, placeholder: 0 %>
+        </div>
+      </div>
+    </div>
+    <div class="small-4">
+      <div class="row">
+        <div class="small-10 columns">
+          <%= f.label :goals_b, class: 'right inline' %>
+        </div>
+        <div class="small-2 columns">
+          <%= f.text_field :goals_b, placeholder: 0 %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
 <%= render partial: 'match_bets/match_bet', locals: { match_bet: @match_bet } %>

@@ -18,8 +18,8 @@ class MatchBetsController < ApplicationController
   # Creates a bet on the supplied match by the current user.
   # TODO spec
   def create
-    @_bet_match.attributes = bet_match_params
-    if @_bet_match.save
+    @_match_bet.attributes = match_bet_params
+    if @_match_bet.save
       flash[:success] = 'OK' # TODO i18n
       redirect_to bet_path
     else
@@ -53,8 +53,8 @@ class MatchBetsController < ApplicationController
     @match_bet = MatchBetPresenter.new(@_match_bet)
   end
 
-  def bet_match_params
-    params.require(:bet_match).permit(:goals_a, :goals_b, :penalty_winner_id)
+  def match_bet_params
+    params.require(:match_bet).permit(:goals_a, :goals_b, :penalty_winner_id)
   end
 
 end
