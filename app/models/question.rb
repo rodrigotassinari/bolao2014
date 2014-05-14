@@ -55,6 +55,11 @@ class Question < ActiveRecord::Base
   end
 
   # TODO spec
+  def bettable_until
+    self.played_at - HOURS_BEFORE_START_TIME_TO_BET.hour
+  end
+
+  # TODO spec
   def self.all_bettables_in_order
     self.ordered.all
   end

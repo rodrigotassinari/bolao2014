@@ -1,4 +1,9 @@
 pt:
+  match_presenter:
+    next_match: 'próxima partida'
+    no_next_match: 'não há próxima partida'
+    previous_match: 'partida anterior'
+    no_previous_match: 'não há partida anterior'
   matches:
     match:
       view: 'Visualizar'

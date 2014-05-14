@@ -6,7 +6,10 @@ class QuestionPresenter < Presenter
     :body_pt,
     :played_at,
     :answer_type,
-    :answer
+    :answer,
+    :locked?,
+    :bettable?,
+    :bettable_until
 
   # TODO spec
   def css_id

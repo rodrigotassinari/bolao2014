@@ -20,8 +20,8 @@ class MatchBetsController < ApplicationController
   def create
     @_match_bet.attributes = match_bet_params
     if @_match_bet.save
-      flash[:success] = 'OK' # TODO i18n
-      redirect_to bet_path
+      flash[:success] = t('.success', match_number: @_match.number)
+      redirect_to_next_bettable(@_match_bet)
     else
       render :edit
     end
@@ -33,7 +33,13 @@ class MatchBetsController < ApplicationController
   # Updates the bet on the supplied match by the current user.
   # TODO spec
   def update
-    # TODO
+    @_match_bet.attributes = match_bet_params
+    if @_match_bet.save
+      flash[:success] = t('.success', match_number: @_match.number)
+      redirect_to_next_bettable(@_match_bet)
+    else
+      render :edit
+    end
   end
 
   private
@@ -44,7 +50,7 @@ class MatchBetsController < ApplicationController
   end
 
   def find_match
-    @_match = Match.find(params[:match_id])
+    @_match = Match.with_known_teams.find(params[:match_id])
     @match = MatchPresenter.new(@_match)
   end
 
@@ -55,6 +61,14 @@ class MatchBetsController < ApplicationController
 
   def match_bet_params
     params.require(:match_bet).permit(:goals_a, :goals_b, :penalty_winner_id)
+  end
+
+  def redirect_to_next_bettable(match_bet)
+    if next_match = match_bet.next_match_to_bet
+      redirect_to match_bet_path(next_match)
+    else
+      redirect_to bet_path
+    end
   end
 
 end

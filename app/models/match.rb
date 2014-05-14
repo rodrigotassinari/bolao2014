@@ -77,8 +77,38 @@ class Match < ActiveRecord::Base
     self.with_known_teams? && !self.locked?
   end
 
+  # TODO spec
+  def bettable_until
+    self.played_at - HOURS_BEFORE_START_TIME_TO_BET.hour
+  end
+
   def with_known_teams?
     self.team_a.present? && self.team_b.present?
+  end
+
+  # TODO spec
+  def next
+    self.class.where('number > ?', self.number).order(number: :asc).limit(1).first
+  end
+
+  # TODO spec
+  def next_bettable
+    self.class.bettable.where('number > ?', self.number).order(number: :asc).limit(1).first
+  end
+
+  # TODO spec
+  def previous
+    self.class.where('number < ?', self.number).order(number: :desc).limit(1).first
+  end
+
+  # TODO spec
+  def previous_bettable
+    self.class.bettable.where('number < ?', self.number).order(number: :desc).limit(1).first
+  end
+
+  # TODO spec
+  def any_other_bettable
+    self.class.bettable.where.not(number: self.number).order(number: :asc).limit(1).first
   end
 
   def played_on_text

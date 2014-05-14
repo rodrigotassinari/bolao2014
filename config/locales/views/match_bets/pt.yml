@@ -5,3 +5,8 @@ pt:
     edit:
       title: 'Minha Aposta: Partida #%{match_number}'
       my_bet: 'Minha Aposta'
+      you_may_change_your_bet_until: 'Você pode alterar seu palpite até %{datetime}.'
+    create:
+      success: 'Palpite salvo para partida #%{match_number}'
+    update:
+      success: 'Palpite atualizado para partida #%{match_number}'

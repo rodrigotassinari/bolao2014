@@ -1,4 +1,9 @@
 en:
+  match_presenter:
+    next_match: ''
+    no_next_match: ''
+    previous_match: ''
+    no_previous_match: ''
   matches:
     match:
       view: ''

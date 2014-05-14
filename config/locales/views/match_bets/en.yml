@@ -5,3 +5,7 @@ en:
     edit:
       title: ' #%{match_number}'
       my_bet: ''
+    create:
+      success: ' #%{match_number}'
+    update:
+      success: ' #%{match_number}'

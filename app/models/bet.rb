@@ -21,6 +21,10 @@ class Bet < ActiveRecord::Base
     ((self.match_bets.count / bettable_count.to_f) * 100.0).round(2)
   end
 
+  def matches_still_to_bet
+    self.matches.where.not(id: self.matches.pluck(:id))
+  end
+
   def bettable_matches
     Match.bettable.ordered
   end

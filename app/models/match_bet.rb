@@ -23,6 +23,13 @@ class MatchBet < ActiveRecord::Base
 
   validate :no_draws_after_groups_phase
 
+  def next_match_to_bet
+    self.bet.
+      bettable_matches_still_to_bet.
+      where.not(number: self.match.number).
+      order(number: :asc).limit(1).first
+  end
+
   private
 
   # validate
