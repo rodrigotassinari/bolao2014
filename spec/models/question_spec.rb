@@ -38,11 +38,11 @@ describe Question do
       question.answer = player.id.to_s
       expect(question).to be_valid
     end
-    it 'validates that the answer must be a true or false when the answer_type is `boolean`', locale: :en do
+    it 'validates that the answer must be a true or false when the answer_type is `boolean`', locale: :pt do
       question = build(:boolean_question, answer: 'opa')
 
       expect(question).to_not be_valid
-      expect(question.errors.get(:answer)).to eql(['is invalid'])
+      expect(question.errors.get(:answer)).to eql(['não é válido'])
 
       question.answer = 'true'
       expect(question).to be_valid

@@ -94,11 +94,11 @@ describe SessionsController do
         it 'renders the new template' do
           expect(response).to render_template('new')
         end
-        it 'assigns the user with errors', locale: :en do
+        it 'assigns the user with errors', locale: :pt do
           user = assigns(:user)
           expect(user).to be_present
           expect(user.errors.any?).to be_true
-          expect(user.errors.get(:email)).to eq(["can't be blank"])
+          expect(user.errors.get(:email)).to eq(['não pode ficar em branco'])
         end
       end
     end

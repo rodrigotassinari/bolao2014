@@ -36,12 +36,12 @@ describe QuestionBet do
       qb.answer = player.id.to_s
       expect(qb).to be_valid
     end
-    it 'only allows `true` or `false` as answer to boolean type questions', locale: :en do
+    it 'only allows `true` or `false` as answer to boolean type questions', locale: :pt do
       question = create(:boolean_question)
       qb = build(:boolean_question_bet, question: question, answer: 'opa')
 
       expect(qb).to_not be_valid
-      expect(qb.errors.get(:answer)).to eql(['is invalid'])
+      expect(qb.errors.get(:answer)).to eql(['não é válido'])
 
       qb.answer = 'true'
       expect(qb).to be_valid
