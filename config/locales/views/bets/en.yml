@@ -1,9 +1,0 @@
-pt:
-  bets:
-    show:
-      title: 'My Bet'
-      current_score: ''
-      matches_betted: '%{count}'
-      matches_to_bet: '%{count}'
-      questions_betted: '%{count}'
-      questions_to_bet: '%{count}'
