@@ -1071,3 +1071,8 @@ Question.create!(
   body_pt: 'O campeão será inédito?',
   played_at: m01.played_at,
   answer_type: 'boolean')
+Question.create!(
+  body_en: 'Will Brazil be the champion?',
+  body_pt: 'O Brasil vai ser campeão?',
+  played_at: m01.played_at,
+  answer_type: 'boolean')
