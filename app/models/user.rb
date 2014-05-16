@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
   def validate_authentication_token!(clear_text_token)
     return false unless authentication_token_exists?
     result = !authentication_token_expired? &&
-      BCrypt::Password.new(self.authentication_token) == authentication_token_input(clear_text_token)
+      BCrypt::Password.new(self.authentication_token) == authentication_token_input(clear_text_token.upcase)
     reset_authentication_token!
     result
   end

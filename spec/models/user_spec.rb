@@ -132,6 +132,10 @@ describe User do
           expect(user.validate_authentication_token!(@clear_text_password)).to be_true
           expect(user.authentication_token_exists?).to be_false
         end
+        it 'returns true with the correct password (case insensitive) and resets the token' do
+          expect(user.validate_authentication_token!(@clear_text_password.downcase)).to be_true
+          expect(user.authentication_token_exists?).to be_false
+        end
       end
       context 'when authentication_token is invalid (has expired)' do
         before(:each) do

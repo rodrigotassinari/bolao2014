@@ -14,6 +14,6 @@ Rails.application.configure do
     }
   end
 
-  config.action_mailer.default_options = { from: "#{ENV['APP_NAME']} <#{ENV['EMAIL_FROM']}>" }
+  config.action_mailer.default_options = { from: "#{ENV['APP_NAME']} <#{ENV['EMAIL_FROM']}>".dup.force_encoding('UTF-8') }
 
 end
