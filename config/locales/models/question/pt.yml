@@ -6,6 +6,7 @@ pt:
         other: Perguntas
     attributes:
       question:
+        number: Número
         body_en: Texto (inglês)
         body_pt: Texto (português)
         played_at: Data

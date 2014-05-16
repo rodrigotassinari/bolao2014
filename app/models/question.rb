@@ -6,6 +6,10 @@ class Question < ActiveRecord::Base
 
   has_many :question_bets
 
+  validates :number,
+    presence: true,
+    uniqueness: true
+
   validates :body_en,
     presence: true,
     uniqueness: { case_insensitive: true }

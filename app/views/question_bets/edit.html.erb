@@ -1,2 +1,19 @@
-<h1>QuestionBets#edit</h1>
-<p>Find me in app/views/question_bets/edit.html.erb</p>
+<% content_for(:title) { t('.title', question_number: @question.number) } %>
+
+<div class="row">
+  <div class="small-12 column">
+    <h2><%= t '.my_bet' %></h2>
+
+    <h3><%= Question.model_name.human(count: 1) %> #<%= @question.number %></h3>
+  </div>
+</div>
+
+<% if @question.locked? %>
+<% else %>
+<% end %>
+
+<div class="row">
+  <div class="small-12 column">
+    <p><%= link_to t('.my_bet').downcase, bet_path %> | <%= link_to t('.all_questions'), 'javascript:void(0)', onclick: "alert('#{I18n.t('common.soon')}');" %> | <%= @question.link_to_previous %> | <%= @question.link_to_next %></p>
+  </div>
+</div>

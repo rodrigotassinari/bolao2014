@@ -952,126 +952,151 @@ Player.create!(team: usa, position: 'field', name: 'Eddie Johnson')
 
 # Suggested questions
 Question.create!(
+  number: 1,
   body_en: 'Which team will be the champion?',
   body_pt: 'Que país será o campeão?',
   played_at: m01.played_at,
   answer_type: 'team')
 Question.create!(
+  number: 2,
   body_en: 'Which team will come in second place?',
   body_pt: 'Que país será o vice-campeão?',
   played_at: m01.played_at,
   answer_type: 'team')
 Question.create!(
+  number: 3,
   body_en: 'Which team will come in third place?',
   body_pt: 'Que país será o terceiro lugar?',
   played_at: m01.played_at,
   answer_type: 'team')
 Question.create!(
+  number: 4,
   body_en: 'Which player will score the most goals (Golden Foot trophy)?',
   body_pt: 'Quem será artilheiro (troféu Chuteira de Ouro)?',
   played_at: m01.played_at,
   answer_type: 'player')
 Question.create!(
+  number: 5,
   body_en: 'Which player will be the best goalkeeper (Golden Glove trophy)?',
   body_pt: 'Quem será melhor goleiro (troféu Luva de Ouro)?',
   played_at: m01.played_at,
   answer_type: 'player')
 Question.create!(
+  number: 6,
   body_en: 'Which player will be the best (Golden Ball trophy)?',
   body_pt: 'Quem será melhor jogador (troféu Bola de Ouro)?',
   played_at: m01.played_at,
   answer_type: 'player')
 Question.create!(
+  number: 7,
   body_en: 'Which player will be the second best (Silver Ball trophy)?',
   body_pt: 'Quem será melhor segundo jogador (troféu Bola de Prata)?',
   played_at: m01.played_at,
   answer_type: 'player')
 Question.create!(
+  number: 8,
   body_en: 'Which player will be the third best (Bronze Ball trophy)?',
   body_pt: 'Quem será melhor terceiro jogador (troféu Bola de Bronze)?',
   played_at: m01.played_at,
   answer_type: 'player')
 Question.create!(
+  number: 9,
   body_en: 'Which team will make the fewer fouls and receive the fewer cards (Fair Play trophy)?',
   body_pt: 'Que país terá menos faltas e cartões (troféu Fair Play)?',
   played_at: m01.played_at,
   answer_type: 'team')
 Question.create!(
+  number: 10,
   body_en: 'Will there be any game with field invasion by fans?',
   body_pt: 'Haverá algum jogo com campo invadido por torcedores?',
   played_at: m01.played_at,
   answer_type: 'boolean')
 Question.create!(
+  number: 11,
   body_en: 'Will some fan show her boobs inside a stadium on TV or photo?',
   body_pt: 'Alguma torcedora vai mostrar os seios no estádio na TV ou foto?',
   played_at: m01.played_at,
   answer_type: 'boolean')
 Question.create!(
+  number: 12,
   body_en: 'Will some player from Brazil score an own goal?',
   body_pt: 'Algum jogador do Brasil vai marcar gol contra?',
   played_at: m01.played_at,
   answer_type: 'boolean')
 Question.create!(
+  number: 13,
   body_en: 'Will there be any fight betweern players and/or referees in any game?',
   body_pt: 'Haverá briga em campo entre jogadores e/ou árbitros em algum jogo?',
   played_at: m01.played_at,
   answer_type: 'boolean')
 Question.create!(
+  number: 14,
   body_en: 'Will there be any fighting among fans in the stadiums?',
   body_pt: 'Haverá briga na arquibancada em algum jogo?',
   played_at: m01.played_at,
   answer_type: 'boolean')
 Question.create!(
+  number: 15,
   body_en: 'Will there be any protesting against the world cup or FIFA in the opening or closing ceremonies?',
   body_pt: 'Haverá protesto #NãoVaiTerCopa ou #ForaFIFA nas cerimônias de abertura ou encerramento?',
   played_at: m01.played_at,
   answer_type: 'boolean')
 Question.create!(
+  number: 16,
   body_en: 'Will someone throw a banana on the field in any game?',
   body_pt: 'Alguém vai jogar uma banana no gramado em algum jogo?',
   played_at: m01.played_at,
   answer_type: 'boolean')
 Question.create!(
+  number: 17,
   body_en: 'Will Brazil be benefited by a penalty after a clear simulation from Neymar?',
   body_pt: 'O Brasil será beneficiado por um pênalty após uma clara simulação do Neymar?',
   played_at: m01.played_at,
   answer_type: 'boolean')
 Question.create!(
+  number: 18,
   body_en: "Will the fans mock Brazil's goalkeepr Julio Cesar, because of his wife's previous romantic relationships?",
   body_pt: 'Em algum jogo do Brasil a torcida cantará sacanerará o goleiro Julio Cesar, devido aos relacionamentos passados de sua esposa?',
   played_at: m01.played_at,
   answer_type: 'boolean')
 Question.create!(
+  number: 19,
   body_en: 'Will Galvão Bueno cry live on TV during the broadcast of any game?',
   body_pt: 'O Galvão Bueno vai chorar ao vivo durante a transmissão de algum jogo?',
   played_at: m01.played_at,
   answer_type: 'boolean')
 Question.create!(
+  number: 20,
   body_en: 'Will Big Phil curse a jornalist?',
   body_pt: 'O Felipão vai xingar algum jornalista?',
   played_at: m01.played_at,
   answer_type: 'boolean')
 Question.create!(
+  number: 21,
   body_en: 'Will Spain be eliminated on the group phase?',
   body_pt: 'A Espanha vai dar vexame e ser eliminada na fase de grupos?',
   played_at: m01.played_at,
   answer_type: 'boolean')
 Question.create!(
+  number: 22,
   body_en: 'Will any asian team get to the quater-finals?',
   body_pt: 'Algum time asiático chegará às quartas-de-final?',
   played_at: m01.played_at,
   answer_type: 'boolean')
 Question.create!(
+  number: 23,
   body_en: 'Will any african team get to the semi-finals?',
   body_pt: 'Algum time africano chegará às semi-finais?',
   played_at: m01.played_at,
   answer_type: 'boolean')
 Question.create!(
+  number: 24,
   body_en: 'Will the champion be a first time winner?',
   body_pt: 'O campeão será inédito?',
   played_at: m01.played_at,
   answer_type: 'boolean')
 Question.create!(
+  number: 25,
   body_en: 'Will Brazil be the champion?',
   body_pt: 'O Brasil vai ser campeão?',
   played_at: m01.played_at,

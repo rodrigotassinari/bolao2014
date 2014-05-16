@@ -7,6 +7,9 @@ describe Question do
   end
 
   context 'validations' do
+    it { should validate_presence_of(:number) }
+    it { should validate_uniqueness_of(:number) }
+
     it { should validate_presence_of(:body_en) }
     it { should validate_uniqueness_of(:body_en).case_insensitive }
 
