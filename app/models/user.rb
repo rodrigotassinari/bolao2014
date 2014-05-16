@@ -29,6 +29,7 @@ class User < ActiveRecord::Base
   validates :authentication_token,
     uniqueness: { case_sensitive: true, allow_blank: true }
 
+  before_validation :normalize_email
   before_create :set_remember_me_token
 
   # TODO spec
@@ -98,6 +99,11 @@ class User < ActiveRecord::Base
     begin
       self.remember_me_token = SecureRandom.urlsafe_base64
     end while User.exists?(remember_me_token: self.remember_me_token)
+  end
+
+  # before_validation
+  def normalize_email
+    self.email.downcase! unless self.email.blank?
   end
 
   # Generates a random string from a set of easily readable characters

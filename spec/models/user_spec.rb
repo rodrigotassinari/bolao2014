@@ -33,10 +33,14 @@ describe User do
   context 'when creating a new user' do
     it 'sets a random remember_me_token' do
       user = build(:user, remember_me_token: nil)
-      # user = build(:user)
       expect(user.remember_me_token).to be_nil
       user.save!
       expect(user.remember_me_token).to_not be_blank
+    end
+    it 'always sets the email as downcase' do
+      user = build(:user, email: 'SomeOne@ExAmple.cOm')
+      user.save!
+      expect(user.email).to eql('someone@example.com')
     end
   end
 

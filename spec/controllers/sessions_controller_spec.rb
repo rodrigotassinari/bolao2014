@@ -65,6 +65,18 @@ describe SessionsController do
           expect(assigns(:remember_me)).to be_true
         end
       end
+      context 'when user supplies a valid but upcased email' do
+        let(:params) { {email: 'Someone@eXample.Com'} }
+        before(:each) do
+          post :one_time_token, params
+        end
+        it 'assigns the user (with downcased email)' do
+          user = assigns(:user)
+          expect(user).to be_present
+          expect(user.email).to eq('someone@example.com')
+          expect(user.errors.any?).to be_false
+        end
+      end
       context 'when user supplies an invalid email' do
         let(:params) { {email: 'invalid email'} }
         before(:each) do

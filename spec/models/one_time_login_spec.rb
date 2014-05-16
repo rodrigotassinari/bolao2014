@@ -5,8 +5,13 @@ describe OneTimeLogin do
   describe '.find_user' do
     context 'when a user with that email exists' do
       let!(:existing_user) { create(:user_en) }
-      let(:user) { described_class.find_user(existing_user.email) }
       it 'returns the user, without changing it' do
+        user = described_class.find_user(existing_user.email)
+        expect(user).to be_persisted
+        expect(user).to eql(existing_user)
+      end
+      it 'returns the user even if the case does not match, without changing it' do
+        user = described_class.find_user(existing_user.email.upcase)
         expect(user).to be_persisted
         expect(user).to eql(existing_user)
       end

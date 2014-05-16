@@ -6,13 +6,13 @@ class SessionsController < ApplicationController
   # GET /login
   # Via: login_path
   def new
-    @user = User.new(email: params[:email])
+    @user = User.new(email: sign_in_params[:email])
   end
 
   # POST /one_time_token
   # Via: one_time_token_path
   def one_time_token
-    @user = OneTimeLogin.find_user(params[:email])
+    @user = OneTimeLogin.find_user(sign_in_params[:email])
     one_time_login = OneTimeLogin.new(@user)
     if @user.valid? && one_time_login.send_authentication_check!
       @remember_me = true
@@ -26,9 +26,9 @@ class SessionsController < ApplicationController
   # Via: login_path
   # TODO spec
   def create
-    email = params[:email]
-    password = params[:password]
-    remember_me = (params[:remember_me] == 'true')
+    email = sign_in_params[:email]
+    password = sign_in_params[:password]
+    remember_me = (sign_in_params[:remember_me] == 'true')
 
     @user = OneTimeLogin.find_user(email)
 
@@ -53,6 +53,10 @@ class SessionsController < ApplicationController
   end
 
   private
+
+  def sign_in_params
+    params.permit(:email, :password, :remember_me)
+  end
 
   def create_session(user, remember_me=true)
     if remember_me

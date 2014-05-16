@@ -28,7 +28,7 @@ class OneTimeLogin
   end
 
   def self.find_user(email)
-    user = User.find_or_initialize_by(email: email)
+    user = User.find_or_initialize_by(email: email.downcase)
     return user if user.persisted?
     user.set_defaults
     user
