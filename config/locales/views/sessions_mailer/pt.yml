@@ -1,4 +1,4 @@
 pt:
   sessions_mailer:
     one_time_login:
-      subject: '[%{app_name}] Seu código de acesso'
+      subject: '[%{app_short_name}] Seu código de acesso'
