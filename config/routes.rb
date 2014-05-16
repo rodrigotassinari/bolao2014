@@ -1,6 +1,8 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
 
+  get 'question_bets/edit'
+
   get '/help' => 'pages#help', as: 'help'
 
   root 'dashboard#index'

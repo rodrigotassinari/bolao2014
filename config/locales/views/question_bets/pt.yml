@@ -1,0 +1,14 @@
+pt:
+  question_bets:
+    question_bet:
+      change: 'Alterar'
+    edit:
+      title: 'Minha Aposta: Pergunta #%{question_number}'
+      my_bet: 'Minha Aposta'
+      question_is_locked: 'Não é mais possível criar ou alterar respostas para esta pergunta.'
+      you_may_change_your_bet_until: 'Você pode alterar sua resposta até %{datetime}.'
+      all_questions: 'todas as perguntas'
+    create:
+      success: 'Resposta salva para pergunta #%{question_number}'
+    update:
+      success: 'Resposta atualizada para pergunta #%{question_number}'

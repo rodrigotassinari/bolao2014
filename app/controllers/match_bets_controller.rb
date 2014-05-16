@@ -46,7 +46,7 @@ class MatchBetsController < ApplicationController
 
   def find_bet
     @_bet = current_user.bet
-    # @bet = BetPresenter.new(@_bet) # TODO
+    @bet = BetPresenter.new(@_bet)
   end
 
   def find_match

@@ -1,0 +1,13 @@
+pt:
+  question_presenter:
+    next_question: 'próxima pergunta'
+    no_next_question: 'não há próxima pergunta'
+    previous_question: 'pergunta anterior'
+    no_previous_question: 'não há pergunta anterior'
+  questions:
+    question:
+      view: 'Visualizar'
+    show:
+      previous: 'Pergunta anterior'
+      next: 'Próxima pergunta'
+      all: 'Todas as perguntas'
