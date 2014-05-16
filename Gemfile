@@ -39,6 +39,8 @@ gem 'skylight', '0.3.12'
 gem 'sinatra', '>= 1.3.0', require: nil
 gem 'sidekiq', '3.0.2'
 
+gem 'google-analytics-turbolinks', '0.0.4'
+
 group :development, :production do
   gem 'rails_stdout_logging', '0.0.3'
 end
