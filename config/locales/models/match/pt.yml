@@ -21,6 +21,12 @@ pt:
         penalty_goals_b: Gols (decisão por pênaltys) Time B
         created_at: Cadastrada em
         updated_at: Atualizada em
+        group_text:
+          group: 'Fase de Grupos'
+          round_16: 'Oitavas de Final'
+          quarter: 'Quartas de Final'
+          semi: 'Semi-finais'
+          final: 'Finais'
     errors:
       models:
         match:

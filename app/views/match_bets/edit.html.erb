@@ -3,75 +3,108 @@
 <div class="row">
   <div class="small-12 column">
     <h2><%= t '.my_bet' %></h2>
-  </div>
-</div>
 
-<div class="row">
-  <div class="small-12 column">
     <h3><%= Match.model_name.human(count: 1) %> #<%= @match.number %></h3>
-  </div>
-</div>
 
-<div class="row">
-  <div class="small-12 column">
+    <p>
+      <%= @match.round_text %>
+      <% if @match.group.present? %>
+        | <%= Match.human_attribute_name(:group) %> <%= @match.group %>
+      <% end %>
+    </p>
+
     <p><%= l @match.played_at, format: :detailed %> @ <%= @match.played_on_text %></p>
   </div>
 </div>
 
-<%= form_for @_match_bet, url: match_bet_path(@match), method: (@_match_bet.new_record? ? :post : :put) do |f| %>
-  <div class="row">
-    <div class="small-3 columns text-left">
-      <p><%= @match.team_a_name %></p>
-    </div>
-    <div class="small-1 columns text-center">
-      <p>&nbsp;</p>
-    </div>
-    <div class="small-3 columns text-right end">
-      <p><%= @match.team_b_name %></p>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="small-1 columns text-left">
-      <%= @match.team_a_flag %>
-    </div>
-    <div class="small-2 columns text-left">
-      <%= f.text_field :goals_a, placeholder: '?', autofocus: true, class: ('error' if @_match_bet.errors.include?(:goals_a)) %>
-      <% if @_match_bet.errors.include?(:goals_a) %>
-        <small class="error"><%= @_match_bet.errors.get(:goals_a).to_sentence %></small>
-      <% end %>
-    </div>
-
-    <div class="small-1 column text-center">
-      <p>VS</p>
-    </div>
-
-    <div class="small-2 columns text-right">
-      <%= f.text_field :goals_b, placeholder: '?', class: ('error' if @_match_bet.errors.include?(:goals_b)) %>
-      <% if @_match_bet.errors.include?(:goals_b) %>
-        <small class="error"><%= @_match_bet.errors.get(:goals_b).to_sentence %></small>
-      <% end %>
-    </div>
-    <div class="small-1 columns text-right end">
-      <%= @match.team_b_flag %>
-    </div>
-  </div>
-
+<% if @match.locked? %>
   <div class="row">
     <div class="small-12 column">
-      <%= f.submit t('common.submit'), class: 'button' %>
+      <div class="row">
+        <div class="small-3 columns text-left">
+          <p><%= @match.team_a_name %></p>
+        </div>
+        <div class="small-1 columns text-center">
+          <p>&nbsp;</p>
+        </div>
+        <div class="small-3 columns text-right end">
+          <p><%= @match.team_b_name %></p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="small-1 columns text-left">
+          <%= @match.team_a_flag %>
+        </div>
+        <div class="small-2 columns text-left">
+          <%= text_field_tag :goals_a, @match_bet.goals_a_or_blank, disabled: true %>
+        </div>
+
+        <div class="small-1 column text-center">
+          <p>VS</p>
+        </div>
+
+        <div class="small-2 columns text-right">
+          <%= text_field_tag :goals_a, @match_bet.goals_b_or_blank, disabled: true %>
+        </div>
+        <div class="small-1 columns text-right end">
+          <%= @match.team_b_flag %>
+        </div>
+      </div>
+      <p><%= t '.match_is_locked' %></p>
     </div>
   </div>
+<% else %>
+  <%= form_for @_match_bet, url: match_bet_path(@match), method: (@_match_bet.new_record? ? :post : :put) do |f| %>
+    <div class="row">
+      <div class="small-3 columns text-left">
+        <p><%= @match.team_a_name %></p>
+      </div>
+      <div class="small-1 columns text-center">
+        <p>&nbsp;</p>
+      </div>
+      <div class="small-3 columns text-right end">
+        <p><%= @match.team_b_name %></p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="small-1 columns text-left">
+        <%= @match.team_a_flag %>
+      </div>
+      <div class="small-2 columns text-left">
+        <%= f.text_field :goals_a, placeholder: '?', autofocus: true, class: ('error' if @_match_bet.errors.include?(:goals_a)) %>
+        <% if @_match_bet.errors.include?(:goals_a) %>
+          <small class="error"><%= @_match_bet.errors.get(:goals_a).to_sentence %></small>
+        <% end %>
+      </div>
+
+      <div class="small-1 column text-center">
+        <p>VS</p>
+      </div>
+
+      <div class="small-2 columns text-right">
+        <%= f.text_field :goals_b, placeholder: '?', class: ('error' if @_match_bet.errors.include?(:goals_b)) %>
+        <% if @_match_bet.errors.include?(:goals_b) %>
+          <small class="error"><%= @_match_bet.errors.get(:goals_b).to_sentence %></small>
+        <% end %>
+      </div>
+      <div class="small-1 columns text-right end">
+        <%= @match.team_b_flag %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="small-12 column">
+        <%= f.submit t('common.submit'), class: 'button' %>
+        <p><%= t '.you_may_change_your_bet_until', datetime: l(@match.bettable_until, format: :detailed ) %></p>
+      </div>
+    </div>
+  <% end %>
 <% end %>
 
 <div class="row">
   <div class="small-12 column">
-    <p><%= t '.you_may_change_your_bet_until', datetime: l(@match.bettable_until, format: :detailed ) %></p>
-  </div>
-</div>
-
-<div class="row">
-  <div class="small-12 column">
-    <p><%= @match.link_to_previous %> | <%= @match.link_to_next %></p>
+    <p><%= link_to t('.my_bet').downcase, bet_path %> | <%= link_to t('.all_matches'), 'javascript:void(0)', onclick: "alert('Em breve!');" %> | <%= @match.link_to_previous %> | <%= @match.link_to_next %></p>
   </div>
 </div>

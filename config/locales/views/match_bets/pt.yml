@@ -5,7 +5,9 @@ pt:
     edit:
       title: 'Minha Aposta: Partida #%{match_number}'
       my_bet: 'Minha Aposta'
+      match_is_locked: 'Não é mais possível criar ou alterar palpites para esta partida.'
       you_may_change_your_bet_until: 'Você pode alterar seu palpite até %{datetime}.'
+      all_matches: 'todas as partidas'
     create:
       success: 'Palpite salvo para partida #%{match_number}'
     update:

@@ -3,7 +3,8 @@ class BetPresenter < Presenter
   expose :to_key, :to_param,
     :points,
     :created_at,
-    :updated_at
+    :updated_at,
+    :paid?
 
   # TODO spec
   def css_id

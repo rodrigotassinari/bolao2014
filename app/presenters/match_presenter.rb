@@ -36,6 +36,11 @@ class MatchPresenter < Presenter
     end
   end
 
+  def round_text
+    return if @subject.round.blank?
+    I18n.t("activerecord.attributes.match.group_text.#{@subject.round}")
+  end
+
   def team_a
     @team_a_presenter ||= TeamPresenter.new(@subject.team_a) if @subject.team_a
   end

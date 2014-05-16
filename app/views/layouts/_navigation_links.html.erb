@@ -1,6 +1,4 @@
-<%# add navigation links to this file %>
 <%# http://foundation.zurb.com/docs/components/topbar.html %>
-
 <% if logged_in? %>
   <ul class="right">
     <li><%= link_to t('bets.show.title'), bet_path %></li>
@@ -14,11 +12,11 @@
   </ul>
   <ul class="left">
     <li><%= link_to Match.model_name.human(count: 2), matches_path %></li>
+    <li><%= link_to Question.model_name.human(count: 2), 'javascript:void(0)', onclick: "alert('Em breve!');" %></li>
     <li><%= link_to t('bets.index.title'), 'javascript:void(0)', onclick: "alert('Em breve!');" %></li>
     <li><%= link_to t('pages.help.title'), help_path %></li>
   </ul>
 <% else %>
-  <%#  Right Nav Section %>
   <ul class="right">
     <li><%= link_to t('common.login'), login_path %></li>
   </ul>

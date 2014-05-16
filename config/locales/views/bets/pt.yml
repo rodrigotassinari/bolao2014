@@ -5,6 +5,12 @@ pt:
     show:
       title: 'Minha Aposta'
       current_score: 'Pontuação atual'
+      bet_is_paid: 'Aposta já paga, obrigado.'
+      bet_is_not_paid: 'Pagamento da aposta ainda não reconhecido. Você tem até %{date} para efetuar o pagamento. Após essa data, sua aposta será apagada.'
+      pay_now: 'Faça o pagamento agora'
+      you_have_matches_to_bet: 'Você tem %{count} partidas para palpitar ainda, %{link}'
+      you_have_questions_to_bet: 'Você tem %{count} perguntas para responder ainda, %{link}'
+      do_it_now: 'faça isso agora'
       matches_betted: 'Partidas preenchidas: %{count}'
       matches_to_bet: 'Partidas disponíveis para preencher: %{count}'
       questions_betted: 'Perguntas respondidas: %{count}'
