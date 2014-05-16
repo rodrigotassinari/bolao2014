@@ -34,7 +34,7 @@ gem 'foundation-rails', '5.2.2.0'
 
 gem 'simple_presenter', '0.2.3'
 
-gem 'skylight', '0.3.12'
+gem 'skylight', '0.3.13'
 
 gem 'sinatra', '>= 1.3.0', require: nil
 gem 'sidekiq', '3.0.2'
