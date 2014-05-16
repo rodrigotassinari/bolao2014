@@ -66,6 +66,18 @@ class Match < ActiveRecord::Base
   scope :not_locked, -> { where('matches.played_at > ?', HOURS_BEFORE_START_TIME_TO_BET.hour.from_now) }
   scope :bettable, -> { with_known_teams.not_locked }
 
+  def total_points
+    (result_points + (2 * goal_points))
+  end
+
+  def result_points
+    Integer(ENV.fetch('APP_MATCH_POINTS_RESULT', 6))
+  end
+
+  def goal_points
+    Integer(ENV.fetch('APP_MATCH_POINTS_GOALS', 2))
+  end
+
   # A match is locked for betting HOURS_BEFORE_START_TIME_TO_BET hour before it starts.
   def locked?
     self.played_at <= HOURS_BEFORE_START_TIME_TO_BET.hour.from_now

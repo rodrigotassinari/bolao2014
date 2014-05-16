@@ -13,16 +13,24 @@ class Bet < ActiveRecord::Base
     presence: true,
     numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
 
-  def self.cost
+  def cost
     BigDecimal(ENV.fetch('APP_BET_COST', 25))
   end
 
-  def self.to_prize
+  def to_prize
     BigDecimal(ENV.fetch('APP_BET_PRIZE', 20))
   end
 
-  def self.payment_deadline
+  def payment_deadline
     Match.where(round: 'round_16').ordered.first.played_at
+  end
+
+  def prize_split
+    {
+      first: Float(ENV.fetch('APP_PRIZE_FIRST', 65.0)),
+      second: Float(ENV.fetch('APP_PRIZE_SECOND', 25.0)),
+      third: Float(ENV.fetch('APP_PRIZE_THIRD', 10.0)),
+    }
   end
 
   def paid?

@@ -9,6 +9,8 @@ class PagesController < ApplicationController
   def help
     @_first_match = Match.ordered.first
     @first_match = MatchPresenter.new(@_first_match)
+    @_bet = Bet.new
+    @bet = BetPresenter.new(@_bet)
   end
 
 end

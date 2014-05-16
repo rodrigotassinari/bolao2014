@@ -44,6 +44,11 @@ class Question < ActiveRecord::Base
     end
   end
 
+  def total_points
+    kind = "APP_QUESTION_POINTS_#{answer_type.upcase}"
+    Integer(ENV.fetch(kind, 5))
+  end
+
   # A question is locked for betting HOURS_BEFORE_START_TIME_TO_BET hour before it starts.
   def locked?
     self.played_at <= HOURS_BEFORE_START_TIME_TO_BET.hour.from_now

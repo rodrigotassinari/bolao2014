@@ -4,7 +4,11 @@ class BetPresenter < Presenter
     :points,
     :created_at,
     :updated_at,
-    :paid?
+    :paid?,
+    :cost,
+    :to_prize,
+    :payment_deadline,
+    :prize_split
 
   # TODO spec
   def css_id

@@ -9,7 +9,7 @@
       <p><%= t '.bet_is_paid' %></p>
     <% else %>
       <p>
-        <%= t '.bet_is_not_paid', date: l(Bet.payment_deadline, format: :detailed) %>
+        <%= t '.bet_is_not_paid', date: l(@bet.payment_deadline, format: :detailed) %>
         <%= link_to t('.pay_now'), 'javascript:void(0)', onclick: "alert('#{I18n.t('common.soon')}');" %>.
       </p>
     <% end %>
