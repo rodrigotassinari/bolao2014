@@ -11,8 +11,8 @@ class Match < ActiveRecord::Base
     'mt' => 'Arena Pantanal, Cuiabá, MT',
     'pe' => 'Arena Pernambuco, Recife, PE',
     'pr' => 'Arena da Baixada, Curitiba, PR',
-    'rj' => 'Maracanã - Estádio Jornalista Mário Filho, Rio de Janeiro, RJ',
-    'rn' => 'Estadio das Dunas, Natal, RN',
+    'rj' => 'Estádio Jornalista Mário Filho (Maracanã), Rio de Janeiro, RJ',
+    'rn' => 'Estádio das Dunas, Natal, RN',
     'rs' => 'Estádio Beira-Rio, Porto Alegre, RS',
     'sp' => 'Arena de São Paulo (Itaquerão), São Paulo, SP',
   }
