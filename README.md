@@ -16,7 +16,7 @@ You will need:
 
 Clone the repo and setup `.env` with values for your environment (use `.env.example` as a starting point, changing the values where needed). If you use [direnv](https://github.com/zimbatm/direnv) (highly recommended), also use `.envrc.example` as a starting point to your `.envrc`.
 
-Next run the standart Rails app seup:
+Next run the standard Rails app seup:
 
 ```
 $ bundle install
