@@ -14,6 +14,7 @@
 - [ ] email notification to users when new matches become available to bet on
 - [ ] match bet scoring when match is updated
 - [ ] question bet scoring when question is updated
+- [ ] allow (optionally, configurable via `.env`) to restrict sign-ups to invites only (and for current users to send out invites)
 - [ ] allow current user to change name, avatar, time zone, locale, etc
 - [ ] allow admin to restrict new sign-ups
 - [ ] admin interface to delete user & bet
