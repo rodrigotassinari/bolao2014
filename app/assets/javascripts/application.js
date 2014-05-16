@@ -15,6 +15,17 @@
 //= require foundation
 //= require turbolinks
 //= require google-analytics-turbolinks
+//= require pace
 //= require_tree .
 
 $(function(){ $(document).foundation(); });
+
+// Show the bar after start of the Turbolinks fetching process
+$(document).on('page:fetch', function() {
+  return Pace.restart();
+});
+
+// Show the bar after Turbolinks added the page into the dom
+$(document).on('page:change', function() {
+  return Pace.restart();
+});
