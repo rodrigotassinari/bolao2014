@@ -105,6 +105,6 @@
 
 <div class="row">
   <div class="small-12 column">
-    <p><%= link_to t('.my_bet').downcase, bet_path %> | <%= link_to t('.all_matches'), 'javascript:void(0)', onclick: "alert('Em breve!');" %> | <%= @match.link_to_previous %> | <%= @match.link_to_next %></p>
+    <p><%= link_to t('.my_bet').downcase, bet_path %> | <%= link_to t('.all_matches'), 'javascript:void(0)', onclick: "alert('#{I18n.t('common.soon')}');" %> | <%= @match.link_to_previous %> | <%= @match.link_to_next %></p>
   </div>
 </div>
