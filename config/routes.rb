@@ -1,6 +1,8 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
 
+  get '/help' => 'pages#help', as: 'help'
+
   root 'dashboard#index'
 
   get '/login' => 'sessions#new', as: 'login'

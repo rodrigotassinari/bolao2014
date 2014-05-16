@@ -1,16 +1,17 @@
 <% content_for(:title) { t('.title', app_name: ENV['APP_NAME']) } %>
 
-<div class="row">
-  <div class="small-12 column">
-    <h2><%= t '.welcome' %></h2>
+<% if logged_in? %>
+  <div class="row">
+    <div class="small-12 column">
+      <h2><%= t '.welcome_back' %></h2>
+      <p><%= t('.how_is_your_bet', link: link_to(t('.your_bet'), bet_path)).html_safe %>.</p>
+    </div>
   </div>
-</div>
-
-<div class="row">
-  <div class="small-12 column">
-    <ul class="disc">
-      <li><%= link_to Match.model_name.human(count: 2), matches_path %></li>
-      <li><%= link_to t('bets.show.title'), bet_path %></li>
-    </ul>
+<% else %>
+  <div class="row">
+    <div class="small-12 column">
+      <h2><%= t '.welcome' %></h2>
+      <p><%= t('.read_the_rules_and_sign_up', rules_link: link_to(t('.the_rules'), help_path), login_link: link_to(t('.do_login'), login_path)).html_safe %>.</p>
+    </div>
   </div>
-</div>
+<% end %>

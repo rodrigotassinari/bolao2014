@@ -994,8 +994,8 @@ Question.create!(
   body_pt: 'Que país terá menos faltas e cartões (troféu Fair Play)?',
   played_at: '2014-06-12 17:00:00 -0300'.to_time,
   answer_type: 'team')
-Question.create!(
-  body_en: 'Will there be any game with field invasion by fans?',
-  body_pt: 'Haverá algum jogo com campo invadido por torcedores?',
-  played_at: '2014-06-12 17:00:00 -0300'.to_time,
-  answer_type: 'boolean')
+# Question.create!(
+#   body_en: 'Will there be any game with field invasion by fans?',
+#   body_pt: 'Haverá algum jogo com campo invadido por torcedores?',
+#   played_at: '2014-06-12 17:00:00 -0300'.to_time,
+#   answer_type: 'boolean')

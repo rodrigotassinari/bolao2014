@@ -18,6 +18,10 @@ class QuestionBet < ActiveRecord::Base
 
   validate :answer_must_match_answer_type
 
+  def self.total_points
+    40
+  end
+
   def answer_object
     return if self.answer.blank?
     case self.question.answer_type

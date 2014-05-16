@@ -1,5 +1,7 @@
 pt:
   bets:
+    index:
+      title: 'Apostas'
     show:
       title: 'Minha Aposta'
       current_score: 'Pontuação atual'

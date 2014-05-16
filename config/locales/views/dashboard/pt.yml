@@ -3,3 +3,9 @@ pt:
     index:
       title: '%{app_name}'
       welcome: 'Bem-vindo!'
+      welcome_back: 'Bem-vindo de volta!'
+      how_is_your_bet: 'Veja como anda %{link}'
+      your_bet: 'sua aposta'
+      read_the_rules_and_sign_up: 'Leia %{rules_link} e %{login_link} para criar sua aposta'
+      the_rules: 'as regras'
+      do_login: 'faça login'

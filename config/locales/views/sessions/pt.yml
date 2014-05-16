@@ -4,6 +4,7 @@ pt:
       title: 'Entrar'
       whats_your_email: 'Digite seu email abaixo para entrar:'
       example_email: 'fulano@exemplo.com'
+      first_time_warning: 'Primeira vez aqui? Leia as regras em %{link}.'
     one_time_token:
       title: 'Confirme sua identidade'
       welcome: 'Muito bem! Um email foi enviado pra você!'

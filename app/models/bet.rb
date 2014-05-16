@@ -13,6 +13,18 @@ class Bet < ActiveRecord::Base
     presence: true,
     numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
 
+  def self.cost
+    BigDecimal(ENV.fetch('APP_BET_COST', 25))
+  end
+
+  def self.to_prize
+    BigDecimal(ENV.fetch('APP_BET_PRIZE', 20))
+  end
+
+  def self.payment_deadline
+    Match.where(round: 'round_16').ordered.first.played_at
+  end
+
   # TODO spec
   # TODO move to presenter?
   def match_bets_percentage

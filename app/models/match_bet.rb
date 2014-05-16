@@ -23,6 +23,18 @@ class MatchBet < ActiveRecord::Base
 
   validate :no_draws_after_groups_phase
 
+  def self.total_points
+    (result_points + (2 * goal_points))
+  end
+
+  def self.result_points
+    4
+  end
+
+  def self.goal_points
+    3
+  end
+
   def next_match_to_bet
     self.bet.
       bettable_matches_still_to_bet.

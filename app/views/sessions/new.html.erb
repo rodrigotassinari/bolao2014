@@ -29,3 +29,9 @@
     </div>
   </div>
 <% end %>
+
+<div class="row">
+  <div class="small-12 column">
+    <p><%= t('.first_time_warning', link: link_to(t('pages.help.title'), help_path)).html_safe %></p>
+  </div>
+</div>

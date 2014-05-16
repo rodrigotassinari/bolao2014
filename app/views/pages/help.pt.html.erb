@@ -1,0 +1,51 @@
+<% content_for(:title) { t('.title', app_name: ENV['APP_NAME']) } %>
+
+<div class="row">
+  <div class="small-12 column">
+    <h2><%= t '.title' %></h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 column">
+    <h3>Palpites e Prazos</h3>
+    <p>Os palpites sobre partidas podem ser feitos e alterados até 1 hora antes do início de cada partida.</p>
+    <p>Os palpites sobre perguntas bônus podem ser feitos e alterados até 1 hora antes do início do torneio (isto é, 1 hora antes do início da <%= link_to 'primeira partida', match_path(@first_match) %>).</p>
+    <p>Os jogos que ainda não foram determinados (das fases finais) só poderão ser palpitados depois de cadastrados nos sistema, o que ocorrerá tão logo as equipes dos jogos sejam determinadas. Cada participante receberá um email avisando da disponibilidade de cada nova partida para ser palpitada.</p>
+
+    <h3>Pontuação</h3>
+    <h4>Partidas</h4>
+    <p>Cada partida pode render até <%= MatchBet.total_points %> pontos para o apostador, caso acerte todos os critérios. Os pontos são assim distribuídos:</p>
+    <ul>
+      <li>Acertou o vencedor (ou o resultado, em caso de empate): <%= MatchBet.result_points %> pontos</li>
+      <li>Acertou os gols do time A: <%= MatchBet.goal_points %> pontos</li>
+      <li>Acertou os gols do time B: <%= MatchBet.goal_points %> pontos</li>
+    </ul>
+    <p>Como teremos <%= Match.count %> jogos, o máximo de pontos possíveis nos palpites de partidas então é de <%= Match.count * MatchBet.total_points %> pontos.</p>
+    <h4>Perguntas Bônus</h4>
+    <p>Cada pergunta bônus pode render <%= QuestionBet.total_points %> pontos para o apostador, caso acerte a resposta. Só há uma resposta correta para cada pergunta, então ou ganha-se <%= QuestionBet.total_points %> pontos ou nenhum ponto em cada pergunta.</p>
+    <p>Como teremos <%= Question.count %> perguntas bônus, o máximo de pontos possíveis nas perguntas então é de <%= Question.count * QuestionBet.total_points %> pontos.</p>
+    <h4>Ranking</h4>
+    <p>Haverá um ranking geral, onde os pontos conquistados nos palpites de partidas e de perguntas serão somados. Este é o ranking que conta para a premiação (ver abaixo).</p>
+    <p>Além disso, haverá rankings apenas considerando as partidas e apenas considerando as perguntas. Estes rankings tem caráter informativo apenas.</p>
+
+    <h3>Pagamento da aposta</h3>
+    <p>Cada apostador pode fazer uma aposta apenas.</p>
+    <p>A aposta tem o custo de <strong><%= number_to_currency Bet.cost %></strong>, e deve ser paga até <strong><%= l Bet.payment_deadline, format: :detailed %></strong>.</p>
+    <p>O pagamento será feito através do <a href="https://pagseguro.uol.com.br/">PagSeguro</a>, via boleto, transferência ou cartão de crédito. <strong>Não</strong> é necessário ter uma conta no PagSeguro para fazer o pagamento.</p>
+
+    <h3>Premiação</h3>
+    <p>Dos <%= number_to_currency Bet.cost %> pagos em cada aposta, <%= number_to_currency Bet.to_prize %> serão destinados à premiação (o restante será destinado ao custeio do PagSeguro e dos custos do servidor).</p>
+    <p>O valor total líquido arrecadado será então dividido assim:</p>
+    <ul>
+      <li>65% para o primeiro colocado no ranking geral</li>
+      <li>25% para o segundo colocado no ranking geral</li>
+      <li>10% para o terceiro colocado no ranking geral</li>
+    </ul>
+    <p>Em caso de empate em pontos em qualquer colocação, os apostadores empatados dividirão o prêmio igualmente entre si.</p>
+
+    <h3>Dúvidas?</h3>
+    <p>Entre em contato <%= mail_to ENV['APP_CONTACT_EMAIL'], 'via email' %>.</p>
+
+  </div>
+</div>
