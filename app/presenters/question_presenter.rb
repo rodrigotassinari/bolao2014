@@ -6,7 +6,6 @@ class QuestionPresenter < Presenter
     :body_pt,
     :played_at,
     :answer_type,
-    :answer,
     :locked?,
     :bettable?,
     :bettable_until,
@@ -15,6 +14,14 @@ class QuestionPresenter < Presenter
   # TODO spec
   def css_id
     "questions_#{@subject.id}"
+  end
+
+  def answer
+    if @subject.answer.blank?
+      I18n.t('question_presenter.no_answer_yet')
+    else
+      @subject.answer
+    end
   end
 
   def answer_object

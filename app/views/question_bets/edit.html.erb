@@ -9,7 +9,23 @@
 </div>
 
 <% if @question.locked? %>
+  <div class="row">
+    <div class="small-12 column">
+      <p><%= @question.body %></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-12 column">
+      <p><%= Question.human_attribute_name(:answer) %>: <%= @question.answer %></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-12 column">
+      <p><%= t '.your_answer' %>: <%= @question_bet.answer %></p>
+    </div>
+  </div>
 <% else %>
+
 <% end %>
 
 <div class="row">

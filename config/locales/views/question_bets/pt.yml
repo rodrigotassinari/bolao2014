@@ -8,6 +8,7 @@ pt:
       question_is_locked: 'Não é mais possível criar ou alterar respostas para esta pergunta.'
       you_may_change_your_bet_until: 'Você pode alterar sua resposta até %{datetime}.'
       all_questions: 'todas as perguntas'
+      your_answer: 'Sua resposta'
     create:
       success: 'Resposta salva para pergunta #%{question_number}'
     update:
