@@ -4,6 +4,7 @@ describe QuestionPresenter do
   let(:question) do
     build(:boolean_question,
       id: 49,
+      number: 12,
       body_en: 'Who are you?',
       body_pt: 'Quem é você?',
       played_at: '2014-06-12 17:00:00 -0300'.to_time,
@@ -15,6 +16,7 @@ describe QuestionPresenter do
 
   its(:to_key) { should eql([49]) }
   its(:to_param) { should eql('49') }
+  its(:number) { should eql(12) }
   its(:body_en) { should eql('Who are you?') }
   its(:body_pt) { should eql('Quem é você?') }
   its(:body) { should eql('Quem é você?') } # locale: :pt

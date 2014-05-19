@@ -19,7 +19,7 @@
     <% end %>
 
     <% if @questions.any? %>
-      <p><strong><%= t('.you_have_questions_to_bet', count: @questions.size, link: link_to(t('.do_it_now'), 'javascript:void(0)', onclick: "alert('#{I18n.t('common.soon')}');")).html_safe %>!</strong></p>
+      <p><strong><%= t('.you_have_questions_to_bet', count: @questions.size, link: link_to(t('.do_it_now'), question_bet_path(@questions.first))).html_safe %>!</strong></p>
     <% end %>
 
     <h3><%= Match.model_name.human(count: 2) %></h3>
