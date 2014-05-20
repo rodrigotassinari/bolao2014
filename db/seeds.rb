@@ -974,12 +974,14 @@ Question.create!(
   body_en: 'Which player will score the most goals (Golden Foot trophy)?',
   body_pt: 'Quem será artilheiro (troféu Chuteira de Ouro)?',
   played_at: m01.played_at,
+  answer_scope: "players.position='field'",
   answer_type: 'player')
 Question.create!(
   number: 5,
   body_en: 'Which player will be the best goalkeeper (Golden Glove trophy)?',
   body_pt: 'Quem será melhor goleiro (troféu Luva de Ouro)?',
   played_at: m01.played_at,
+  answer_scope: "players.position='goalkeeper'",
   answer_type: 'player')
 Question.create!(
   number: 6,
@@ -1101,3 +1103,10 @@ Question.create!(
   body_pt: 'O Brasil vai ser campeão?',
   played_at: m01.played_at,
   answer_type: 'boolean')
+Question.create!(
+  number: 26,
+  body_en: 'Which player will score the first goal for Brazil?',
+  body_pt: 'Qual jogador marcará o primeiro gol do Brasil?',
+  played_at: m01.played_at,
+  answer_scope: "players.team_id=#{bra.id}",
+  answer_type: 'player')

@@ -104,7 +104,12 @@ class Question < ActiveRecord::Base
     when 'team'
       Team.unscoped.order(acronym: :asc)
     when 'player'
-      Player.joins(:team).includes(:team).order('teams.acronym ASC, players.position DESC, players.name ASC')
+      base_relation = Player.joins(:team).includes(:team).order('teams.acronym ASC, players.position DESC, players.name ASC')
+      if self.answer_scope
+        base_relation.where(self.answer_scope)
+      else
+        base_relation
+      end
     when 'boolean'
       ['true', 'false']
     end
