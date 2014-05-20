@@ -1057,8 +1057,8 @@ Question.create!(
   answer_type: 'boolean')
 Question.create!(
   number: 18,
-  body_en: "Will the fans mock Brazil's goalkeepr Julio Cesar, because of his wife's previous romantic relationships?",
-  body_pt: 'Em algum jogo do Brasil a torcida cantará sacanerará o goleiro Julio Cesar, devido aos relacionamentos passados de sua esposa?',
+  body_en: 'Will any player from Brazil receive a red card in any match?',
+  body_pt: 'Algum jogador do Brasil vai ser expulso em algum jogo?',
   played_at: m01.played_at,
   answer_type: 'boolean')
 Question.create!(
@@ -1099,12 +1099,6 @@ Question.create!(
   answer_type: 'boolean')
 Question.create!(
   number: 25,
-  body_en: 'Will Brazil be the champion?',
-  body_pt: 'O Brasil vai ser campeão?',
-  played_at: m01.played_at,
-  answer_type: 'boolean')
-Question.create!(
-  number: 26,
   body_en: 'Which player will score the first goal for Brazil?',
   body_pt: 'Qual jogador marcará o primeiro gol do Brasil?',
   played_at: m01.played_at,
