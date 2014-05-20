@@ -38,6 +38,24 @@ class MatchPresenter < Presenter
     end
   end
 
+  # TODO spec
+  def link_to_next_bettable
+    if @subject.next_bettable
+      h.link_to(I18n.t('match_presenter.next_bettable_match'), r.match_bet_path(@subject.next))
+    else
+      h.content_tag(:span, I18n.t('match_presenter.no_next_bettable_match'))
+    end
+  end
+
+  # TODO spec
+  def link_to_previous_bettable
+    if @subject.previous_bettable
+      h.link_to(I18n.t('match_presenter.previous_bettable_match'), r.match_bet_path(@subject.previous))
+    else
+      h.content_tag(:span, I18n.t('match_presenter.no_previous_bettable_match'))
+    end
+  end
+
   def betted_by?(bet)
     @subject.betted_by?(bet)
   end

@@ -105,6 +105,11 @@
 
 <div class="row">
   <div class="small-12 column">
-    <p><%= link_to t('.my_bet').downcase, bet_path %> | <%= link_to t('.all_matches'), bet_matches_path %> | <%= @match.link_to_previous %> | <%= @match.link_to_next %></p>
+    <p>
+      <%= link_to t('.my_bet').downcase, bet_path %> |
+      <%= link_to t('.all_matches'), bet_matches_path %> |
+      <%= @match.link_to_previous_bettable %> |
+      <%= @match.link_to_next_bettable %>
+    </p>
   </div>
 </div>
