@@ -9,13 +9,15 @@ class QuestionPresenter < Presenter
     :locked?,
     :bettable?,
     :bettable_until,
-    :number
+    :number,
+    :possible_answers
 
   # TODO spec
   def css_id
     "questions_#{@subject.id}"
   end
 
+  # TODO spec
   def answer
     if @subject.answer.blank?
       I18n.t('question_presenter.no_answer_yet')
@@ -24,6 +26,7 @@ class QuestionPresenter < Presenter
     end
   end
 
+  # TODO spec
   def answer_object
     @obj ||= @subject.answer_object
     case @obj.class.to_s
@@ -36,6 +39,7 @@ class QuestionPresenter < Presenter
     end
   end
 
+  # TODO spec
   def link_to_next
     if @subject.next
       h.link_to(I18n.t('question_presenter.next_question'), r.question_bet_path(@subject.next))
@@ -44,6 +48,7 @@ class QuestionPresenter < Presenter
     end
   end
 
+  # TODO spec
   def link_to_previous
     if @subject.previous
       h.link_to(I18n.t('question_presenter.previous_question'), r.question_bet_path(@subject.previous))

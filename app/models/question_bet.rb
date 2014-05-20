@@ -30,6 +30,14 @@ class QuestionBet < ActiveRecord::Base
     end
   end
 
+  # TODO spec
+  def next_question_to_bet
+    self.bet.
+      bettable_questions_still_to_bet.
+      where.not(number: self.question.number).
+      order(number: :asc).limit(1).first
+  end
+
   private
 
   def answer_must_match_answer_type

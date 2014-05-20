@@ -29,4 +29,9 @@ class Team < ActiveRecord::Base
     self.send("name_#{I18n.locale}".to_sym)
   end
 
+  # TODO spec
+  def name_and_acronym
+    "#{self.acronym} #{self.name}"
+  end
+
 end

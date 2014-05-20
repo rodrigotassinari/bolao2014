@@ -98,6 +98,18 @@ class Question < ActiveRecord::Base
     self.ordered.all
   end
 
+  # TODO spec
+  def possible_answers
+    case self.answer_type
+    when 'team'
+      Team.unscoped.order(acronym: :asc)
+    when 'player'
+      Player.joins(:team).order('teams.acronym ASC, players.position DESC, players.name ASC')
+    when 'boolean'
+      ['true', 'false']
+    end
+  end
+
   private
 
   def answer_must_match_answer_type

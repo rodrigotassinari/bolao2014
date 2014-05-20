@@ -8,12 +8,13 @@
   </div>
 </div>
 
-<% if @question.locked? %>
-  <div class="row">
-    <div class="small-12 column">
-      <p><%= @question.body %></p>
-    </div>
+<div class="row">
+  <div class="small-12 column">
+    <p><%= @question.body %></p>
   </div>
+</div>
+
+<% if @question.locked? %>
   <div class="row">
     <div class="small-12 column">
       <p><%= Question.human_attribute_name(:answer) %>: <%= @question.answer %></p>
@@ -25,7 +26,23 @@
     </div>
   </div>
 <% else %>
-
+  <%= form_for @_question_bet, url: question_bet_path(@question), method: (@_question_bet.new_record? ? :post : :put) do |f| %>
+    <div class="row">
+      <div class="small-12 column">
+        <%= f.label :answer, t('.your_answer') %>
+        <%= f.select :answer, @question_bet.possible_answers_options, {include_blank: true}, {autofocus: true, class: ('error' if @_question_bet.errors.include?(:answer))} %>
+        <% if @_question_bet.errors.include?(:answer) %>
+          <small class="error"><%= @_question_bet.errors.get(:answer).to_sentence %></small>
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="small-12 column">
+        <%= f.submit t('common.submit'), class: 'button' %>
+        <p><%= t '.you_may_change_your_bet_until', datetime: l(@question.bettable_until, format: :detailed ) %></p>
+      </div>
+    </div>
+  <% end %>
 <% end %>
 
 <div class="row">

@@ -12,3 +12,6 @@ pt:
         position: Posição
         created_at: Cadastrado em
         updated_at: Atualizado em
+        positions:
+          field: jogador de linha
+          goalkeeper: goleiro

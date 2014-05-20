@@ -18,4 +18,16 @@ class Player < ActiveRecord::Base
   scope :goalkeepers, -> { where(position: 'goalkeeper') }
   scope :fielders, -> { where(position: 'field') }
 
+  def name_position_and_team
+    [
+      self.team.try(:acronym),
+      self.name,
+      (self.position == 'goalkeeper' ? "(#{translated_position})" : nil),
+    ].reject(&:blank?).join(' ')
+  end
+
+  def translated_position
+    I18n.t("activerecord.attributes.player.positions.#{self.position}")
+  end
+
 end

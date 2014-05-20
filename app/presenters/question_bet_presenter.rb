@@ -20,4 +20,35 @@ class QuestionBetPresenter < Presenter
     @question_presenter ||= QuestionPresenter.new(@subject.question) if @subject.question
   end
 
+  # TODO spec
+  def possible_answers_options
+    self.send("#{question.answer_type}_possible_answers_options")
+  end
+
+  private
+
+  def team_possible_answers_options
+    h.options_from_collection_for_select(question.possible_answers, :id, :name_and_acronym, answer_literal)
+  end
+
+  def player_possible_answers_options
+    h.options_from_collection_for_select(question.possible_answers, :id, :name_position_and_team, answer_literal)
+  end
+
+  def boolean_possible_answers_options
+    h.options_for_select({t('common.yesyes') => 'true', t('common.nono') => 'false'}, answer_literal)
+  end
+
+  def answer_literal
+    return if answer.blank?
+    case question.answer_type
+    when 'team'
+      Integer(answer)
+    when 'player'
+      Integer(answer)
+    when 'boolean'
+      answer.to_s
+    end
+  end
+
 end
