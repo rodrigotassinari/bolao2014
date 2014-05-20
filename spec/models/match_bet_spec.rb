@@ -28,6 +28,11 @@ describe MatchBet do
       expect(mb).to_not be_valid
       expect(mb.errors.get(:penalty_winner_id)).to eq(['não pode ficar em branco'])
     end
+    it 'allows match_bet to be a normal win after groups phase' do
+      match = create(:match, round: 'round_16')
+      mb = build(:match_bet, match: match, goals_a: 2, goals_b: 1)
+      expect(mb).to be_valid
+    end
   end
 
 end
