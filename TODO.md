@@ -4,10 +4,10 @@
 
 (more or less in order of importance)
 
-- [ ] make user select a winner when submitting match bet in case of draw on round > group phase
-- [ ] page to create question bets by the current user
+- [X] page to create question bets by the current user
 - [ ] page listing all match bets by the current user
 - [ ] page listing all question bets by the current user
+- [ ] make user select a winner when submitting match bet in case of draw on round > group phase
 - [ ] accept bet payment via PagSeguro
 - [ ] admin interface to edit matches
 - [ ] admin interface to edit questions
