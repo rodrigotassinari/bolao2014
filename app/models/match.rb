@@ -99,6 +99,11 @@ class Match < ActiveRecord::Base
   end
 
   # TODO spec
+  def betted_by?(bet)
+    bet.matches.exists?(id: self.id)
+  end
+
+  # TODO spec
   def next
     self.class.where('number > ?', self.number).order(number: :asc).limit(1).first
   end

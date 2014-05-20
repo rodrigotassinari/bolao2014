@@ -73,4 +73,46 @@ class Bet < ActiveRecord::Base
     self.questions.bettable.ordered
   end
 
+  # TODO spec
+  def filtered_matches(filter=nil)
+    case filter.to_s
+    when 'betted'
+      self.matches.ordered
+    when 'to_bet'
+      self.bettable_matches_still_to_bet
+    else
+      Match.with_known_teams.ordered
+    end
+  end
+
+  # TODO spec
+  def filtered_questions(filter=nil)
+    case filter.to_s
+    when 'betted'
+      self.questions.ordered
+    when 'to_bet'
+      self.bettable_questions_still_to_bet
+    else
+      Question.unscoped.ordered
+    end
+  end
+
+  def filtered_question_bets(filter=nil)
+    case filter.to_s
+    when 'to_bet'
+      self.question_bets.where('1=2')
+    else
+      self.question_bets.unscoped
+    end
+  end
+
+  def filtered_match_bets(filter=nil)
+    case filter.to_s
+    when 'to_bet'
+      self.match_bets.where('1=2')
+    else
+      self.match_bets.unscoped
+    end
+  end
+
 end

@@ -1,6 +1,7 @@
 class MatchPresenter < Presenter
 
   expose :to_key, :to_param,
+    :id,
     :number,
     :round,
     :group,
@@ -34,6 +35,10 @@ class MatchPresenter < Presenter
     else
       h.content_tag(:span, I18n.t('match_presenter.no_previous_match'))
     end
+  end
+
+  def betted_by?(bet)
+    @subject.betted_by?(bet)
   end
 
   def round_text

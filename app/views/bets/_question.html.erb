@@ -1,0 +1,20 @@
+<div class="row">
+  <div id="<%= question.css_id %>" class="small-10 small-centered column question">
+    <p><strong><%= question.body %></strong></p>
+    <p><%= Question.human_attribute_name(:answer) %>: <%= question.answer %></p>
+    <% if question.betted_by?(@_bet) %>
+      <% question_bet = @question_bets.detect { |qb| qb.question_id == question.id } %>
+      <p>
+        <%= t '.your_answer' %>: <%= question_bet.answer_text %>
+        <span>(<%= link_to t('.update'), question_bet_path(question) %>)</span>
+      </p>
+      <p><%= t '.you_may_change_your_bet_until', datetime: l(question.bettable_until, format: :detailed ) %></p>
+    <% else %>
+      <p>
+        <%= t '.your_answer' %>: <%= t '.not_answered' %>
+        <span>(<%= link_to t('.create'), question_bet_path(question) %>)</span>
+      </p>
+      <p><%= t '.you_may_make_your_bet_until', datetime: l(question.bettable_until, format: :detailed ) %></p>
+    <% end %>
+  </div>
+</div>

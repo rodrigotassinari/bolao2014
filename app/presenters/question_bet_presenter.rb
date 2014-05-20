@@ -5,7 +5,9 @@ class QuestionBetPresenter < Presenter
     :answer_object,
     :points,
     :created_at,
-    :updated_at
+    :updated_at,
+    :question_id,
+    :bet_id
 
   # TODO spec
   def css_id
@@ -23,6 +25,18 @@ class QuestionBetPresenter < Presenter
   # TODO spec
   def possible_answers_options
     self.send("#{question.answer_type}_possible_answers_options")
+  end
+
+  def answer_text
+    return if answer.blank?
+    case question.answer_type
+    when 'team'
+      answer_object.name_and_acronym
+    when 'player'
+      answer_object.name_position_and_team
+    when 'boolean'
+      {'true' => t('common.yesyes'), 'false' => t('common.nono')}[answer.to_s]
+    end
   end
 
   private

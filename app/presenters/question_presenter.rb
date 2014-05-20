@@ -1,6 +1,7 @@
 class QuestionPresenter < Presenter
 
   expose :to_key, :to_param,
+    :id,
     :body,
     :body_en,
     :body_pt,
@@ -37,6 +38,10 @@ class QuestionPresenter < Presenter
     else
       @obj
     end
+  end
+
+  def betted_by?(bet)
+    @subject.betted_by?(bet)
   end
 
   # TODO spec

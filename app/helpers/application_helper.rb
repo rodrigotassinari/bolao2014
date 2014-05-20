@@ -7,4 +7,8 @@ module ApplicationHelper
     type.to_s
   end
 
+  def current_filter
+    ActiveSupport::StringInquirer.new(params[:filter].to_s)
+  end
+
 end

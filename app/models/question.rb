@@ -69,6 +69,11 @@ class Question < ActiveRecord::Base
   end
 
   # TODO spec
+  def betted_by?(bet)
+    bet.questions.exists?(id: self.id)
+  end
+
+  # TODO spec
   def next
     self.class.where('number > ?', self.number).order(number: :asc).limit(1).first
   end

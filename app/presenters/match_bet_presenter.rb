@@ -6,7 +6,9 @@ class MatchBetPresenter < Presenter
     :penalty_winner_id,
     :points,
     :created_at,
-    :updated_at
+    :updated_at,
+    :match_id,
+    :bet_id
 
   # TODO spec
   def css_id

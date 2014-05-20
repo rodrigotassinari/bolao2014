@@ -1,0 +1,21 @@
+<% content_for(:title) { t('.title') } %>
+
+<div class="row">
+  <div class="small-12 column">
+    <h2><%= t '.my_bet' %></h2>
+    <h3><%= Match.model_name.human(count: 2) %></h3>
+
+    <dl class="sub-nav">
+      <dt><%= t '.filter' %>:</dt>
+      <dd class="<%= 'active' if (current_filter.blank? || current_filter.all?) %>"><%= link_to t('.all'), bet_matches_path %></dd>
+      <dd class="<%= 'active' if current_filter.betted? %>"><%= link_to t('.betted'), bet_matches_path(filter: :betted) %></dd>
+      <dd class="<%= 'active' if current_filter.to_bet? %>"><%= link_to t('.to_bet'), bet_matches_path(filter: :to_bet) %></dd>
+    </dl>
+
+    <% if @matches.empty? %>
+      <p><%= t( current_filter.blank? ? '.none_to_show' : ".none_to_show_#{current_filter}") %>.</p>
+    <% else %>
+      <%= render partial: 'match', collection: @matches %>
+    <% end %>
+  </div>
+</div>
