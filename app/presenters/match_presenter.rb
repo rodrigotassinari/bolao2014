@@ -14,7 +14,8 @@ class MatchPresenter < Presenter
     :penalty_goals_b,
     :locked?,
     :bettable?,
-    :bettable_until
+    :bettable_until,
+    :played?
 
   # TODO spec
   def css_id
@@ -51,8 +52,8 @@ class MatchPresenter < Presenter
   end
 
   # TODO spec
-  def team_a_flag
-    team_flag(:a)
+  def team_a_flag(width=42, length=28)
+    team_flag(:a, width, length)
   end
 
   # TODO spec
@@ -70,8 +71,8 @@ class MatchPresenter < Presenter
   end
 
   # TODO spec
-  def team_b_flag
-    team_flag(:b)
+  def team_b_flag(width=42, length=28)
+    team_flag(:b, width, length)
   end
 
   # TODO spec
@@ -86,9 +87,9 @@ class MatchPresenter < Presenter
 
   private
 
-  def team_flag(letter)
+  def team_flag(letter, width=42, length=28)
     team = @subject.send("team_#{letter}")
-    h.image_tag("flags/#{team.acronym}.png", class: 'team-flag', width: 42, length: 28)
+    h.image_tag("flags/#{team.acronym}.png", class: 'team-flag', alt: "#{team.acronym} flag", width: width, length: length)
   end
 
   def team_name(letter)

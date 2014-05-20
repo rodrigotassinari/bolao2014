@@ -58,6 +58,12 @@ class Question < ActiveRecord::Base
     self.played_at <= HOURS_BEFORE_START_TIME_TO_BET.hour.from_now
   end
 
+  # TODO spec
+  def answered?
+    self.played_at < Time.zone.now &&
+      self.answer.present?
+  end
+
   # A question is bettable up to HOURS_BEFORE_START_TIME_TO_BET hour before it starts.
   def bettable?
     !self.locked?

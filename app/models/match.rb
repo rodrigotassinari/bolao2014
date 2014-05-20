@@ -83,6 +83,13 @@ class Match < ActiveRecord::Base
     self.played_at <= HOURS_BEFORE_START_TIME_TO_BET.hour.from_now
   end
 
+  # TODO spec
+  def played?
+    self.played_at < Time.zone.now &&
+    self.with_known_goals? &&
+      self.with_known_teams?
+  end
+
   # A match is bettable up to HOURS_BEFORE_START_TIME_TO_BET hour before it starts,
   # and must have both teams known.
   def bettable?
@@ -96,6 +103,11 @@ class Match < ActiveRecord::Base
 
   def with_known_teams?
     self.team_a.present? && self.team_b.present?
+  end
+
+  # TODO spec
+  def with_known_goals?
+    self.goals_a.present? && self.goals_b.present?
   end
 
   # TODO spec

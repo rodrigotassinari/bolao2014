@@ -36,6 +36,7 @@ pt:
       none_to_show_betted: 'Você não respondeu a nenhuma pergunta ainda'
       none_to_show_to_bet: 'Você já respondeu a todas as perguntas'
     question:
+      not_yet_answered: (ainda não disponível)
       not_answered: '(ainda não respondeu)'
       you_may_make_your_bet_until: 'Você pode enviar sua resposta até %{datetime}'
       you_may_change_your_bet_until: 'Você pode alterar sua resposta até %{datetime}'
@@ -44,7 +45,10 @@ pt:
       update: 'alterar'
     match:
       not_answered: '(ainda não palpitou)'
-      you_may_make_your_bet_until: 'Você pode enviar sua seu palpite até %{datetime}'
+      you_may_make_your_bet_until: 'Você pode enviar seu palpite até %{datetime}'
       you_may_change_your_bet_until: 'Você pode alterar seu palpite até %{datetime}'
-      create: 'responder'
+      your_answer: 'Seu palpite'
+      create: 'palpitar'
       update: 'alterar'
+      result: 'Resultado'
+      not_yet_played: '(ainda não disponível)'

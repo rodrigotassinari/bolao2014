@@ -1,7 +1,14 @@
 <div class="row">
   <div id="<%= question.css_id %>" class="small-10 small-centered column question">
+    <h4><%= Question.model_name.human(count: 1) %> #<%= question.number %></h4>
     <p><strong><%= question.body %></strong></p>
-    <p><%= Question.human_attribute_name(:answer) %>: <%= question.answer %></p>
+
+    <% if question.answered? %>
+      <p><%= Question.human_attribute_name(:answer) %>: <%= question.answer %></p>
+    <% else %>
+      <p><%= Question.human_attribute_name(:answer) %>: <span class="subheader"><%= t '.not_yet_answered' %></span></p>
+    <% end %>
+
     <% if question.betted_by?(@_bet) %>
       <% question_bet = @question_bets.detect { |qb| qb.question_id == question.id } %>
       <p>
@@ -11,7 +18,7 @@
       <p><%= t '.you_may_change_your_bet_until', datetime: l(question.bettable_until, format: :detailed ) %></p>
     <% else %>
       <p>
-        <%= t '.your_answer' %>: <%= t '.not_answered' %>
+        <%= t '.your_answer' %>: <span class="subheader"><%= t '.not_answered' %></span>
         <span>(<%= link_to t('.create'), question_bet_path(question) %>)</span>
       </p>
       <p><%= t '.you_may_make_your_bet_until', datetime: l(question.bettable_until, format: :detailed ) %></p>

@@ -7,6 +7,7 @@ class QuestionPresenter < Presenter
     :body_pt,
     :played_at,
     :answer_type,
+    :answered?,
     :locked?,
     :bettable?,
     :bettable_until,
