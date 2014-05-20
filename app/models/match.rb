@@ -90,6 +90,11 @@ class Match < ActiveRecord::Base
       self.with_known_teams?
   end
 
+  # TODO spec
+  def drawable?
+    self.round.present? && self.round == 'group'
+  end
+
   # A match is bettable up to HOURS_BEFORE_START_TIME_TO_BET hour before it starts,
   # and must have both teams known.
   def bettable?

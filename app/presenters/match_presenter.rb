@@ -15,7 +15,8 @@ class MatchPresenter < Presenter
     :locked?,
     :bettable?,
     :bettable_until,
-    :played?
+    :played?,
+    :drawable?
 
   # TODO spec
   def css_id

@@ -39,7 +39,7 @@ class MatchBet < ActiveRecord::Base
   # validate
   def no_draws_after_groups_phase
     if self.match &&
-      self.match.round != 'group' &&
+      !self.match.drawable? &&
       self.goals_a == self.goals_b &&
       self.penalty_winner_id.blank?
       errors.add(:penalty_winner_id, :blank)
@@ -48,7 +48,7 @@ class MatchBet < ActiveRecord::Base
 
   def no_penalty_winner_after_groups_phase_if_no_draw
     if self.match &&
-      self.match.round != 'group' &&
+      !self.match.drawable? &&
       self.goals_a != self.goals_b &&
       self.penalty_winner_id.present?
       errors.add(:penalty_winner_id, :present)
@@ -57,7 +57,7 @@ class MatchBet < ActiveRecord::Base
 
   def no_penalty_winner_during_groups_phase
     if self.match &&
-      self.match.round == 'group' &&
+      self.match.drawable? &&
       self.penalty_winner_id.present?
       errors.add(:penalty_winner_id, :present)
     end

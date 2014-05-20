@@ -55,7 +55,7 @@
     </div>
   </div>
 <% else %>
-  <%= form_for @_match_bet, url: match_bet_path(@match), method: (@_match_bet.new_record? ? :post : :put) do |f| %>
+  <%= form_for @_match_bet, url: match_bet_path(@match), method: (@_match_bet.new_record? ? :post : :put), html: {id: @match_bet.form_id} do |f| %>
     <div class="row">
       <div class="small-3 columns text-left">
         <p><%= @match.team_a_name %></p>
@@ -73,7 +73,7 @@
         <%= @match.team_a_flag %>
       </div>
       <div class="small-2 columns text-left">
-        <%= f.text_field :goals_a, placeholder: '?', autofocus: true, class: ('error' if @_match_bet.errors.include?(:goals_a)) %>
+        <%= f.text_field :goals_a, placeholder: '?', autofocus: true, class: "goal-guess #{'error' if @_match_bet.errors.include?(:goals_a)}" %>
         <% if @_match_bet.errors.include?(:goals_a) %>
           <small class="error"><%= @_match_bet.errors.get(:goals_a).to_sentence %></small>
         <% end %>
@@ -84,7 +84,7 @@
       </div>
 
       <div class="small-2 columns text-right">
-        <%= f.text_field :goals_b, placeholder: '?', class: ('error' if @_match_bet.errors.include?(:goals_b)) %>
+        <%= f.text_field :goals_b, placeholder: '?', class: "goal-guess #{'error' if @_match_bet.errors.include?(:goals_b)}" %>
         <% if @_match_bet.errors.include?(:goals_b) %>
           <small class="error"><%= @_match_bet.errors.get(:goals_b).to_sentence %></small>
         <% end %>
@@ -93,6 +93,18 @@
         <%= @match.team_b_flag %>
       </div>
     </div>
+
+    <% unless @match.drawable? %>
+      <div id="penalty-winner-selector" class="row <%= 'hide' if !@match_bet.penalty_winner_select_visible? %>">
+        <div class="small-7 column end">
+          <%= f.label :penalty_winner_id %>
+          <%= f.select :penalty_winner_id, @match_bet.teams_options_for_select, {include_blank: true}, {class: ('error' if @_match_bet.errors.include?(:penalty_winner_id))} %>
+          <% if @_match_bet.errors.include?(:penalty_winner_id) %>
+            <small class="error"><%= @_match_bet.errors.get(:penalty_winner_id).to_sentence %></small>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
 
     <div class="row">
       <div class="small-12 column">
