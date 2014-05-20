@@ -23,6 +23,10 @@ class MatchBet < ActiveRecord::Base
 
   validate :no_draws_after_groups_phase
 
+  validate :no_penalty_winner_during_groups_phase
+
+  validate :no_penalty_winner_after_groups_phase_if_no_draw
+
   def next_match_to_bet
     self.bet.
       bettable_matches_still_to_bet.
@@ -39,6 +43,23 @@ class MatchBet < ActiveRecord::Base
       self.goals_a == self.goals_b &&
       self.penalty_winner_id.blank?
       errors.add(:penalty_winner_id, :blank)
+    end
+  end
+
+  def no_penalty_winner_after_groups_phase_if_no_draw
+    if self.match &&
+      self.match.round != 'group' &&
+      self.goals_a != self.goals_b &&
+      self.penalty_winner_id.present?
+      errors.add(:penalty_winner_id, :present)
+    end
+  end
+
+  def no_penalty_winner_during_groups_phase
+    if self.match &&
+      self.match.round == 'group' &&
+      self.penalty_winner_id.present?
+      errors.add(:penalty_winner_id, :present)
     end
   end
 

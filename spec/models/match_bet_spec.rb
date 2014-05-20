@@ -33,6 +33,18 @@ describe MatchBet do
       mb = build(:match_bet, match: match, goals_a: 2, goals_b: 1)
       expect(mb).to be_valid
     end
+    it 'does not allow match to have a penalty_winner during group phase', locale: :pt do
+      match = create(:match, round: 'group')
+      mb = build(:match_bet, match: match, goals_a: 1, goals_b: 1, penalty_winner_id: match.team_a_id)
+      expect(mb).to_not be_valid
+      expect(mb.errors.get(:penalty_winner_id)).to eq(['deve ficar em branco'])
+    end
+    it 'does not allow match to have a penalty_winner after group phase if it is not a draw', locale: :pt do
+      match = create(:match, round: 'round_16')
+      mb = build(:match_bet, match: match, goals_a: 2, goals_b: 1, penalty_winner_id: match.team_a_id)
+      expect(mb).to_not be_valid
+      expect(mb.errors.get(:penalty_winner_id)).to eq(['deve ficar em branco'])
+    end
   end
 
 end
