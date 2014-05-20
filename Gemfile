@@ -41,6 +41,8 @@ gem 'sidekiq', '3.0.2'
 
 gem 'google-analytics-turbolinks', '0.0.4'
 
+gem 'pagseguro-oficial', git: 'https://github.com/rtopitt/pagseguro-ruby.git'
+
 group :development, :production do
   gem 'rails_stdout_logging', '0.0.3'
 end
