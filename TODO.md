@@ -5,17 +5,17 @@
 (more or less in order of importance)
 
 - [X] page to create question bets by the current user
-- [ ] page listing all match bets by the current user
-- [ ] page listing all question bets by the current user
-- [ ] make user select a winner when submitting match bet in case of draw on round > group phase
+- [X] page listing all match bets by the current user
+- [X] page listing all question bets by the current user
 - [ ] accept bet payment via PagSeguro
-- [ ] admin interface to edit matches
-- [ ] admin interface to edit questions
+- [ ] make user select a winner when submitting match bet in case of draw on round > group phase
+- [ ] email notification to users with incomplete bets
 - [ ] email notification to users when new matches become available to bet on
 - [ ] match bet scoring when match is updated
 - [ ] question bet scoring when question is updated
-- [ ] allow (optionally, configurable via `.env`) to restrict sign-ups to invites only (and for current users to send out invites)
 - [ ] allow current user to change name, avatar, time zone, locale, etc
+- [ ] admin interface to edit matches
+- [ ] admin interface to edit questions
 - [ ] allow admin to restrict new sign-ups
 - [ ] admin interface to delete user & bet
 - [ ] list all bets in order of points in 3 rankings: overall, matches, questions
@@ -25,6 +25,7 @@
 - [ ] allow users to comment on matches
 - [ ] allow users to comment on match bets
 - [ ] allow users to comment on question bets
+- [ ] allow (optionally, configurable via `.env`) to restrict sign-ups to invites only (and for current users to send out invites)
 - [ ] create timeline of events on (logged in) home page
 - [ ] create a less ugly layout
 - [ ] improve test coverage
