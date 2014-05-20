@@ -104,7 +104,7 @@ class Question < ActiveRecord::Base
     when 'team'
       Team.unscoped.order(acronym: :asc)
     when 'player'
-      Player.joins(:team).order('teams.acronym ASC, players.position DESC, players.name ASC')
+      Player.joins(:team).includes(:team).order('teams.acronym ASC, players.position DESC, players.name ASC')
     when 'boolean'
       ['true', 'false']
     end
