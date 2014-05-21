@@ -61,6 +61,11 @@ class Payment < ActiveRecord::Base
     end
   end
 
+  # TODO spec
+  def status
+    ActiveSupport::StringInquirer.new(read_attribute(:status)) unless read_attribute(:status).blank?
+  end
+
   def update_from_pagseguro!(transaction)
   end
 
