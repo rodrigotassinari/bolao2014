@@ -25,6 +25,16 @@ describe EmailWorker do
       job = EmailWorker.new
       job.perform(mailer_as_string, 'one_time_login', [42, 'password'])
     end
+    it 'calls the method from the class defined without params' do
+      mailer = double(SessionsMailer)
+      mailer_as_string = 'SessionsMailer'
+      mailer_as_string.should_receive(:constantize) { SessionsMailer }
+      SessionsMailer.should_receive(:one_time_login).with(no_args) { mailer }
+      mailer.should_receive(:deliver)
+
+      job = EmailWorker.new
+      job.perform(mailer_as_string, 'one_time_login', [])
+    end
   end
 
 end

@@ -1,0 +1,9 @@
+pt:
+  admin:
+    notifications_mailer:
+      payment_normal_change:
+        subject: '[%{subject_prefix} Admin] Pagamento #%{payment_id} atualizado'
+      payment_strange_change:
+        subject: '[%{subject_prefix} Admin] Pagamento #%{payment_id} atualizado estranhamente (AVISO)'
+      payment_invalid_change:
+        subject: '[%{subject_prefix} Admin] Tentativa inválida de atualizar pagamento #%{payment_id} (ERRO)'

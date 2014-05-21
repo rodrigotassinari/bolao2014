@@ -5,32 +5,43 @@ class PaymentUpdater
 
   attr_reader :transaction, :payment, :previous_payment_status, :next_payment_status
 
-  def initialize(transaction=PagSeguro::Transaction.new, payment_class=Payment)
+  def initialize(transaction=PagSeguro::Transaction.new, payment_class=Payment, admin_notifier_class=Admin::NotificationsMailer)
     @transaction = transaction
     @payment = payment_class.find_by_reference!(transaction.reference)
     @previous_payment_status = @payment.status
     validate_previous_payment_status!
     @next_payment_status = nil
+    @admin_notifier_class = admin_notifier_class
   end
 
   def update!
     set_payment_attributes_from_transaction
     if valid_status_change?
       payment.save!
-      if strange_status_change?
-        # TODO notify admin of payment status strange change
-      else
-        # TODO notify admin of payment status normal change
+      if status_changed?
+        admin_notify (strange_status_change? ? :payment_strange_change : :payment_normal_change)
         # TODO notify user that his bet payment was received (if changed from a non-paying status to a paying status)
       end
       true
     else
-      # TODO notify admin of payment status invalid change attempt (potential problem)
+      admin_notify(:payment_invalid_change)
       false
     end
   end
 
   private
+
+  def admin_notify(notification_type)
+    unless @admin_notifier_class.respond_to?(notification_type)
+      raise ArgumentError, "admin_notifier #{@admin_notifier_class} does not have a #{notification_type} method"
+    end
+    @admin_notifier_class.async_deliver(
+      notification_type,
+      payment.id,
+      previous_payment_status,
+      next_payment_status
+    )
+  end
 
   def status_changed?
     previous_payment_status != next_payment_status

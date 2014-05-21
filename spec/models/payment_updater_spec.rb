@@ -40,6 +40,8 @@ describe PaymentUpdater do
 
   describe '#update!' do
     let(:now) { Time.zone.now }
+    let(:payment_class) { Payment }
+    let(:admin_notifier_class) { Admin::NotificationsMailer }
     before(:each) do
       Timecop.freeze(now)
     end
@@ -71,7 +73,10 @@ describe PaymentUpdater do
           payment.reload
           test_unpaid_payment_attributes(payment, transaction)
         end
-        it 'DOES NOT notify the admin' # no change in status
+        it 'DOES NOT notify the admin' do # no change in status
+          admin_notifier_class.should_not_receive(:async_deliver)
+          subject.update!
+        end
       end
       context 'when transaction status = in_analysis' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'in_analysis')) }
@@ -80,7 +85,10 @@ describe PaymentUpdater do
           payment.reload
           test_unpaid_payment_attributes(payment, transaction)
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'waiting_payment', 'in_analysis')
+          subject.update!
+        end
       end
       context 'when transaction status = paid' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'paid')) }
@@ -90,7 +98,10 @@ describe PaymentUpdater do
           test_paid_payment_attributes(payment, transaction)
           expect(payment.paid_at.to_i).to eql(transaction.created_at.to_i)
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'waiting_payment', 'paid')
+          subject.update!
+        end
       end
       context 'when transaction status = available' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'available')) }
@@ -100,7 +111,10 @@ describe PaymentUpdater do
           test_paid_payment_attributes(payment, transaction)
           expect(payment.paid_at.to_i).to eql(transaction.created_at.to_i)
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'waiting_payment', 'available')
+          subject.update!
+        end
       end
       context 'when transaction status = in_dispute' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'in_dispute')) }
@@ -110,7 +124,10 @@ describe PaymentUpdater do
           test_paid_payment_attributes(payment, transaction)
           expect(payment.paid_at.to_i).to eql(transaction.created_at.to_i)
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'waiting_payment', 'in_dispute')
+          subject.update!
+        end
       end
       context 'when transaction status = refunded' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'refunded')) }
@@ -121,7 +138,10 @@ describe PaymentUpdater do
           expect(payment.paid_at.to_i).to eql(transaction.created_at.to_i)
           # expect(payment.refunded_at.to_i).to eql(transaction.updated_at.to_i) # TODO
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'waiting_payment', 'refunded')
+          subject.update!
+        end
       end
       context 'when transaction status = cancelled' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'cancelled', cancellation_source: 'Foo Bar')) }
@@ -132,7 +152,10 @@ describe PaymentUpdater do
           expect(payment.paid_at.to_i).to eql(transaction.created_at.to_i)
           # expect(payment.cancelled_at.to_i).to eql(transaction.updated_at.to_i) # TODO
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'waiting_payment', 'cancelled')
+          subject.update!
+        end
       end
     end
     describe 'with an unpaid (in_analysis) payment' do
@@ -144,7 +167,10 @@ describe PaymentUpdater do
           payment.reload
           test_unpaid_payment_attributes(payment, transaction)
         end
-        it 'notifies the admin' # the analysis "failed", went back to 'waiting_payment'
+        it 'notifies the admin' do # the analysis "failed", went back to 'waiting_payment'
+          test_normal_admin_notification(admin_notifier_class, payment, 'in_analysis', 'waiting_payment')
+          subject.update!
+        end
       end
       context 'when transaction status = in_analysis' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'in_analysis')) }
@@ -153,7 +179,10 @@ describe PaymentUpdater do
           payment.reload
           test_unpaid_payment_attributes(payment, transaction)
         end
-        it 'DOES NOT notify the admin' # no change in status
+        it 'DOES NOT notify the admin' do # no change in status
+          admin_notifier_class.should_not_receive(:async_deliver)
+          subject.update!
+        end
       end
       context 'when transaction status = paid' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'paid')) }
@@ -163,7 +192,10 @@ describe PaymentUpdater do
           test_paid_payment_attributes(payment, transaction)
           expect(payment.paid_at.to_i).to eql(transaction.created_at.to_i)
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'in_analysis', 'paid')
+          subject.update!
+        end
       end
       context 'when transaction status = available' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'available')) }
@@ -173,7 +205,10 @@ describe PaymentUpdater do
           test_paid_payment_attributes(payment, transaction)
           expect(payment.paid_at.to_i).to eql(transaction.created_at.to_i)
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'in_analysis', 'available')
+          subject.update!
+        end
       end
       context 'when transaction status = in_dispute' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'in_dispute')) }
@@ -183,7 +218,10 @@ describe PaymentUpdater do
           test_paid_payment_attributes(payment, transaction)
           expect(payment.paid_at.to_i).to eql(transaction.created_at.to_i)
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'in_analysis', 'in_dispute')
+          subject.update!
+        end
       end
       context 'when transaction status = refunded' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'refunded')) }
@@ -194,7 +232,10 @@ describe PaymentUpdater do
           expect(payment.paid_at.to_i).to eql(transaction.created_at.to_i)
           # expect(payment.refunded_at.to_i).to eql(transaction.updated_at.to_i) # TODO
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'in_analysis', 'refunded')
+          subject.update!
+        end
       end
       context 'when transaction status = cancelled' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'cancelled', cancellation_source: 'Foo Bar')) }
@@ -205,7 +246,10 @@ describe PaymentUpdater do
           expect(payment.paid_at.to_i).to eql(transaction.created_at.to_i)
           # expect(payment.cancelled_at.to_i).to eql(transaction.updated_at.to_i) # TODO
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'in_analysis', 'cancelled')
+          subject.update!
+        end
       end
     end
     describe 'with a paid (paid) payment' do
@@ -218,7 +262,10 @@ describe PaymentUpdater do
           expect(payment.status).to eql('paid')
           expect(payment.paid_at).to_not be_nil
         end
-        it 'notifies the admin' # something is wrong, a paid bet changed back to 'waiting_payment'
+        it 'notifies the admin' do # something is wrong, a paid bet changed back to 'waiting_payment'
+          test_invalid_admin_notification(admin_notifier_class, payment, 'paid', 'waiting_payment')
+          subject.update!
+        end
       end
       context 'when transaction status = in_analysis' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'in_analysis')) }
@@ -228,7 +275,10 @@ describe PaymentUpdater do
           expect(payment.status).to eql('paid')
           expect(payment.paid_at).to_not be_nil
         end
-        it 'notifies the admin' # something is wrong, a paid bet changed back to 'in_analysis'
+        it 'notifies the admin' do # something is wrong, a paid bet changed back to 'in_analysis'
+          test_invalid_admin_notification(admin_notifier_class, payment, 'paid', 'in_analysis')
+          subject.update!
+        end
       end
       context 'when transaction status = paid' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'paid')) }
@@ -237,7 +287,10 @@ describe PaymentUpdater do
           payment.reload
           test_paid_payment_attributes(payment, transaction)
         end
-        it 'DOES NOT notify the admin' # no change in status
+        it 'DOES NOT notify the admin' do # no change in status
+          admin_notifier_class.should_not_receive(:async_deliver)
+          subject.update!
+        end
       end
       context 'when transaction status = available' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'available')) }
@@ -246,7 +299,10 @@ describe PaymentUpdater do
           payment.reload
           test_paid_payment_attributes(payment, transaction)
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'paid', 'available')
+          subject.update!
+        end
       end
       context 'when transaction status = in_dispute' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'in_dispute')) }
@@ -255,7 +311,10 @@ describe PaymentUpdater do
           payment.reload
           test_paid_payment_attributes(payment, transaction)
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'paid', 'in_dispute')
+          subject.update!
+        end
       end
       context 'when transaction status = refunded' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'refunded')) }
@@ -265,7 +324,10 @@ describe PaymentUpdater do
           test_paid_payment_attributes(payment, transaction)
           # expect(payment.refunded_at.to_i).to eql(transaction.updated_at.to_i) # TODO
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'paid', 'refunded')
+          subject.update!
+        end
       end
       context 'when transaction status = cancelled' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'cancelled', cancellation_source: 'Foo Bar')) }
@@ -275,7 +337,10 @@ describe PaymentUpdater do
           test_paid_payment_attributes(payment, transaction)
           # expect(payment.cancelled_at.to_i).to eql(transaction.updated_at.to_i) # TODO
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'paid', 'cancelled')
+          subject.update!
+        end
       end
     end
     describe 'with a paid (available) payment' do
@@ -288,7 +353,10 @@ describe PaymentUpdater do
           expect(payment.status).to eql('available')
           expect(payment.paid_at).to_not be_nil
         end
-        it 'notifies the admin' # something is wrong, a paid bet changed back to 'waiting_payment'
+        it 'notifies the admin' do # something is wrong, a paid bet changed back to 'waiting_payment'
+          test_invalid_admin_notification(admin_notifier_class, payment, 'available', 'waiting_payment')
+          subject.update!
+        end
       end
       context 'when transaction status = in_analysis' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'in_analysis')) }
@@ -298,7 +366,10 @@ describe PaymentUpdater do
           expect(payment.status).to eql('available')
           expect(payment.paid_at).to_not be_nil
         end
-        it 'notifies the admin' # something is wrong, a paid bet changed back to 'in_analysis'
+        it 'notifies the admin' do # something is wrong, a paid bet changed back to 'in_analysis'
+          test_invalid_admin_notification(admin_notifier_class, payment, 'available', 'in_analysis')
+          subject.update!
+        end
       end
       context 'when transaction status = paid' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'paid')) }
@@ -307,7 +378,10 @@ describe PaymentUpdater do
           payment.reload
           test_paid_payment_attributes(payment, transaction)
         end
-        it 'notifies the admin' # potential error? why would an available go back to paid?
+        it 'notifies the admin' do # potential error? why would an available go back to paid?
+          test_strange_admin_notification(admin_notifier_class, payment, 'available', 'paid')
+          subject.update!
+        end
       end
       context 'when transaction status = available' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'available')) }
@@ -316,7 +390,10 @@ describe PaymentUpdater do
           payment.reload
           test_paid_payment_attributes(payment, transaction)
         end
-        it 'DOES NOT notify the admin' # no change in status
+        it 'DOES NOT notify the admin' do # no change in status
+          admin_notifier_class.should_not_receive(:async_deliver)
+          subject.update!
+        end
       end
       context 'when transaction status = in_dispute' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'in_dispute')) }
@@ -325,7 +402,10 @@ describe PaymentUpdater do
           payment.reload
           test_paid_payment_attributes(payment, transaction)
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'available', 'in_dispute')
+          subject.update!
+        end
       end
       context 'when transaction status = refunded' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'refunded')) }
@@ -335,7 +415,10 @@ describe PaymentUpdater do
           test_paid_payment_attributes(payment, transaction)
           # expect(payment.refunded_at.to_i).to eql(transaction.updated_at.to_i) # TODO
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'available', 'refunded')
+          subject.update!
+        end
       end
       context 'when transaction status = cancelled' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'cancelled', cancellation_source: 'Foo Bar')) }
@@ -345,7 +428,10 @@ describe PaymentUpdater do
           test_paid_payment_attributes(payment, transaction)
           # expect(payment.cancelled_at.to_i).to eql(transaction.updated_at.to_i) # TODO
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'available', 'cancelled')
+          subject.update!
+        end
       end
     end
     describe 'with a paid (in_dispute) payment' do
@@ -358,7 +444,10 @@ describe PaymentUpdater do
           expect(payment.status).to eql('in_dispute')
           expect(payment.paid_at).to_not be_nil
         end
-        it 'notifies the admin' # something is wrong, a paid bet changed back to 'waiting_payment'
+        it 'notifies the admin' do # something is wrong, a paid bet changed back to 'waiting_payment'
+          test_invalid_admin_notification(admin_notifier_class, payment, 'in_dispute', 'waiting_payment')
+          subject.update!
+        end
       end
       context 'when transaction status = in_analysis' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'in_analysis')) }
@@ -368,7 +457,10 @@ describe PaymentUpdater do
           expect(payment.status).to eql('in_dispute')
           expect(payment.paid_at).to_not be_nil
         end
-        it 'notifies the admin' # something is wrong, a paid bet changed back to 'in_analysis'
+        it 'notifies the admin' do # something is wrong, a paid bet changed back to 'in_analysis'
+          test_invalid_admin_notification(admin_notifier_class, payment, 'in_dispute', 'in_analysis')
+          subject.update!
+        end
       end
       context 'when transaction status = paid' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'paid')) }
@@ -377,7 +469,10 @@ describe PaymentUpdater do
           payment.reload
           test_paid_payment_attributes(payment, transaction)
         end
-        it 'notifies the admin' # potential error? why would an in_dispute go back to paid?
+        it 'notifies the admin' do # potential error? why would an in_dispute go back to paid?
+          test_strange_admin_notification(admin_notifier_class, payment, 'in_dispute', 'paid')
+          subject.update!
+        end
       end
       context 'when transaction status = available' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'available')) }
@@ -386,7 +481,10 @@ describe PaymentUpdater do
           payment.reload
           test_paid_payment_attributes(payment, transaction)
         end
-        it 'notifies the admin' # potential error? why would an in_dispute go back to available?
+        it 'notifies the admin' do # potential error? why would an in_dispute go back to available?
+          test_strange_admin_notification(admin_notifier_class, payment, 'in_dispute', 'available')
+          subject.update!
+        end
       end
       context 'when transaction status = in_dispute' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'in_dispute')) }
@@ -395,7 +493,10 @@ describe PaymentUpdater do
           payment.reload
           test_paid_payment_attributes(payment, transaction)
         end
-        it 'DOES NOT notify the admin' # no change in status
+        it 'DOES NOT notify the admin' do # no change in status
+          admin_notifier_class.should_not_receive(:async_deliver)
+          subject.update!
+        end
       end
       context 'when transaction status = refunded' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'refunded')) }
@@ -405,7 +506,10 @@ describe PaymentUpdater do
           test_paid_payment_attributes(payment, transaction)
           # expect(payment.refunded_at.to_i).to eql(transaction.updated_at.to_i) # TODO
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'in_dispute', 'refunded')
+          subject.update!
+        end
       end
       context 'when transaction status = cancelled' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'cancelled', cancellation_source: 'Foo Bar')) }
@@ -415,7 +519,10 @@ describe PaymentUpdater do
           test_paid_payment_attributes(payment, transaction)
           # expect(payment.cancelled_at.to_i).to eql(transaction.updated_at.to_i) # TODO
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'in_dispute', 'cancelled')
+          subject.update!
+        end
       end
     end
     describe 'with a paid (refunded) payment' do
@@ -428,7 +535,10 @@ describe PaymentUpdater do
           expect(payment.status).to eql('refunded')
           expect(payment.paid_at).to_not be_nil
         end
-        it 'notifies the admin' # something is wrong, a paid bet changed back to 'waiting_payment'
+        it 'notifies the admin' do # something is wrong, a paid bet changed back to 'waiting_payment'
+          test_invalid_admin_notification(admin_notifier_class, payment, 'refunded', 'waiting_payment')
+          subject.update!
+        end
       end
       context 'when transaction status = in_analysis' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'in_analysis')) }
@@ -438,7 +548,10 @@ describe PaymentUpdater do
           expect(payment.status).to eql('refunded')
           expect(payment.paid_at).to_not be_nil
         end
-        it 'notifies the admin' # something is wrong, a paid bet changed back to 'in_analysis'
+        it 'notifies the admin' do # something is wrong, a paid bet changed back to 'in_analysis'
+          test_invalid_admin_notification(admin_notifier_class, payment, 'refunded', 'in_analysis')
+          subject.update!
+        end
       end
       context 'when transaction status = paid' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'paid')) }
@@ -447,7 +560,10 @@ describe PaymentUpdater do
           payment.reload
           test_paid_payment_attributes(payment, transaction)
         end
-        it 'notifies the admin' # potential error? why would an refunded go back to paid?
+        it 'notifies the admin' do # potential error? why would an refunded go back to paid?
+          test_strange_admin_notification(admin_notifier_class, payment, 'refunded', 'paid')
+          subject.update!
+        end
       end
       context 'when transaction status = available' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'available')) }
@@ -456,7 +572,10 @@ describe PaymentUpdater do
           payment.reload
           test_paid_payment_attributes(payment, transaction)
         end
-        it 'notifies the admin' # potential error? why would an refunded go back to available?
+        it 'notifies the admin' do # potential error? why would an refunded go back to available?
+          test_strange_admin_notification(admin_notifier_class, payment, 'refunded', 'available')
+          subject.update!
+        end
       end
       context 'when transaction status = in_dispute' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'in_dispute')) }
@@ -465,7 +584,10 @@ describe PaymentUpdater do
           payment.reload
           test_paid_payment_attributes(payment, transaction)
         end
-        it 'notifies the admin' # potential error? why would an refunded go back to available?
+        it 'notifies the admin' do # potential error? why would an refunded go back to in_dispute?
+          test_strange_admin_notification(admin_notifier_class, payment, 'refunded', 'in_dispute')
+          subject.update!
+        end
       end
       context 'when transaction status = refunded' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'refunded')) }
@@ -475,7 +597,10 @@ describe PaymentUpdater do
           test_paid_payment_attributes(payment, transaction)
           # expect(payment.refunded_at.to_i).to eql(transaction.updated_at.to_i) # TODO
         end
-        it 'DOES NOT notify the admin' # no change in status
+        it 'DOES NOT notify the admin' do # no change in status
+          admin_notifier_class.should_not_receive(:async_deliver)
+          subject.update!
+        end
       end
       context 'when transaction status = cancelled' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'cancelled', cancellation_source: 'Foo Bar')) }
@@ -485,7 +610,10 @@ describe PaymentUpdater do
           test_paid_payment_attributes(payment, transaction)
           # expect(payment.cancelled_at.to_i).to eql(transaction.updated_at.to_i) # TODO
         end
-        it 'notifies the admin'
+        it 'notifies the admin' do
+          test_normal_admin_notification(admin_notifier_class, payment, 'refunded', 'cancelled')
+          subject.update!
+        end
       end
     end
     describe 'with a paid (cancelled) payment' do
@@ -498,7 +626,10 @@ describe PaymentUpdater do
           expect(payment.status).to eql('cancelled')
           expect(payment.paid_at).to_not be_nil
         end
-        it 'notifies the admin' # something is wrong, a paid bet changed back to 'waiting_payment'
+        it 'notifies the admin' do # something is wrong, a paid bet changed back to 'waiting_payment'
+          test_invalid_admin_notification(admin_notifier_class, payment, 'cancelled', 'waiting_payment')
+          subject.update!
+        end
       end
       context 'when transaction status = in_analysis' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'in_analysis')) }
@@ -508,7 +639,10 @@ describe PaymentUpdater do
           expect(payment.status).to eql('cancelled')
           expect(payment.paid_at).to_not be_nil
         end
-        it 'notifies the admin' # something is wrong, a paid bet changed back to 'in_analysis'
+        it 'notifies the admin' do # something is wrong, a paid bet changed back to 'in_analysis'
+          test_invalid_admin_notification(admin_notifier_class, payment, 'cancelled', 'in_analysis')
+          subject.update!
+        end
       end
       context 'when transaction status = paid' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'paid')) }
@@ -517,7 +651,10 @@ describe PaymentUpdater do
           payment.reload
           test_paid_payment_attributes(payment, transaction)
         end
-        it 'notifies the admin' # potential error? why would an cancelled go back to paid?
+        it 'notifies the admin' do # potential error? why would an cancelled go back to paid?
+          test_strange_admin_notification(admin_notifier_class, payment, 'cancelled', 'paid')
+          subject.update!
+        end
       end
       context 'when transaction status = available' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'available')) }
@@ -526,7 +663,10 @@ describe PaymentUpdater do
           payment.reload
           test_paid_payment_attributes(payment, transaction)
         end
-        it 'notifies the admin' # potential error? why would an cancelled go back to available?
+        it 'notifies the admin' do # potential error? why would an cancelled go back to available?
+          test_strange_admin_notification(admin_notifier_class, payment, 'cancelled', 'available')
+          subject.update!
+        end
       end
       context 'when transaction status = in_dispute' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'in_dispute')) }
@@ -535,7 +675,10 @@ describe PaymentUpdater do
           payment.reload
           test_paid_payment_attributes(payment, transaction)
         end
-        it 'notifies the admin' # potential error? why would an cancelled go back to in_dispute?
+        it 'notifies the admin' do # potential error? why would an cancelled go back to in_dispute?
+          test_strange_admin_notification(admin_notifier_class, payment, 'cancelled', 'in_dispute')
+          subject.update!
+        end
       end
       context 'when transaction status = refunded' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'refunded')) }
@@ -545,7 +688,10 @@ describe PaymentUpdater do
           test_paid_payment_attributes(payment, transaction)
           # expect(payment.refunded_at.to_i).to eql(transaction.updated_at.to_i) # TODO
         end
-        it 'notifies the admin' # potential error? why would an cancelled go back to refunded?
+        it 'notifies the admin' do # potential error? why would an cancelled go back to refunded?
+          test_strange_admin_notification(admin_notifier_class, payment, 'cancelled', 'refunded')
+          subject.update!
+        end
       end
       context 'when transaction status = cancelled' do
         let(:transaction) { build_transaction(base_transaction_attributes.merge(status: 'cancelled', cancellation_source: 'Foo Bar')) }
@@ -555,7 +701,10 @@ describe PaymentUpdater do
           test_paid_payment_attributes(payment, transaction)
           # expect(payment.cancelled_at.to_i).to eql(transaction.updated_at.to_i) # TODO
         end
-        it 'DOES NOT notify the admin' # no change in status
+        it 'DOES NOT notify the admin' do # no change in status
+          admin_notifier_class.should_not_receive(:async_deliver)
+          subject.update!
+        end
       end
     end
   end
@@ -643,6 +792,39 @@ describe PaymentUpdater do
     expect(payment.payer_name).to eql(transaction.sender.name)
     expect(payment.payer_email).to eql(transaction.sender.email)
     expect(payment.payer_phone).to eql("#{transaction.sender.phone.area_code} #{transaction.sender.phone.number}")
+  end
+
+  def test_normal_admin_notification(admin_notifier_class, payment, from_status, to_status)
+    admin_notifier_class.
+      should_receive(:async_deliver).
+      with(
+        :payment_normal_change,
+        payment.id,
+        from_status,
+        to_status
+      )
+  end
+
+  def test_invalid_admin_notification(admin_notifier_class, payment, from_status, to_status)
+    admin_notifier_class.
+      should_receive(:async_deliver).
+      with(
+        :payment_invalid_change,
+        payment.id,
+        from_status,
+        to_status
+      )
+  end
+
+  def test_strange_admin_notification(admin_notifier_class, payment, from_status, to_status)
+    admin_notifier_class.
+      should_receive(:async_deliver).
+      with(
+        :payment_strange_change,
+        payment.id,
+        from_status,
+        to_status
+      )
   end
 
 end
