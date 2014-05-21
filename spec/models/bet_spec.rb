@@ -8,6 +8,7 @@ describe Bet do
     it { should have_many(:question_bets) }
     it { should have_many(:matches).through(:match_bets) }
     it { should have_many(:questions).through(:question_bets) }
+    it { should have_one(:payment) }
   end
 
   context 'validations' do

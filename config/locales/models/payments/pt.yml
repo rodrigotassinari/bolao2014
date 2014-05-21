@@ -1,0 +1,27 @@
+pt:
+  activerecord:
+    models:
+      payment:
+        one: Pagamento
+        other: Pagamentos
+    attributes:
+      payment:
+        bet: Aposta
+        bet_id: Aposta
+        status: Status
+        amount: Valor
+        paid_at: Pago em
+        reference: Referência
+        checkout_code: Código de compra
+        checkout_url: URL de compra
+        transaction_code: Código da transação
+        gross_amount: Valor bruto
+        discount_amount: Valor dos discontos
+        fee_amount: Valor da taxa
+        net_amount: Valor líquido
+        extra_amount: Valor extra
+        installments: Parcelas
+        escrow_ends_at: Disponível em
+        payer_name: Nome do pagador
+        payer_email: Email do pagador
+        payer_phone: Telefone do pagador

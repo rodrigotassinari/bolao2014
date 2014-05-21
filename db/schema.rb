@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140520012901) do
+ActiveRecord::Schema.define(version: 20140521012130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,33 @@ ActiveRecord::Schema.define(version: 20140520012901) do
   add_index "matches", ["round"], name: "index_matches_on_round", using: :btree
   add_index "matches", ["team_a_id"], name: "index_matches_on_team_a_id", using: :btree
   add_index "matches", ["team_b_id"], name: "index_matches_on_team_b_id", using: :btree
+
+  create_table "payments", force: true do |t|
+    t.integer  "bet_id",                                                          null: false
+    t.string   "reference",                                                       null: false
+    t.string   "status",                                    default: "initiated", null: false
+    t.decimal  "amount",           precision: 14, scale: 2,                       null: false
+    t.datetime "paid_at"
+    t.string   "checkout_code"
+    t.string   "checkout_url"
+    t.string   "transaction_code"
+    t.decimal  "gross_amount",     precision: 14, scale: 2
+    t.decimal  "discount_amount",  precision: 14, scale: 2
+    t.decimal  "fee_amount",       precision: 14, scale: 2
+    t.decimal  "net_amount",       precision: 14, scale: 2
+    t.decimal  "extra_amount",     precision: 14, scale: 2
+    t.integer  "installments"
+    t.datetime "escrow_ends_at"
+    t.string   "payer_name"
+    t.string   "payer_email"
+    t.string   "payer_phone"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "payments", ["bet_id"], name: "index_payments_on_bet_id", unique: true, using: :btree
+  add_index "payments", ["reference"], name: "index_payments_on_reference", unique: true, using: :btree
+  add_index "payments", ["status"], name: "index_payments_on_status", using: :btree
 
   create_table "players", force: true do |t|
     t.integer  "team_id",                      null: false

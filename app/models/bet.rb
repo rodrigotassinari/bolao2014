@@ -5,6 +5,7 @@ class Bet < ActiveRecord::Base
   has_many :question_bets
   has_many :matches, through: :match_bets
   has_many :questions, through: :question_bets
+  has_one :payment
 
   validates :user,
     presence: true

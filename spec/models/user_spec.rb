@@ -159,10 +159,10 @@ describe User do
   end
 
   describe '#set_defaults' do
-    it 'sets the user locale to the current locale', locale: :en do
+    it 'sets the user locale to the current locale', locale: :pt do
       expect(subject.locale).to be_nil
       subject.set_defaults
-      expect(subject.locale).to eq('en')
+      expect(subject.locale).to eq('pt')
     end
     it 'sets the user time_zone to the current time_zone', time_zone: 'Auckland' do
       expect(subject.time_zone).to be_nil

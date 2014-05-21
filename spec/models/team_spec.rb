@@ -26,9 +26,9 @@ describe Team do
     it 'returns the :pt name', locale: :pt do
       expect(subject.name).to eql('Brasil')
     end
-    it 'returns the :en name', locale: :en do
-      expect(subject.name).to eql('Brazil')
-    end
+    # it 'returns the :en name', locale: :en do
+    #   expect(subject.name).to eql('Brazil')
+    # end
   end
 
 end

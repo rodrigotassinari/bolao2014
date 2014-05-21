@@ -63,6 +63,8 @@ group :development do
 
   # Use Capistrano for deployment
   gem 'capistrano-rails', '~> 1.1'
+
+  gem 'ultrahook', '~> 0.1'
 end
 
 group :test do

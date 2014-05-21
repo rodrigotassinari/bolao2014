@@ -17,8 +17,12 @@ Rails.application.routes.draw do
   resources :questions, only: [:index, :show]
 
   resource :bet, only: [:show]
-  get  '/bet/matches' => 'bets#matches', as: 'bet_matches'
-  get  '/bet/questions' => 'bets#questions', as: 'bet_questions'
+  get '/bet/matches' => 'bets#matches', as: 'bet_matches'
+  get '/bet/questions' => 'bets#questions', as: 'bet_questions'
+
+  get '/bet/payment' => 'payments#new', as: 'bet_payment'
+  post '/bet/payment' => 'payments#create'
+  post '/payment_notifications' => 'payments#update', as: 'payment_notifications'
 
   get  '/bet/matches/:match_id' => 'match_bets#edit', as: 'match_bet'
   post '/bet/matches/:match_id' => 'match_bets#create'

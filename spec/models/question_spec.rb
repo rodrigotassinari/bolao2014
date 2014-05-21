@@ -57,9 +57,9 @@ describe Question do
     it 'returns the :pt body', locale: :pt do
       expect(subject.body).to eql('Fú')
     end
-    it 'returns the :en body', locale: :en do
-      expect(subject.body).to eql('Foo')
-    end
+    # it 'returns the :en body', locale: :en do
+    #   expect(subject.body).to eql('Foo')
+    # end
   end
 
   describe '#answer_object' do
