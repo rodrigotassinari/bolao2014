@@ -33,7 +33,7 @@ class Admin::NotificationsMailer < ActionMailer::Base
 
   private
 
-  def load_payment_and_related_models
+  def load_payment_and_related_models(payment_id, previous_status, next_status)
     @payment = Payment.find(payment_id)
     @bet = @payment.bet
     @user = @bet.user

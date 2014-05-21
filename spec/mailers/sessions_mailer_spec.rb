@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe SessionsMailer do
+
   describe 'one_time_login' do
     let(:user) do
       build(:user,
