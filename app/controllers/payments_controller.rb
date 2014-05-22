@@ -20,7 +20,7 @@ class PaymentsController < ApplicationController
   # Creates the payment data on the payment gateway and redirects the user to proceed with paying for the bet.
   # TODO spec
   def create
-    if @_payment.request_and_save
+    if @_payment.request_and_save # TODO
       redirect_to @_payment.checkout_url
     else
       flash[:error] = t('.error_with_gateway')

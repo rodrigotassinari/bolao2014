@@ -33,52 +33,46 @@ describe Admin::NotificationsMailer do
   end
 
   describe "payment_normal_change", locale: :pt do
-    let(:payment) { create(:paid_payment) }
+    let(:payment) { create(:paid_payment, id: 42) }
     let(:mail) { Admin::NotificationsMailer.payment_normal_change(payment.id, 'waiting_payment', 'paid') }
-
     it "renders the headers" do
       expect(mail.subject).to eq("[#{ENV['APP_SHORT_NAME']} Admin] Pagamento ##{payment.id} atualizado")
       expect(mail.to).to eq([ ENV['APP_ADMIN_EMAIL'] ])
       expect(mail.from).to eq([ ENV['EMAIL_FROM'] ])
     end
-
-    xit "renders the body" do
-      expect(mail.body.encoded).to match("Hi")
+    it "renders the body" do
+      expect(mail.body.encoded).to_not be_blank
     end
   end
 
   describe "payment_strange_change", locale: :pt do
-    let(:payment) { create(:paid_payment) }
+    let(:payment) { create(:paid_payment, id: 42) }
     let(:mail) { Admin::NotificationsMailer.payment_strange_change(payment.id, 'cancelled', 'paid') }
-
     it "renders the headers" do
       expect(mail.subject).to eq("[#{ENV['APP_SHORT_NAME']} Admin] Pagamento ##{payment.id} atualizado estranhamente (AVISO)")
       expect(mail.to).to eq([ ENV['APP_ADMIN_EMAIL'] ])
       expect(mail.from).to eq([ ENV['EMAIL_FROM'] ])
     end
-
-    xit "renders the body" do
-      expect(mail.body.encoded).to match("Hi")
+    it "renders the body" do
+      expect(mail.body.encoded).to_not be_blank
     end
   end
 
   describe "payment_invalid_change", locale: :pt do
-    let(:payment) { create(:paid_payment) }
+    let(:payment) { create(:paid_payment, id: 42) }
     let(:mail) { Admin::NotificationsMailer.payment_invalid_change(payment.id, 'paid', 'waiting_payment') }
-
     it "renders the headers" do
       expect(mail.subject).to eq("[#{ENV['APP_SHORT_NAME']} Admin] Tentativa inválida de atualizar pagamento ##{payment.id} (ERRO)")
       expect(mail.to).to eq([ ENV['APP_ADMIN_EMAIL'] ])
       expect(mail.from).to eq([ ENV['EMAIL_FROM'] ])
     end
-
-    xit "renders the body" do
-      expect(mail.body.encoded).to match("Hi")
+    it "renders the body" do
+      expect(mail.body.encoded).to_not be_blank
     end
   end
 
   def read_fixture(action)
-    IO.readlines(File.join(Rails.root, 'spec', 'fixtures', self.class.mailer_class.name.underscore, action))
+    IO.readlines(File.join(Rails.root, 'spec', 'fixtures', self.class.mailer_class.name.underscore, "#{action}.#{I18n.locale}"))
   end
 
 end

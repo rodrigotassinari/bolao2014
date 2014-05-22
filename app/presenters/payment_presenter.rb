@@ -1,6 +1,7 @@
 class PaymentPresenter < Presenter
 
   expose :to_key, :to_param,
+    :id,
     :bet_id,
     :reference,
     :status,

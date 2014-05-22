@@ -1,0 +1,7 @@
+Olá Administrador do <%= @app_name %>,
+
+AVISO: O pagamento #<%= @payment.id %> teve seu status alterado de <%= @previous_status %> para <%= @next_status %>, o que é estranho!
+
+Eis as informações atuais do pagamento #<%= @payment.id %>:
+
+<%= render partial: 'admin/notifications_mailer/payment_information', locals: {payment: @payment, bet: @bet, user: @user} %>

@@ -1,0 +1,39 @@
+Olá Administrador do Bolão 2014,
+
+O pagamento #42 teve seu status alterado de 'waiting_payment' para 'paid'.
+
+Eis as informações atuais do pagamento #42:
+
+user:
+  name: <%= user.name %>
+  email: <%= user.email %>
+  time_zone: <%= user.time_zone %>
+  locale: <%= user.locale %>
+  created_at: <%= user.created_at %>
+  updated_at: <%= user.updated_at %>
+
+bet:
+  points: <%= bet.points %>
+  created_at: <%= bet.created_at %>
+  updated_at: <%= bet.updated_at %>
+
+payment:
+  reference: <%= payment.reference %>
+  status: <%= payment.status %>
+  amount: <%= payment.amount %>
+  checkout_code: <%= payment.checkout_code %>
+  checkout_url: <%= payment.checkout_url %>
+  transaction_code: <%= payment.transaction_code %>
+  paid_at: <%= payment.paid_at %>
+  gross_amount: <%= payment.gross_amount %>
+  discount_amount: <%= payment.discount_amount %>
+  fee_amount: <%= payment.fee_amount %>
+  extra_amount: <%= payment.extra_amount %>
+  net_amount: <%= payment.net_amount %>
+  installments: <%= payment.installments %>
+  escrow_ends_at: <%= payment.escrow_ends_at %>
+  payer_name: <%= payment.payer_name %>
+  payer_email: <%= payment.payer_email %>
+  payer_phone: <%= payment.payer_phone %>
+  created_at: <%= payment.created_at %>
+  updated_at: <%= payment.updated_at %>

@@ -13,14 +13,14 @@ class Admin::NotificationsMailer < ActionMailer::Base
   # Sent to system admin whenever a payment has it's status changed.
   def payment_normal_change(payment_id, previous_status, next_status)
     load_payment_and_related_models(payment_id, previous_status, next_status)
-    mail subject: t('.subject', subject_prefix: subject_prefix, payment_id: @payment.id)
+    mail subject: t('.subject', subject_prefix: subject_prefix, payment_id: @_payment.id)
   end
 
   # Sent to system admin whenever a payment has it's status changed but in a strange way
   # (for example, from 'cancelled' back to 'paid'), could be an error or not.
   def payment_strange_change(payment_id, previous_status, next_status)
     load_payment_and_related_models(payment_id, previous_status, next_status)
-    mail subject: t('.subject', subject_prefix: subject_prefix, payment_id: @payment.id)
+    mail subject: t('.subject', subject_prefix: subject_prefix, payment_id: @_payment.id)
   end
 
   # Sent to system admin whenever a payment has been attempted to change it's status in
@@ -28,17 +28,21 @@ class Admin::NotificationsMailer < ActionMailer::Base
   # payment gateway is very likely.
   def payment_invalid_change(payment_id, previous_status, next_status)
     load_payment_and_related_models(payment_id, previous_status, next_status)
-    mail subject: t('.subject', subject_prefix: subject_prefix, payment_id: @payment.id)
+    mail subject: t('.subject', subject_prefix: subject_prefix, payment_id: @_payment.id)
   end
 
   private
 
   def load_payment_and_related_models(payment_id, previous_status, next_status)
-    @payment = Payment.find(payment_id)
-    @bet = @payment.bet
-    @user = @bet.user
+    @_payment = Payment.find(payment_id)
+    @_bet = @_payment.bet
+    @_user = @_bet.user
+    @payment = PaymentPresenter.new(@_payment)
+    @bet = BetPresenter.new(@_bet)
+    @user = UserPresenter.new(@_user)
     @previous_status = previous_status
     @next_status = next_status
+    @app_name = ENV['APP_NAME'].dup.force_encoding('UTF-8')
   end
 
   def subject_prefix
