@@ -11,9 +11,7 @@ class PaymentsController < ApplicationController
   # Via: bet_payment_path
   #
   # Shows the payment form / information before redirecting to the payment gateway.
-  # TODO spec
   def new
-    # TODO
   end
 
   # POST /bet/payment
@@ -22,8 +20,12 @@ class PaymentsController < ApplicationController
   # Creates the payment data on the payment gateway and redirects the user to proceed with paying for the bet.
   # TODO spec
   def create
-    # TODO
-    # @_payment.pay!
+    if @_payment.request_and_save
+      redirect_to @_payment.checkout_url
+    else
+      flash[:error] = t('.error_with_gateway')
+      redirect_to bet_payment_path
+    end
   end
 
   # POST /payment_notifications

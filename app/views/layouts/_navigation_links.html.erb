@@ -1,7 +1,16 @@
 <%# http://foundation.zurb.com/docs/components/topbar.html %>
 <% if logged_in? %>
   <ul class="right">
-    <li><%= link_to t('bets.show.title'), bet_path %></li>
+    <li class="has-dropdown">
+      <%= link_to t('bets.show.title'), bet_path %>
+      <ul class="dropdown">
+        <li><%= link_to t('bets.show.overview'), bet_path %></li>
+        <li><%= link_to Match.model_name.human(count: 2), bet_matches_path %></li>
+        <li><%= link_to Question.model_name.human(count: 2), bet_questions_path %></li>
+        <li><%= link_to Payment.model_name.human(count: 1), bet_payment_path %></li>
+      </ul>
+    </li>
+
     <li class="has-dropdown">
       <%= link_to current_user.email, 'javascript:void(0)' %>
       <ul class="dropdown">

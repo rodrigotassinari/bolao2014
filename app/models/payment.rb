@@ -66,7 +66,25 @@ class Payment < ActiveRecord::Base
     ActiveSupport::StringInquirer.new(read_attribute(:status)) unless read_attribute(:status).blank?
   end
 
-  def update_from_pagseguro!(transaction)
+  # TODO spec
+  def paid?
+    self.persisted? &&
+      self.paid_at.present? &&
+      !self.status.initiated? &&
+      !self.status.waiting_payment? &&
+      !self.status.in_analysis?
+  end
+
+  # TODO spec
+  def paying?
+    self.persisted? &&
+      (self.status.initiated? || self.status.waiting_payment? || self.status.in_analysis?)
+  end
+
+  # TODO spec
+  def request_and_save
+    # TODO
+    false
   end
 
   private

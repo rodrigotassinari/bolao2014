@@ -22,4 +22,22 @@ describe PaymentPresenter do
     expect(subject.bet.send(:subject)).to eq(bet)
   end
 
+  def partial_for_status
+    {
+      'initiated' => 'payments/initiated',
+      'waiting_payment' => 'payments/waiting_payment',
+      'in_analysis' => 'payments/in_analysis',
+      'paid' => 'payments/paid',
+      'available' => 'payments/paid',
+      'in_dispute' => 'payments/in_dispute',
+      'refunded' => 'payments/refunded',
+      'cancelled' => 'payments/cancelled',
+    }.each do |status, partial|
+      let(:payment) { build(:paid_payment, status: status) }
+      it "returns the '#{partial}' partial when status is '#{status}'" do
+        expect(subject.partial_for_status).to eql(partial)
+      end
+    end
+  end
+
 end

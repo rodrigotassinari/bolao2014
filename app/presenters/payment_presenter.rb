@@ -22,6 +22,10 @@ class PaymentPresenter < Presenter
     :created_at,
     :updated_at
 
+  def self.model_name
+    Payment.model_name
+  end
+
   # TODO spec
   def css_id
     "payments_#{@subject.id}"
@@ -29,6 +33,11 @@ class PaymentPresenter < Presenter
 
   def bet
     @bet_presenter ||= BetPresenter.new(@subject.bet) if @subject.bet
+  end
+
+  def partial_for_status
+    return 'payments/paid' if @subject.status.paid? || @subject.status.available?
+    "payments/#{@subject.status}"
   end
 
 end

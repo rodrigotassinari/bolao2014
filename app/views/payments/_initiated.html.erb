@@ -1,0 +1,7 @@
+<p class="panel callout radius"><%= t '.status_explanation' %></p>
+<p><%= t('.cost_explanation', value: number_to_currency(bet.cost), link: link_to(t('.the_rules'), help_path)).html_safe %></p>
+<p><%= t '.pagseguro_explanation' %></p>
+
+<%= form_for payment, url: bet_payment_path, method: :post do |f| %>
+  <%= f.submit t('.begin_payment_process'), disable_with: t('common.wait'), class: 'button radius' %>
+<% end %>

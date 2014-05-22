@@ -5,22 +5,77 @@ describe PaymentsController do
   # GET /bet/payment
   # Via: bet_payment_path
   describe '#new' do
-    # TODO
+    context 'when not logged in' do
+      it 'redirects with an error message' do
+        get :new
+        expect(response).to be_redirect
+        expect(response).to redirect_to(login_path)
+        expect(flash[:notice]).to eql(I18n.t('common.login_required'))
+      end
+    end
+    context 'when logged in' do
+      let(:bet) { create(:bet) }
+      let(:user) { bet.user }
+      before(:each) { login_user(user) }
+      it 'finds the current user bet' do
+        get :new
+        expect(assigns(:_bet)).to eql(bet)
+        expect(assigns(:bet)).to be_instance_of(BetPresenter)
+      end
+      context 'when the bet has not been paid' do
+        it 'builds and assigns a new payment' do
+          get :new
+          payment = assigns(:_payment)
+          expect(payment).to be_instance_of(Payment)
+          expect(payment).to be_new_record
+          expect(payment.bet).to eql(bet)
+          expect(assigns(:payment)).to be_instance_of(PaymentPresenter)
+        end
+      end
+      context 'when the bet is being paid' do
+        let!(:payment) { create(:unpaid_payment, bet: bet) }
+        it 'finds and assigns the payment' do
+          get :new
+          expect(assigns(:_payment)).to eql(payment)
+          expect(assigns(:payment)).to be_instance_of(PaymentPresenter)
+        end
+      end
+      context 'when the bet has been paid' do
+        let!(:payment) { create(:paid_payment, bet: bet) }
+        it 'finds and assigns the payment' do
+          get :new
+          expect(assigns(:_payment)).to eql(payment)
+          expect(assigns(:payment)).to be_instance_of(PaymentPresenter)
+        end
+      end
+    end
   end
 
   # POST /bet/payment
   # Via: bet_payment_path
   describe '#create' do
-    # TODO
+    context 'when logged in' do
+      let(:bet) { create(:bet) }
+      let(:user) { bet.user }
+      before(:each) { login_user(user) }
+      context 'when the bet has not been paid' do
+      end
+      context 'when the bet is being paid' do
+        let!(:payment) { create(:unpaid_payment, bet: bet) }
+      end
+      context 'when the bet has been paid' do
+        let!(:payment) { create(:paid_payment, bet: bet) }
+      end
+    end
   end
 
   # POST /payment_notifications
   # Via: payment_notifications_path
   describe '#update' do
-      context 'when logged in' do
+    context 'when logged in' do
       let(:user) { build(:user) }
       before(:each) { login_user(user) }
-      it 'returns redirects with an error message' do
+      it 'redirects with an error message' do
         post :update
         expect(response).to be_redirect
         expect(response).to redirect_to(root_path)

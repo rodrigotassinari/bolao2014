@@ -5,6 +5,7 @@ class BetPresenter < Presenter
     :created_at,
     :updated_at,
     :paid?,
+    :paying?,
     :cost,
     :to_prize,
     :payment_deadline,

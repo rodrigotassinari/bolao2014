@@ -1,0 +1,27 @@
+pt:
+  payments:
+    create:
+      error_with_gateway: 'Não foi possível iniciar seu pagamento, tente novamente em breve ou entre em contato caso o erro continue.'
+    new:
+      title: 'Pagamento da Minha Aposta'
+      my_bet: 'Minha Aposta'
+      doubts: 'Em caso de dúvidas, %{mail_to}.'
+      get_in_touch: 'entre em contato'
+    initiated:
+      status_explanation: 'Você ainda não fez o pagamento. Clique no botão abaixo para iniciar o processo.'
+      cost_explanation: 'A aposta custa %{value}. Para maiores informações, leia %{link}.'
+      the_rules: 'as regras'
+      pagseguro_explanation: 'Você será enviado para o PagSeguro, onde poderá efetuar o pagamento seguindo as instruções na tela.'
+      begin_payment_process: 'Efetuar pagamento'
+    waiting_payment:
+      status_explanation: ''
+    in_analysis:
+      status_explanation: ''
+    paid:
+      status_explanation: ''
+    in_dispute:
+      status_explanation: ''
+    refunded:
+      status_explanation: ''
+    cancelled:
+      status_explanation: ''

@@ -7,20 +7,11 @@
   </div>
 </div>
 
-<!--
-  <div class="row">
-    <div class="small-12 column">
-      <% if @bet.paid? %>
-        <p><%= t '.bet_is_paid' %></p>
-      <% else %>
-        <p class="panel radius">
-          <%= t '.bet_is_not_paid', date: l(@bet.payment_deadline, format: :detailed) %>
-          <%= link_to t('.pay_now'), 'javascript:void(0)', onclick: "alert('#{I18n.t('common.soon')}');" %>.
-        </p>
-      <% end %>
-    </div>
+<div class="row">
+  <div class="small-12 column">
+    <%= render partial: 'bets/payment', locals: {bet: @bet} %>
   </div>
--->
+</div>
 
 <div class="row">
   <div class="small-6 column">

@@ -1,0 +1,20 @@
+<% content_for(:title) { t('.title') } %>
+
+<div class="row">
+  <div class="small-12 column">
+    <h2><%= t '.my_bet' %></h2>
+    <h3><%= Payment.model_name.human(count: 1) %></h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 column">
+    <%= render partial: @payment.partial_for_status, locals: {payment: @payment, bet: @bet} %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 column">
+    <p><%= t('.doubts', mail_to: mail_to(ENV['APP_CONTACT_EMAIL'], t('.get_in_touch'))).html_safe %></p>
+  </div>
+</div>

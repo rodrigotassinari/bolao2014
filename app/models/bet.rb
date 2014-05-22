@@ -34,8 +34,14 @@ class Bet < ActiveRecord::Base
     }
   end
 
+  # TODO spec
   def paid?
-    false
+    self.payment && self.payment.paid?
+  end
+
+  # TODO spec
+  def paying?
+    self.payment && self.payment.paying?
   end
 
   # TODO spec
