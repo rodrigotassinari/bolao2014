@@ -2,6 +2,7 @@ pt:
   payments:
     create:
       error_with_gateway: 'Não foi possível iniciar seu pagamento, tente novamente em breve ou entre em contato caso o erro continue.'
+      internal_error: 'Houve um erro interno ao iniciar seu pagamento, por favor entre em contato.'
     new:
       title: 'Pagamento da Minha Aposta'
       my_bet: 'Minha Aposta'

@@ -48,4 +48,23 @@ describe Payment do
     end
   end
 
+  describe '#request_and_save' do
+    context 'when payment status is not `initiated`' do
+      subject { build(:initiated_payment, status: 'waiting_payment') }
+      it 'raises an error', locale: :pt do
+        expect { subject.request_and_save }.
+          to raise_error(
+            ActiveRecord::RecordInvalid,
+            "A validação falhou: Status não é válido"
+          )
+      end
+    end
+    context 'with valid payment status' do
+      subject { build(:initiated_payment) }
+      it 'returns true'
+      it 'creates a payment request on the external payment gateway'
+      it 'saves the payment, with the request response information'
+    end
+  end
+
 end

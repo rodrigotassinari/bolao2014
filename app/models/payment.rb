@@ -82,7 +82,11 @@ class Payment < ActiveRecord::Base
   end
 
   # TODO spec
-  def request_and_save
+  def request_and_save!
+    unless self.status.initiated?
+      self.errors.add(:status, :invalid)
+      raise ActiveRecord::RecordInvalid.new(self)
+    end
     # TODO
     false
   end

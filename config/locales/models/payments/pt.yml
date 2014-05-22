@@ -25,3 +25,12 @@ pt:
         payer_name: Nome do pagador
         payer_email: Email do pagador
         payer_phone: Telefone do pagador
+        statuses:
+          initiated: Iniciado
+          waiting_payment: Aguardando pagamento
+          in_analysis: Em análise
+          paid: Pago
+          available: Pago (Disponível)
+          in_dispute: Em disputa
+          refunded: Reembolsado
+          cancelled: Cancelado

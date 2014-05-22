@@ -20,12 +20,16 @@ class PaymentsController < ApplicationController
   # Creates the payment data on the payment gateway and redirects the user to proceed with paying for the bet.
   # TODO spec
   def create
-    if @_payment.request_and_save # TODO
+    if @_payment.request_and_save! # TODO
       redirect_to @_payment.checkout_url
     else
       flash[:error] = t('.error_with_gateway')
       redirect_to bet_payment_path
     end
+  rescue ActiveRecord::RecordInvalid => invalid
+    # @_payment was not in initiated stage
+    flash[:error] = t('.internal_error')
+    redirect_to bet_payment_path
   end
 
   # POST /payment_notifications
