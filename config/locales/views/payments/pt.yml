@@ -14,6 +14,7 @@ pt:
       the_rules: 'as regras'
       pagseguro_explanation: 'Você será enviado para o PagSeguro, onde poderá efetuar o pagamento seguindo as instruções na tela.'
       begin_payment_process: 'Efetuar pagamento'
+      press_button_only_once: 'Aperte o botão apenas uma vez e aguarde, por favor.'
     waiting_payment:
       status_explanation: ''
     in_analysis:

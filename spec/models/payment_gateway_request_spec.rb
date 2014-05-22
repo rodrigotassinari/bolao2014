@@ -17,9 +17,9 @@ describe PaymentGatewayRequest do
       expect(request).to_not be_nil
       expect(request).to be_instance_of(PagSeguro::PaymentRequest)
       expect(request.reference).to eql(payment.reference)
-      expect(request.notification_url).to eql("http://example.com/payment_notifications")
-      expect(request.redirect_url).to eql("http://example.com/bet/payment")
-      expect(request.abandon_url).to eql("http://example.com/bet/payment")
+      expect(request.notification_url).to eql("http://bolao2014.example.com/payment_notifications")
+      expect(request.redirect_url).to eql("http://bolao2014.example.com/bet/payment")
+      expect(request.abandon_url).to eql("http://bolao2014.example.com/bet/payment")
       expect(request.items.size).to eql(1)
       item = request.items.first
       expect(item.id).to eql(bet.id)

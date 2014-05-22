@@ -40,15 +40,16 @@ class PaymentGatewayRequest
   end
 
   def app_host
-    if Rails.env.test?
-      # PagSeguro does not accept URL's with port numbers, nor from localhost or 127.0.0.1, nor from 'fake' domains
-      'example.com'
+    # PagSeguro does not accept URL's with port numbers, nor from localhost or 127.0.0.1, nor from 'fake' domains
+    if (Rails.env.test? || Rails.env.development?)
+      'bolao2014.example.com'
     else
       Rails.configuration.action_mailer.default_url_options[:host]
     end
   end
 
   def notification_host
+    # Uses UltraHook to be able to receive webhooks on localhost
     if Rails.env.development?
       "pagseguro.#{ENV['ULTRAHOOK_USERNAME']}.ultrahook.com"
     else

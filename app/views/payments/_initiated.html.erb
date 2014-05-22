@@ -5,3 +5,4 @@
 <%= form_for payment, url: bet_payment_path, method: :post do |f| %>
   <%= f.submit t('.begin_payment_process'), disable_with: t('common.wait'), class: 'button radius' %>
 <% end %>
+<p><%= t '.press_button_only_once' %></p>

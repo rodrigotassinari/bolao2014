@@ -62,12 +62,46 @@ describe PaymentsController do
       let(:user) { bet.user }
       before(:each) { login_user(user) }
       context 'when the bet has not been paid' do
+        let(:payment) { build(:initiated_payment, bet: bet) }
+        before(:each) do
+          Payment.should_receive(:find_or_initialize_with_defaults).with(bet).and_return(payment)
+        end
+        context 'on success' do
+          before(:each) do
+            payment.should_receive(:request_and_save!).and_return(true)
+            payment.should_receive(:checkout_url).and_return('http://go.to/payment')
+          end
+          it 'creates a payment and redirects to the payment gateway' do
+            post :create
+            expect(response).to redirect_to('http://go.to/payment')
+          end
+        end
+        context 'on failure' do
+          before(:each) do
+            payment.should_receive(:request_and_save!).and_return(false)
+          end
+          it 'redirects with an error', locale: :pt do # error with payment gateway
+            post :create
+            expect(response).to redirect_to(bet_payment_path)
+            expect(flash[:error]).to eql('Não foi possível iniciar seu pagamento, tente novamente em breve ou entre em contato caso o erro continue.')
+          end
+        end
       end
       context 'when the bet is being paid' do
         let!(:payment) { create(:unpaid_payment, bet: bet) }
+        it 'redirects with an error', locale: :pt do # in normal use should never get here in this state
+          post :create
+          expect(response).to redirect_to(bet_payment_path)
+          expect(flash[:error]).to eql('Houve um erro interno ao iniciar seu pagamento, por favor entre em contato.')
+        end
       end
       context 'when the bet has been paid' do
         let!(:payment) { create(:paid_payment, bet: bet) }
+        it 'redirects with an error', locale: :pt do # in normal use should never get here in this state
+          post :create
+          expect(response).to redirect_to(bet_payment_path)
+          expect(flash[:error]).to eql('Houve um erro interno ao iniciar seu pagamento, por favor entre em contato.')
+        end
       end
     end
   end

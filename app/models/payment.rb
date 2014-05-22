@@ -96,9 +96,11 @@ class Payment < ActiveRecord::Base
       self.checkout_code = request.checkout_code
       self.checkout_url = request.checkout_url
       self.save!
+      notify_admin('initiated', 'waiting_payment')
       true
     else
       self.errors.add(:payment_gateway, request.errors.join(', '))
+      # TODO notify admin?
       false
     end
   end
@@ -107,6 +109,15 @@ class Payment < ActiveRecord::Base
 
   def fetch_pagseguro_transaction
     PagSeguro::Transaction.find_by_code(self.transaction_code)
+  end
+
+  def notify_admin(from_status, to_status)
+    Admin::NotificationsMailer.async_deliver(
+      :payment_normal_change,
+      self.id,
+      from_status,
+      to_status
+    )
   end
 
 end

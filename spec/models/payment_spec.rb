@@ -61,7 +61,7 @@ describe Payment do
       end
     end
     context 'with valid payment status' do
-      subject { build(:initiated_payment, bet: bet) }
+      subject { build(:initiated_payment, id: 42, bet: bet) }
       let(:fake_request) do
         double('PaymentGatewayRequest',
           save: true,
@@ -105,6 +105,17 @@ describe Payment do
           expect(subject.payer_name).to be_blank
           expect(subject.payer_email).to be_blank
           expect(subject.payer_phone).to be_blank
+        end
+        it 'notifies admin' do
+          Admin::NotificationsMailer.
+            should_receive(:async_deliver).
+            with(
+              :payment_normal_change,
+              subject.id,
+              'initiated',
+              'waiting_payment'
+            )
+          subject.request_and_save!
         end
       end
       context 'on request failure' do
