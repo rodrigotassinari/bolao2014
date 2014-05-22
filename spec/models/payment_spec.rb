@@ -48,11 +48,12 @@ describe Payment do
     end
   end
 
-  describe '#request_and_save' do
+  describe '#request_and_save!' do
+    let(:bet) { create(:bet) }
     context 'when payment status is not `initiated`' do
-      subject { build(:initiated_payment, status: 'waiting_payment') }
+      subject { build(:initiated_payment, bet: bet, status: 'waiting_payment') }
       it 'raises an error', locale: :pt do
-        expect { subject.request_and_save }.
+        expect { subject.request_and_save! }.
           to raise_error(
             ActiveRecord::RecordInvalid,
             "A validação falhou: Status não é válido"
@@ -60,10 +61,71 @@ describe Payment do
       end
     end
     context 'with valid payment status' do
-      subject { build(:initiated_payment) }
-      it 'returns true'
-      it 'creates a payment request on the external payment gateway'
-      it 'saves the payment, with the request response information'
+      subject { build(:initiated_payment, bet: bet) }
+      let(:fake_request) do
+        double('PaymentGatewayRequest',
+          save: true,
+          errors: [],
+          checkout_code: 'some-checkout-code',
+          checkout_url: 'some-checkout-url',
+          created_at: Time.zone.now
+        )
+      end
+      before(:each) do
+        PaymentGatewayRequest.stub(:new).and_return(fake_request)
+      end
+      context 'on request success' do
+        it 'returns true' do
+          expect(subject.request_and_save!).to be_true
+        end
+        it 'creates a payment request on the external payment gateway' do
+          PaymentGatewayRequest.should_receive(:new).with(subject).and_return(fake_request)
+          fake_request.should_receive(:save).and_return(true)
+          subject.request_and_save!
+        end
+        it 'saves the payment, with the request response information' do
+          expect(subject).to be_new_record
+          expect { subject.request_and_save! }.to change(Payment, :count).by(1)
+          expect(subject).to be_persisted
+          subject.reload
+          expect(subject.reference).to eql("bet_#{bet.id}")
+          expect(subject.status).to be_waiting_payment
+          expect(subject.amount).to eql(Payment::DEFAULT_AMOUNT)
+          expect(subject.paid_at).to be_nil
+          expect(subject.checkout_code).to eql(fake_request.checkout_code)
+          expect(subject.checkout_url).to eql(fake_request.checkout_url)
+          expect(subject.transaction_code).to be_blank
+          expect(subject.gross_amount).to be_nil
+          expect(subject.discount_amount).to be_nil
+          expect(subject.fee_amount).to be_nil
+          expect(subject.net_amount).to be_nil
+          expect(subject.extra_amount).to be_nil
+          expect(subject.installments).to be_nil
+          expect(subject.escrow_ends_at).to be_nil
+          expect(subject.payer_name).to be_blank
+          expect(subject.payer_email).to be_blank
+          expect(subject.payer_phone).to be_blank
+        end
+      end
+      context 'on request failure' do
+        let(:fake_request) do
+          double('PaymentGatewayRequest',
+            save: false,
+            errors: ['some errors'],
+            checkout_code: nil,
+            checkout_url: nil,
+            created_at: nil
+          )
+        end
+        it 'returns false' do
+          expect(subject.request_and_save!).to be_false
+        end
+        it 'sets errors', locale: :pt do
+          subject.request_and_save!
+          expect(subject.errors).to_not be_empty
+          expect(subject.errors.get(:payment_gateway)).to eql(['some errors'])
+        end
+      end
     end
   end
 

@@ -25,6 +25,7 @@ pt:
         payer_name: Nome do pagador
         payer_email: Email do pagador
         payer_phone: Telefone do pagador
+        payment_gateway: 'Meio de pagamento'
         statuses:
           initiated: Iniciado
           waiting_payment: Aguardando pagamento
@@ -34,3 +35,6 @@ pt:
           in_dispute: Em disputa
           refunded: Reembolsado
           cancelled: Cancelado
+    other:
+      payment:
+        item_description: 'Minha aposta no %{app_name}'

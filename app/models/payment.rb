@@ -1,4 +1,5 @@
 class Payment < ActiveRecord::Base
+
   # from https://github.com/rtopitt/pagseguro-ruby/blob/ec430c93bef91a2e8eb66a4c22e8181fdb32b403/lib/pagseguro/payment_status.rb#L3
   STATUSES = %w( initiated waiting_payment in_analysis paid available in_dispute refunded cancelled ).freeze
   DEFAULT_AMOUNT = BigDecimal(ENV.fetch('APP_BET_COST', '25')).freeze
@@ -81,14 +82,25 @@ class Payment < ActiveRecord::Base
       (self.status.initiated? || self.status.waiting_payment? || self.status.in_analysis?)
   end
 
-  # TODO spec
   def request_and_save!
     unless self.status.initiated?
       self.errors.add(:status, :invalid)
       raise ActiveRecord::RecordInvalid.new(self)
     end
-    # TODO
-    false
+    unless self.valid?
+      raise ActiveRecord::RecordInvalid.new(self)
+    end
+    request = PaymentGatewayRequest.new(self)
+    if request.save
+      self.status = 'waiting_payment'
+      self.checkout_code = request.checkout_code
+      self.checkout_url = request.checkout_url
+      self.save!
+      true
+    else
+      self.errors.add(:payment_gateway, request.errors.join(', '))
+      false
+    end
   end
 
   private

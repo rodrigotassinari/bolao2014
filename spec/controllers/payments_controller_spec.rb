@@ -29,6 +29,9 @@ describe PaymentsController do
           expect(payment).to be_instance_of(Payment)
           expect(payment).to be_new_record
           expect(payment.bet).to eql(bet)
+          expect(payment.reference).to eql("bet_#{bet.id}")
+          expect(payment.status).to be_initiated
+          expect(payment.amount).to eql(Payment::DEFAULT_AMOUNT)
           expect(assigns(:payment)).to be_instance_of(PaymentPresenter)
         end
       end
