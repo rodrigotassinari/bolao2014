@@ -1,4 +1,5 @@
 class Match < ActiveRecord::Base
+  include BettableEvent
 
   ROUNDS = %w( group round_16 quarter semi final )
   GROUPS = %w( A B C D E F G H )
@@ -16,8 +17,6 @@ class Match < ActiveRecord::Base
     'rs' => 'Estádio Beira-Rio, Porto Alegre, RS',
     'sp' => 'Arena de São Paulo (Itaquerão), São Paulo, SP',
   }
-  # How long (in hours) to allow bets on a match
-  HOURS_BEFORE_START_TIME_TO_BET = 1
 
   belongs_to :team_a, class_name: 'Team'
   belongs_to :team_b, class_name: 'Team'
@@ -26,19 +25,12 @@ class Match < ActiveRecord::Base
   # belongs_to :winner, :class_name => 'Team' # TODO add winner_id to matches
   # belongs_to :loser, :class_name => 'Team' # TODO add loser_id to matches
 
-  validates :number,
-    presence: true,
-    uniqueness: true
-
   validates :round,
     presence: true,
     inclusion: { in: ROUNDS, allow_blank: true }
 
   validates :group,
     inclusion: { in: GROUPS, allow_blank: true }
-
-  validates :played_at,
-    presence: true
 
   validates :played_on,
     presence: true,
@@ -60,10 +52,7 @@ class Match < ActiveRecord::Base
 
   validate :teams_must_be_of_the_same_group_as_the_match
 
-  scope :ordered, -> { order(played_at: :asc, number: :asc) }
   scope :with_known_teams, -> { where.not(team_a: nil, team_b: nil) }
-  scope :locked, -> { where('matches.played_at <= ?', HOURS_BEFORE_START_TIME_TO_BET.hour.from_now) }
-  scope :not_locked, -> { where('matches.played_at > ?', HOURS_BEFORE_START_TIME_TO_BET.hour.from_now) }
   scope :bettable, -> { with_known_teams.not_locked }
 
   def total_points
@@ -78,11 +67,6 @@ class Match < ActiveRecord::Base
     Integer(ENV.fetch('APP_MATCH_POINTS_GOALS', 2))
   end
 
-  # A match is locked for betting HOURS_BEFORE_START_TIME_TO_BET hour before it starts.
-  def locked?
-    self.played_at <= HOURS_BEFORE_START_TIME_TO_BET.hour.from_now
-  end
-
   # TODO spec
   def played?
     self.played_at < Time.zone.now &&
@@ -95,15 +79,10 @@ class Match < ActiveRecord::Base
     self.round.present? && self.round == 'group'
   end
 
-  # A match is bettable up to HOURS_BEFORE_START_TIME_TO_BET hour before it starts,
+  # A match is bettable up to hours_before_start_time_to_bet hour before it starts,
   # and must have both teams known.
   def bettable?
     self.with_known_teams? && !self.locked?
-  end
-
-  # TODO spec
-  def bettable_until
-    self.played_at - HOURS_BEFORE_START_TIME_TO_BET.hour
   end
 
   def with_known_teams?
@@ -120,39 +99,9 @@ class Match < ActiveRecord::Base
     bet.matches.exists?(id: self.id)
   end
 
-  # TODO spec
-  def next
-    self.class.where('number > ?', self.number).order(number: :asc).limit(1).first
-  end
-
-  # TODO spec
-  def next_bettable
-    self.class.bettable.where('number > ?', self.number).order(number: :asc).limit(1).first
-  end
-
-  # TODO spec
-  def previous
-    self.class.where('number < ?', self.number).order(number: :desc).limit(1).first
-  end
-
-  # TODO spec
-  def previous_bettable
-    self.class.bettable.where('number < ?', self.number).order(number: :desc).limit(1).first
-  end
-
-  # TODO spec
-  def any_other_bettable
-    self.class.bettable.where.not(number: self.number).order(number: :asc).limit(1).first
-  end
-
   def played_on_text
     return nil if self.played_on.blank?
     VENUES[self.played_on]
-  end
-
-  # TODO spec
-  def self.all_in_order
-    self.ordered.all
   end
 
   # TODO spec

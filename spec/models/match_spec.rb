@@ -61,7 +61,7 @@ describe Match do
 
   describe '#locked?' do
     let(:match) { build(:match) }
-    let(:limit) { described_class::HOURS_BEFORE_START_TIME_TO_BET }
+    let(:limit) { described_class.hours_before_start_time_to_bet }
     it 'returns false for more than 1 hour before the match start' do
       Timecop.freeze(match.played_at - (limit * 60 + 1).minutes) do
         expect(match).to_not be_locked
@@ -85,7 +85,7 @@ describe Match do
   end
 
   describe '#bettable?' do
-    let(:limit) { described_class::HOURS_BEFORE_START_TIME_TO_BET }
+    let(:limit) { described_class.hours_before_start_time_to_bet }
     context 'when both teams are known' do
       let(:match) { build(:match) }
       it 'returns false for more than 1 hour before the match start' do

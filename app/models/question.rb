@@ -1,14 +1,9 @@
 class Question < ActiveRecord::Base
+  include BettableEvent
 
   ANSWER_TYPES = %w( team player boolean )
-  # How long (in hours) to allow bets on a question
-  HOURS_BEFORE_START_TIME_TO_BET = 1
 
   has_many :question_bets
-
-  validates :number,
-    presence: true,
-    uniqueness: true
 
   validates :body_en,
     presence: true,
@@ -18,18 +13,12 @@ class Question < ActiveRecord::Base
     presence: true,
     uniqueness: { case_insensitive: true }
 
-  validates :played_at,
-    presence: true
-
   validates :answer_type,
     presence: true,
     inclusion: { in: ANSWER_TYPES, allow_blank: true }
 
   validate :answer_must_match_answer_type
 
-  scope :ordered, -> { order(played_at: :asc, id: :asc) }
-  scope :locked, -> { where('questions.played_at <= ?', HOURS_BEFORE_START_TIME_TO_BET.hour.from_now) }
-  scope :not_locked, -> { where('questions.played_at > ?', HOURS_BEFORE_START_TIME_TO_BET.hour.from_now) }
   scope :bettable, -> { not_locked }
 
   def body
@@ -53,55 +42,20 @@ class Question < ActiveRecord::Base
     Integer(ENV.fetch(kind, 5))
   end
 
-  # A question is locked for betting HOURS_BEFORE_START_TIME_TO_BET hour before it starts.
-  def locked?
-    self.played_at <= HOURS_BEFORE_START_TIME_TO_BET.hour.from_now
-  end
-
   # TODO spec
   def answered?
     self.played_at < Time.zone.now &&
       self.answer.present?
   end
 
-  # A question is bettable up to HOURS_BEFORE_START_TIME_TO_BET hour before it starts.
+  # A question is bettable up to hours_before_start_time_to_bet hour before it starts.
   def bettable?
     !self.locked?
   end
 
   # TODO spec
-  def bettable_until
-    self.played_at - HOURS_BEFORE_START_TIME_TO_BET.hour
-  end
-
-  # TODO spec
   def betted_by?(bet)
     bet.questions.exists?(id: self.id)
-  end
-
-  # TODO spec
-  def next
-    self.class.where('number > ?', self.number).order(number: :asc).limit(1).first
-  end
-
-  # TODO spec
-  def next_bettable
-    self.class.bettable.where('number > ?', self.number).order(number: :asc).limit(1).first
-  end
-
-  # TODO spec
-  def previous
-    self.class.where('number < ?', self.number).order(number: :desc).limit(1).first
-  end
-
-  # TODO spec
-  def previous_bettable
-    self.class.bettable.where('number < ?', self.number).order(number: :desc).limit(1).first
-  end
-
-  # TODO spec
-  def any_other_bettable
-    self.class.bettable.where.not(number: self.number).order(number: :asc).limit(1).first
   end
 
   # TODO spec
