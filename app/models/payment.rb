@@ -83,13 +83,7 @@ class Payment < ActiveRecord::Base
   end
 
   def request_and_save!
-    unless self.status.initiated?
-      self.errors.add(:status, :invalid)
-      raise ActiveRecord::RecordInvalid.new(self)
-    end
-    unless self.valid?
-      raise ActiveRecord::RecordInvalid.new(self)
-    end
+    validate_pre_pay_status!
     request = PaymentGatewayRequest.new(self)
     if request.save
       self.status = 'waiting_payment'
@@ -105,7 +99,35 @@ class Payment < ActiveRecord::Base
     end
   end
 
+  # Sets payment as paid mannually, without going through the payment gateway. For cases
+  # when people give you the money in cash personally.
+  # TODO spec
+  def manual_pay!
+    validate_pre_pay_status!
+    self.status = 'available'
+    self.paid_at = Time.zone.now
+    self.amount = DEFAULT_AMOUNT
+    self.gross_amount = DEFAULT_AMOUNT
+    self.discount_amount 0.0
+    self.fee_amount = 0.0
+    self.extra_amount = 0.0
+    self.net_amount = DEFAULT_AMOUNT
+    self.installments = 1
+    self.escrow_ends_at = self.paid_at
+    self.save!
+  end
+
   private
+
+  def validate_pre_pay_status!
+    unless self.status.initiated?
+      self.errors.add(:status, :invalid)
+      raise ActiveRecord::RecordInvalid.new(self)
+    end
+    unless self.valid?
+      raise ActiveRecord::RecordInvalid.new(self)
+    end
+  end
 
   def fetch_pagseguro_transaction
     PagSeguro::Transaction.find_by_code(self.transaction_code)
