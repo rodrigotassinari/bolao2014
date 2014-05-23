@@ -1,17 +1,10 @@
 class MatchBet < ActiveRecord::Base
+  include EventBet
 
-  belongs_to :bet
   belongs_to :match
-
-  validates :bet,
-    presence: true
 
   validates :match,
     presence: true
-
-  validates :points,
-    presence: true,
-    numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
 
   validates :goals_a,
     presence: true,
@@ -27,11 +20,9 @@ class MatchBet < ActiveRecord::Base
 
   validate :no_penalty_winner_after_groups_phase_if_no_draw
 
+  # TODO spec
   def next_match_to_bet
-    self.bet.
-      bettable_matches_still_to_bet.
-      where.not(number: self.match.number).
-      order(number: :asc).limit(1).first
+    self.next_to_bet
   end
 
   private
