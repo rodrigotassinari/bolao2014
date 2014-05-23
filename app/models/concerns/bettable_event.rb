@@ -60,5 +60,13 @@ module BettableEvent
     self.class.bettable.where.not(number: self.number).order(number: :asc).limit(1).first
   end
 
+  # Score all existing [match/question]_bets for this [match/question] (calculates the points
+  # and saves on the [match/question]_bets). Can be run any number of times.
+  #
+  # TODO run it automatically the first time the [match/question] is updated with it's real
+  # results (goals & who won for match, answer for question).
+  def score!
+    "#{self.class}Scorer".constantize.new(self).score_all!
+  end
 
 end
