@@ -8,7 +8,7 @@
 - [X] page listing all match bets by the current user
 - [X] page listing all question bets by the current user
 - [X] make user select a winner when submitting match bet in case of draw on round > group phase
-- [ ] accept bet payment via PagSeguro
+- [X] accept bet payment via PagSeguro
 - [ ] email notification to users with incomplete bets
 - [ ] email notification to users when new matches become available to bet on
 - [ ] match bet scoring when match is updated
