@@ -28,6 +28,35 @@ class QuestionBet < ActiveRecord::Base
     self.next_to_bet
   end
 
+  # Returns true if this question_bet is ready to be scored.
+  # TODO spec
+  def scorable?
+    self.valid? && self.question.scorable?
+  end
+
+  # Returns true if the question_bet answer is correct (matches the question answer).
+  # TODO spec
+  def correct_answer?
+    self.question.scorable? && self.answer == self.question.answer
+  end
+
+  # TODO spec
+  def result_points
+    correct_answer? ? self.question.result_points : 0
+  end
+
+  # Calculates and saves points for this question_bet.
+  # TODO spec
+  def score!
+    raise 'question_bet is not scorable' unless scorable?
+    self.points = 0
+    self.points += result_points
+    self.save!
+    # TODO update / recalculate bet total points
+    # TODO notify user (only if first time scoring / points changed)
+    true
+  end
+
   private
 
   # validate

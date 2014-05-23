@@ -53,7 +53,9 @@ class Match < ActiveRecord::Base
   validate :teams_must_be_of_the_same_group_as_the_match
 
   scope :with_known_teams, -> { where.not(team_a: nil, team_b: nil) }
+  scope :with_known_goals, -> { where.not(goals_a: nil, goals_b: nil) }
   scope :bettable, -> { with_known_teams.not_locked }
+  scope :scorable, -> { with_known_teams.with_known_goals.locked }
 
   def total_points
     (result_points + (2 * goal_points))
@@ -107,6 +109,14 @@ class Match < ActiveRecord::Base
   # TODO spec
   def self.all_bettables_in_order
     self.ordered.with_known_teams.all
+  end
+
+  # Returns `true` if the match is ready to be scored.
+  # TODO spec
+  def scorable?
+    with_known_teams? &&
+      with_known_goals? &&
+      locked?
   end
 
   private

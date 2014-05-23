@@ -77,4 +77,8 @@ describe QuestionBet do
     end
   end
 
+  describe '#score!' do
+    # TODO
+  end
+
 end

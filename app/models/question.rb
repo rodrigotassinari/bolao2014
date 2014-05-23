@@ -19,7 +19,9 @@ class Question < ActiveRecord::Base
 
   validate :answer_must_match_answer_type
 
+  scope :with_known_answer, -> { where.not(answer: nil) }
   scope :bettable, -> { not_locked }
+  scope :scorable, -> { with_known_answer.locked }
 
   def body
     self.send("body_#{I18n.locale}".to_sym)
@@ -38,6 +40,10 @@ class Question < ActiveRecord::Base
   end
 
   def total_points
+    result_points
+  end
+
+  def result_points
     kind = "APP_QUESTION_POINTS_#{answer_type.upcase}"
     Integer(ENV.fetch(kind, 5))
   end
@@ -78,6 +84,17 @@ class Question < ActiveRecord::Base
     when 'boolean'
       ['true', 'false']
     end
+  end
+
+  # TODO spec
+  def with_known_answer?
+    self.answer.present?
+  end
+
+  # Returns `true` if the question is ready to be scored.
+  # TODO spec
+  def scorable?
+    with_known_answer? && locked?
   end
 
   private

@@ -47,4 +47,8 @@ describe MatchBet do
     end
   end
 
+  describe '#score!' do
+    # TODO
+  end
+
 end
