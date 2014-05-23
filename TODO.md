@@ -9,25 +9,25 @@
 - [X] page listing all question bets by the current user
 - [X] make user select a winner when submitting match bet in case of draw on round > group phase
 - [X] accept bet payment via PagSeguro
-- [ ] email notification to users with incomplete bets
-- [ ] email notification to users when new matches become available to bet on
-- [ ] match bet scoring when match is updated
-- [ ] question bet scoring when question is updated
-- [ ] allow current user to change name, avatar, time zone, locale, etc
-- [ ] admin interface to edit matches
-- [ ] admin interface to edit questions
-- [ ] allow admin to restrict new sign-ups
-- [ ] admin interface to delete user & bet
-- [ ] list all bets in order of points in 3 rankings: overall, matches, questions
-- [ ] graph all bets' points / rank evolution through time
+- [ ] (WIP) match bet scoring when match is updated
+- [ ] (WIP) question bet scoring when question is updated
 - [ ] email notification to users when their match bets are scored with points and current rank
 - [ ] email notification to users when their question bets are scored with points and current rank
+- [ ] admin interface to edit matches
+- [ ] admin interface to edit questions
+- [ ] email notification to users with incomplete bets (notify x, y and z hours before lock time on each *_bet)
+- [ ] email notification to users when new matches become available to bet on
+- [ ] allow current user to change name, avatar, time zone, locale, etc
+- [ ] list all bets in order of points in 3 rankings: overall, matches only, questions only
+- [ ] graph all bets' points / rank evolution through time
 - [ ] allow users to comment on matches
 - [ ] allow users to comment on match bets
 - [ ] allow users to comment on question bets
-- [ ] allow (optionally, configurable via `.env`) to restrict sign-ups to invites only (and for current users to send out invites)
 - [ ] create timeline of events on (logged in) home page
-- [ ] create a less ugly layout
 - [ ] improve test coverage
+- [ ] admin interface to delete user & bet
+- [ ] allow admin to restrict new sign-ups
+- [ ] allow (optionally, configurable via `.env`) to restrict sign-ups to invites only (and for current users to send out invites)
+- [ ] create a less ugly layout
 - [ ] create JSON API
 - [ ] create english locale
