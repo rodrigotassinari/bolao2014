@@ -108,7 +108,7 @@ class Payment < ActiveRecord::Base
     self.paid_at = Time.zone.now
     self.amount = DEFAULT_AMOUNT
     self.gross_amount = DEFAULT_AMOUNT
-    self.discount_amount 0.0
+    self.discount_amount = 0.0
     self.fee_amount = 0.0
     self.extra_amount = 0.0
     self.net_amount = DEFAULT_AMOUNT
