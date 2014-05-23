@@ -16,14 +16,24 @@ pt:
       begin_payment_process: 'Efetuar pagamento'
       press_button_only_once: 'Aperte o botão apenas uma vez e aguarde, por favor.'
     waiting_payment:
-      status_explanation: ''
+      status_explanation: 'Você ainda precisa concluir seu pagamento no PagSeguro.'
+      cost_explanation: 'A aposta custa %{value}. Para maiores informações, leia %{link}.'
+      the_rules: 'as regras'
+      pagseguro_explanation: 'Você será enviado para o PagSeguro, onde poderá efetuar o pagamento seguindo as instruções na tela.'
+      what_to_do: 'Clique no botão abaixo para ir para o PagSeguro e concluir o pagamento.'
+      continue_payment_process: 'Efetuar pagamento'
     in_analysis:
-      status_explanation: ''
+      status_explanation: 'Seu pagamento se encontra em análise no PagSeguro.'
+      what_to_do: 'Você não precisa fazer nada, apenas aguarde. Caso não haja mudança de status no pagamento em 3 dias úteis, entre me contato.'
     paid:
-      status_explanation: ''
+      status_explanation: 'Seu pagamento foi feito e reconhecido com sucesso.'
+      what_to_do: 'Muito obrigado! Sua aposta está válida e você não precisa fazer mais nada. Boa sorte!'
     in_dispute:
-      status_explanation: ''
+      status_explanation: 'Você iniciou uma disputa de pagamento no PagSeguro.'
+      what_to_do: 'Sua aposta não é mais válida. Você não está mais participando do bolão. Por favor entre em contato para sabermos o que houve e como proceder.'
     refunded:
-      status_explanation: ''
+      status_explanation: 'Seu pagamento foi reembolsado no PagSeguro.'
+      what_to_do: 'Sua aposta não é mais válida. Você não está mais participando do bolão. Por favor entre em contato caso deseje fazer outro pagamento para continuar participando do bolão.'
     cancelled:
-      status_explanation: ''
+      status_explanation: 'Seu pagamento foi cancelado no PagSeguro.'
+      what_to_do: 'Sua aposta não é mais válida. Você não está mais participando do bolão. Por favor entre em contato caso deseje fazer outro pagamento para continuar participando do bolão.'
