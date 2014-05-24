@@ -2,6 +2,7 @@ class MatchBet < ActiveRecord::Base
   include EventBet
 
   belongs_to :match
+  alias_method :event, :match
 
   validates :match,
     presence: true

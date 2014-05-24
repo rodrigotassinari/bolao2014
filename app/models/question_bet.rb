@@ -2,6 +2,7 @@ class QuestionBet < ActiveRecord::Base
   include EventBet
 
   belongs_to :question
+  alias_method :event, :question
 
   validates :question,
     presence: true

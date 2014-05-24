@@ -28,15 +28,8 @@ class Question < ActiveRecord::Base
   end
 
   def answer_object
-    return if self.answer.blank?
-    case self.answer_type
-    when 'team'
-      Team.find(Integer(self.answer))
-    when 'player'
-      Player.find(Integer(self.answer))
-    when 'boolean'
-      self.answer == 'true'
-    end
+    return unless self.answer?
+    self.send("#{self.answer_type}_answer_object")
   end
 
   def total_points
@@ -51,7 +44,7 @@ class Question < ActiveRecord::Base
   # TODO spec
   def answered?
     self.played_at < Time.zone.now &&
-      self.answer.present?
+      self.answer?
   end
 
   # A question is bettable up to hours_before_start_time_to_bet hour before it starts.
@@ -71,24 +64,12 @@ class Question < ActiveRecord::Base
 
   # TODO spec
   def possible_answers
-    case self.answer_type
-    when 'team'
-      Team.unscoped.order(acronym: :asc)
-    when 'player'
-      base_relation = Player.joins(:team).includes(:team).order('teams.acronym ASC, players.position DESC, players.name ASC')
-      if self.answer_scope
-        base_relation.where(self.answer_scope)
-      else
-        base_relation
-      end
-    when 'boolean'
-      ['true', 'false']
-    end
+    self.send("#{self.answer_type}_possible_answers")
   end
 
   # TODO spec
   def with_known_answer?
-    self.answer.present?
+    self.answer?
   end
 
   # Returns `true` if the question is ready to be scored.
@@ -110,6 +91,35 @@ class Question < ActiveRecord::Base
         errors.add(:answer, :invalid) unless ['true', 'false'].include?(self.answer)
       end
     end
+  end
+
+  def team_answer_object
+    Team.find(Integer(self.answer))
+  end
+
+  def player_answer_object
+    Player.find(Integer(self.answer))
+  end
+
+  def boolean_answer_object
+    self.answer == 'true'
+  end
+
+  def team_possible_answers
+    Team.unscoped.order(acronym: :asc)
+  end
+
+  def player_possible_answers
+    base_relation = Player.joins(:team).includes(:team).order('teams.acronym ASC, players.position DESC, players.name ASC')
+    if self.answer_scope
+      base_relation.where(self.answer_scope)
+    else
+      base_relation
+    end
+  end
+
+  def boolean_possible_answers
+    ['true', 'false']
   end
 
 end

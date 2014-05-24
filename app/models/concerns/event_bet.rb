@@ -21,10 +21,11 @@ module EventBet
   def next_to_bet
     self.bet.
       send("bettable_#{self.class.to_s.downcase.underscore.pluralize}_still_to_bet").
-      where.not(number: self.send(self.to_s.downcase.underscore).number).
+      where.not(number: self.event.number).
       order(number: :asc).limit(1).first
   end
 
+  # TODO spec
   def scored?
     !self.points.nil?
   end

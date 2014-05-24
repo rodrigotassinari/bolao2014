@@ -78,7 +78,7 @@ class Match < ActiveRecord::Base
 
   # TODO spec
   def drawable?
-    self.round.present? && self.round == 'group'
+    self.round? && self.round == 'group'
   end
 
   # A match is bettable up to hours_before_start_time_to_bet hour before it starts,
@@ -93,7 +93,7 @@ class Match < ActiveRecord::Base
 
   # TODO spec
   def with_known_goals?
-    self.goals_a.present? && self.goals_b.present?
+    self.goals_a? && self.goals_b?
   end
 
   # TODO spec
@@ -102,7 +102,7 @@ class Match < ActiveRecord::Base
   end
 
   def played_on_text
-    return nil if self.played_on.blank?
+    return nil unless self.played_on?
     VENUES[self.played_on]
   end
 
@@ -123,8 +123,7 @@ class Match < ActiveRecord::Base
 
   # validation
   def teams_are_not_the_same
-    if self.team_a &&
-      self.team_b &&
+    if with_known_teams? &&
       self.team_a == self.team_b
       errors.add(:team_b_id, :equal_teams)
     end
@@ -132,9 +131,8 @@ class Match < ActiveRecord::Base
 
   # validation
   def teams_must_be_of_the_same_group_as_the_match
-    if self.team_a &&
-      self.team_b &&
-      self.group &&
+    if with_known_teams? &&
+      self.group? &&
       [self.group, self.team_a.group, self.team_b.group].uniq.size != 1
       errors.add(:group, :not_the_same)
     end
