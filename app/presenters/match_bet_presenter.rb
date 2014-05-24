@@ -7,6 +7,7 @@ class MatchBetPresenter < Presenter
     :points,
     :created_at,
     :updated_at,
+    :scored_at,
     :match_id,
     :bet_id
 

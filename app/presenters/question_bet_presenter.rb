@@ -6,6 +6,7 @@ class QuestionBetPresenter < Presenter
     :points,
     :created_at,
     :updated_at,
+    :scored_at,
     :question_id,
     :bet_id
 

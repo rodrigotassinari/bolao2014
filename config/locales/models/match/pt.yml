@@ -35,3 +35,5 @@ pt:
               equal_teams: 'não pode ser o mesmo que o outro'
             group:
               not_the_same: 'não é o mesmo dos times'
+            penalty_goals_b:
+              equal: 'não pode ser o mesmo que o outro'

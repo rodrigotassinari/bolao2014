@@ -52,10 +52,26 @@ class Match < ActiveRecord::Base
 
   validate :teams_must_be_of_the_same_group_as_the_match
 
+  validate :no_draw_after_group_phase
+
   scope :with_known_teams, -> { where.not(team_a: nil, team_b: nil) }
   scope :with_known_goals, -> { where.not(goals_a: nil, goals_b: nil) }
   scope :bettable, -> { with_known_teams.not_locked }
   scope :scorable, -> { with_known_teams.with_known_goals.locked }
+
+  # Returns the winner as a symbol `:team_a` or `:team_b` or `:draw` if it is a tie.
+  def result
+    return unless valid? && scorable?
+    if goals_a == goals_b
+      if drawable?
+        :draw
+      else
+        penalty_goals_a > penalty_goals_b ? :team_a : :team_b
+      end
+    else
+      goals_a > goals_b ? :team_a : :team_b
+    end
+  end
 
   def total_points
     (result_points + (2 * goal_points))
@@ -93,7 +109,7 @@ class Match < ActiveRecord::Base
 
   # TODO spec
   def with_known_goals?
-    self.goals_a? && self.goals_b?
+    self.goals_a.present? && self.goals_b.present?
   end
 
   # TODO spec
@@ -136,6 +152,32 @@ class Match < ActiveRecord::Base
       [self.group, self.team_a.group, self.team_b.group].uniq.size != 1
       errors.add(:group, :not_the_same)
     end
+  end
+
+  # validation
+  def no_draw_after_group_phase
+    return unless with_known_teams? && with_known_goals? && !drawable?
+    if goals_draw?
+      if !with_known_penalty_goals?
+        errors.add(:penalty_goals_a, :blank)
+        errors.add(:penalty_goals_b, :blank)
+      end
+      if penalty_goals_draw?
+        errors.add(:penalty_goals_b, :equal)
+      end
+    end
+  end
+
+  def goals_draw?
+    with_known_goals? && self.goals_a == self.goals_b
+  end
+
+  def with_known_penalty_goals?
+    self.penalty_goals_a.present? && self.penalty_goals_b.present?
+  end
+
+  def penalty_goals_draw?
+    with_known_penalty_goals? && self.penalty_goals_a == self.penalty_goals_b
   end
 
 end

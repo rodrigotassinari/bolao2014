@@ -108,8 +108,76 @@ describe QuestionBet do
     end
   end
 
+  describe '#scorable?' do
+    let(:bet) { create(:bet) }
+    let(:question) { create(:boolean_question) }
+    subject { create(:boolean_question_bet, bet: bet, question: question) }
+    it 'returns true if the question is scorable' do
+      question.should_receive(:scorable?).and_return(true)
+      expect(subject).to be_scorable
+    end
+    it 'returns false if the question is not scorable' do
+      question.should_receive(:scorable?).and_return(false)
+      expect(subject).to_not be_scorable
+    end
+    it 'returns false if not valid' do
+      subject.answer = nil
+      expect(subject).to_not be_scorable
+    end
+  end
+
   describe '#score!' do
-    # TODO
+    let(:bet) { create(:bet) }
+    let(:question) { create(:boolean_question, answer: 'true', played_at: 1.day.ago) }
+    subject { create(:boolean_question_bet, bet: bet, question: question) }
+    it 'raises error if not scorable' do
+      subject.should_receive(:scorable?).and_return(false)
+      expect { subject.score! }.to raise_error(RuntimeError, 'question_bet is not scorable')
+    end
+    it 'sets / updates scored_at' do
+      subject.stub(:scorable?).and_return(true)
+      expect(subject.scored_at).to be_nil
+      subject.score!
+      subject.reload
+      expect(subject.scored_at).to_not be_nil
+      expect(subject.scored_at).to be_between(5.seconds.ago, 5.seconds.from_now)
+    end
+    it 'notifies user when if scoring changed the points'
+    it 'does not notify user if scoring did not change the points'
+    it 'sets / updates the bet points if points changed'
+    it 'does not sets / updates the bet points if points did not change'
+    context 'when answer is wrong' do
+      subject { create(:boolean_question_bet, bet: bet, question: question, answer: 'false') }
+      it 'scores 0 points' do
+        expect(subject.points).to eql(0)
+        subject.score!
+        expect(subject.points).to eql(0)
+      end
+    end
+    context 'when answer is correct' do
+      subject { create(:boolean_question_bet, bet: bet, question: question, answer: 'true') }
+      it 'scores full points' do
+        expect(subject.points).to eql(0)
+        subject.score!
+        expect(subject.points).to eql(question.total_points)
+      end
+    end
+  end
+
+  describe '#scored?' do
+    let(:bet) { create(:bet) }
+    let(:question) { create(:boolean_question) }
+    subject { create(:boolean_question_bet, bet: bet, question: question) }
+    it 'returns true if has been scored' do
+      subject.points = 10
+      subject.scored_at = 1.hour.ago
+      expect(subject).to be_scored
+    end
+    it 'returns false if has not been scored' do
+      subject.points = 0
+      subject.scored_at = nil
+      expect(subject).to_not be_scored
+    end
   end
 
 end

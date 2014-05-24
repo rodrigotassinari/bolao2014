@@ -11,7 +11,7 @@ module EventBet
       presence: true,
       numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
 
-    scope :scored, -> { where.not(:points, nil) }
+    scope :scored, -> { where.not(points: nil, scored_at: nil) }
   end
 
   module ClassMethods
@@ -24,9 +24,14 @@ module EventBet
       order(number: :asc).limit(1).first
   end
 
-  # TODO spec
+  # Returns true if this event_bet is ready to be scored.
+  def scorable?
+    self.valid? && self.event.scorable?
+  end
+
+  # Returns true if this event_bet has been scored.
   def scored?
-    !self.points.nil?
+    self.scored_at? && self.points >= 0
   end
 
 end
