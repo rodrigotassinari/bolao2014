@@ -21,9 +21,8 @@ class MatchBet < ActiveRecord::Base
 
   validate :no_penalty_winner_after_groups_phase_if_no_draw
 
-  # TODO spec
   def next_match_to_bet
-    self.next_to_bet
+    self.next_event_to_bet
   end
 
   # Returns true if this match_bet is ready to be scored.

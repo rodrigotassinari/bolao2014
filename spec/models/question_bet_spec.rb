@@ -77,6 +77,37 @@ describe QuestionBet do
     end
   end
 
+  describe '#next_question_to_bet' do
+    let!(:question1) { create(:boolean_question, number: 1, body_pt: '1', body_en: '1', played_at: 2.days.ago) }
+    let!(:question2) { create(:boolean_question, number: 2, body_pt: '2', body_en: '2', played_at: 1.day.ago) }
+    let!(:question3) { create(:boolean_question, number: 3, body_pt: '3', body_en: '3', played_at: 1.day.from_now) }
+    let!(:question4) { create(:boolean_question, number: 4, body_pt: '4', body_en: '4', played_at: 2.days.from_now) }
+    let!(:question5) { create(:boolean_question, number: 5, body_pt: '5', body_en: '5', played_at: 3.days.from_now) }
+    let!(:bet) { create(:bet) }
+    let!(:question_bet2) { create(:boolean_question_bet, bet: bet, question: question2, answer: 'true') }
+    let!(:question_bet3) { create(:boolean_question_bet, bet: bet, question: question3, answer: 'true') }
+    let!(:new_question_bet1) { build(:boolean_question_bet, bet: bet, question: question4, answer: nil) }
+    let!(:new_question_bet2) { build(:boolean_question_bet, bet: bet, question: question5, answer: nil) }
+    before(:each) do
+      expect(question1).to_not be_bettable
+      expect(question2).to_not be_bettable
+      expect(question3).to be_bettable
+      expect(question4).to be_bettable
+      expect(question5).to be_bettable
+    end
+    it "returns the next question who is bettable and has not been betted by the question_bet's bet" do
+      expect(question_bet2.next_question_to_bet).to eql(question4)
+      expect(question_bet3.next_question_to_bet).to eql(question4)
+      expect(new_question_bet1.next_question_to_bet).to eql(question5)
+      expect(new_question_bet2.next_question_to_bet).to eql(question4)
+    end
+    it "returns nil if there are no more bettable questiones by the question_bet's bet" do
+      question4.destroy
+      question5.destroy
+      expect(question_bet2.next_question_to_bet).to be_nil
+    end
+  end
+
   describe '#score!' do
     # TODO
   end

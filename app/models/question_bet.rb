@@ -24,9 +24,8 @@ class QuestionBet < ActiveRecord::Base
     end
   end
 
-  # TODO spec
   def next_question_to_bet
-    self.next_to_bet
+    self.next_event_to_bet
   end
 
   # Returns true if this question_bet is ready to be scored.

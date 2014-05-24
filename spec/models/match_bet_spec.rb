@@ -47,6 +47,39 @@ describe MatchBet do
     end
   end
 
+  describe '#next_match_to_bet' do
+    let!(:team_a) { create(:team) }
+    let!(:team_b) { create(:other_team) }
+    let!(:match1) { create(:match, number: 1, team_a: team_a, team_b: team_b, played_at: 2.days.ago) }
+    let!(:match2) { create(:match, number: 2, team_a: team_a, team_b: team_b, played_at: 1.day.ago) }
+    let!(:match3) { create(:match, number: 3, team_a: team_a, team_b: team_b, played_at: 1.day.from_now) }
+    let!(:match4) { create(:match, number: 4, team_a: team_a, team_b: team_b, played_at: 2.days.from_now) }
+    let!(:match5) { create(:match, number: 5, team_a: team_a, team_b: team_b, played_at: 3.days.from_now) }
+    let!(:bet) { create(:bet) }
+    let!(:match_bet2) { create(:match_bet, bet: bet, match: match2, goals_a: 1, goals_b: 0) }
+    let!(:match_bet3) { create(:match_bet, bet: bet, match: match3, goals_a: 1, goals_b: 0) }
+    let!(:new_match_bet1) { build(:match_bet, bet: bet, match: match4, goals_a: nil, goals_b: nil) }
+    let!(:new_match_bet2) { build(:match_bet, bet: bet, match: match5, goals_a: nil, goals_b: nil) }
+    before(:each) do
+      expect(match1).to_not be_bettable
+      expect(match2).to_not be_bettable
+      expect(match3).to be_bettable
+      expect(match4).to be_bettable
+      expect(match5).to be_bettable
+    end
+    it "returns the next match who is bettable and has not been betted by the match_bet's bet" do
+      expect(match_bet2.next_match_to_bet).to eql(match4)
+      expect(match_bet3.next_match_to_bet).to eql(match4)
+      expect(new_match_bet1.next_match_to_bet).to eql(match5)
+      expect(new_match_bet2.next_match_to_bet).to eql(match4)
+    end
+    it "returns nil if there are no more bettable matches by the match_bet's bet" do
+      match4.destroy
+      match5.destroy
+      expect(match_bet2.next_match_to_bet).to be_nil
+    end
+  end
+
   describe '#score!' do
     # TODO
   end
