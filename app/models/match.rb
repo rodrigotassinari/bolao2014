@@ -1,4 +1,5 @@
 class Match < ActiveRecord::Base
+  include BettableEvent
 
   ROUNDS = %w( group round_16 quarter semi final )
   GROUPS = %w( A B C D E F G H )
@@ -16,8 +17,6 @@ class Match < ActiveRecord::Base
     'rs' => 'Estádio Beira-Rio, Porto Alegre, RS',
     'sp' => 'Arena de São Paulo (Itaquerão), São Paulo, SP',
   }
-  # How long (in hours) to allow bets on a match
-  HOURS_BEFORE_START_TIME_TO_BET = 1
 
   belongs_to :team_a, class_name: 'Team'
   belongs_to :team_b, class_name: 'Team'
@@ -26,19 +25,12 @@ class Match < ActiveRecord::Base
   # belongs_to :winner, :class_name => 'Team' # TODO add winner_id to matches
   # belongs_to :loser, :class_name => 'Team' # TODO add loser_id to matches
 
-  validates :number,
-    presence: true,
-    uniqueness: true
-
   validates :round,
     presence: true,
     inclusion: { in: ROUNDS, allow_blank: true }
 
   validates :group,
     inclusion: { in: GROUPS, allow_blank: true }
-
-  validates :played_at,
-    presence: true
 
   validates :played_on,
     presence: true,
@@ -60,11 +52,26 @@ class Match < ActiveRecord::Base
 
   validate :teams_must_be_of_the_same_group_as_the_match
 
-  scope :ordered, -> { order(played_at: :asc, number: :asc) }
+  validate :no_draw_after_group_phase
+
   scope :with_known_teams, -> { where.not(team_a: nil, team_b: nil) }
-  scope :locked, -> { where('matches.played_at <= ?', HOURS_BEFORE_START_TIME_TO_BET.hour.from_now) }
-  scope :not_locked, -> { where('matches.played_at > ?', HOURS_BEFORE_START_TIME_TO_BET.hour.from_now) }
+  scope :with_known_goals, -> { where.not(goals_a: nil, goals_b: nil) }
   scope :bettable, -> { with_known_teams.not_locked }
+  scope :scorable, -> { with_known_teams.with_known_goals.locked }
+
+  # Returns the winner as a symbol `:team_a` or `:team_b` or `:draw` if it is a tie.
+  def result
+    return unless valid? && scorable?
+    if goals_a == goals_b
+      if drawable?
+        :draw
+      else
+        penalty_goals_a > penalty_goals_b ? :team_a : :team_b
+      end
+    else
+      goals_a > goals_b ? :team_a : :team_b
+    end
+  end
 
   def total_points
     (result_points + (2 * goal_points))
@@ -78,11 +85,6 @@ class Match < ActiveRecord::Base
     Integer(ENV.fetch('APP_MATCH_POINTS_GOALS', 2))
   end
 
-  # A match is locked for betting HOURS_BEFORE_START_TIME_TO_BET hour before it starts.
-  def locked?
-    self.played_at <= HOURS_BEFORE_START_TIME_TO_BET.hour.from_now
-  end
-
   # TODO spec
   def played?
     self.played_at < Time.zone.now &&
@@ -92,18 +94,13 @@ class Match < ActiveRecord::Base
 
   # TODO spec
   def drawable?
-    self.round.present? && self.round == 'group'
+    self.round? && self.round == 'group'
   end
 
-  # A match is bettable up to HOURS_BEFORE_START_TIME_TO_BET hour before it starts,
+  # A match is bettable up to hours_before_start_time_to_bet hour before it starts,
   # and must have both teams known.
   def bettable?
     self.with_known_teams? && !self.locked?
-  end
-
-  # TODO spec
-  def bettable_until
-    self.played_at - HOURS_BEFORE_START_TIME_TO_BET.hour
   end
 
   def with_known_teams?
@@ -120,39 +117,9 @@ class Match < ActiveRecord::Base
     bet.matches.exists?(id: self.id)
   end
 
-  # TODO spec
-  def next
-    self.class.where('number > ?', self.number).order(number: :asc).limit(1).first
-  end
-
-  # TODO spec
-  def next_bettable
-    self.class.bettable.where('number > ?', self.number).order(number: :asc).limit(1).first
-  end
-
-  # TODO spec
-  def previous
-    self.class.where('number < ?', self.number).order(number: :desc).limit(1).first
-  end
-
-  # TODO spec
-  def previous_bettable
-    self.class.bettable.where('number < ?', self.number).order(number: :desc).limit(1).first
-  end
-
-  # TODO spec
-  def any_other_bettable
-    self.class.bettable.where.not(number: self.number).order(number: :asc).limit(1).first
-  end
-
   def played_on_text
-    return nil if self.played_on.blank?
+    return nil unless self.played_on?
     VENUES[self.played_on]
-  end
-
-  # TODO spec
-  def self.all_in_order
-    self.ordered.all
   end
 
   # TODO spec
@@ -160,12 +127,19 @@ class Match < ActiveRecord::Base
     self.ordered.with_known_teams.all
   end
 
+  # Returns `true` if the match is ready to be scored.
+  # TODO spec
+  def scorable?
+    with_known_teams? &&
+      with_known_goals? &&
+      locked?
+  end
+
   private
 
   # validation
   def teams_are_not_the_same
-    if self.team_a &&
-      self.team_b &&
+    if with_known_teams? &&
       self.team_a == self.team_b
       errors.add(:team_b_id, :equal_teams)
     end
@@ -173,12 +147,37 @@ class Match < ActiveRecord::Base
 
   # validation
   def teams_must_be_of_the_same_group_as_the_match
-    if self.team_a &&
-      self.team_b &&
-      self.group &&
+    if with_known_teams? &&
+      self.group? &&
       [self.group, self.team_a.group, self.team_b.group].uniq.size != 1
       errors.add(:group, :not_the_same)
     end
+  end
+
+  # validation
+  def no_draw_after_group_phase
+    return unless with_known_teams? && with_known_goals? && !drawable?
+    if goals_draw?
+      if !with_known_penalty_goals?
+        errors.add(:penalty_goals_a, :blank)
+        errors.add(:penalty_goals_b, :blank)
+      end
+      if penalty_goals_draw?
+        errors.add(:penalty_goals_b, :equal)
+      end
+    end
+  end
+
+  def goals_draw?
+    with_known_goals? && self.goals_a == self.goals_b
+  end
+
+  def with_known_penalty_goals?
+    self.penalty_goals_a.present? && self.penalty_goals_b.present?
+  end
+
+  def penalty_goals_draw?
+    with_known_penalty_goals? && self.penalty_goals_a == self.penalty_goals_b
   end
 
 end

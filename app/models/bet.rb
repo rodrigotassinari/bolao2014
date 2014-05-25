@@ -61,7 +61,7 @@ class Bet < ActiveRecord::Base
   end
 
   def bettable_matches_still_to_bet
-    self.bettable_matches.ordered.where.not(id: self.matches.pluck(:id))
+    self.bettable_matches.where.not(id: self.matches.pluck(:id))
   end
 
   def bettable_matches_already_betted

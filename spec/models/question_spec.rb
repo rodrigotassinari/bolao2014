@@ -90,7 +90,7 @@ describe Question do
 
   describe '#locked?' do
     let(:question) { build(:boolean_question) }
-    let(:limit) { described_class::HOURS_BEFORE_START_TIME_TO_BET }
+    let(:limit) { described_class.hours_before_start_time_to_bet }
     it 'returns false for more than 1 hour before the question start' do
       Timecop.freeze(question.played_at - (limit * 60 + 1).minutes) do
         expect(question).to_not be_locked
@@ -115,7 +115,7 @@ describe Question do
 
   describe '#bettable?' do
     let(:question) { build(:boolean_question) }
-    let(:limit) { described_class::HOURS_BEFORE_START_TIME_TO_BET }
+    let(:limit) { described_class.hours_before_start_time_to_bet }
     it 'returns true for more than 1 hour before the question start' do
       Timecop.freeze(question.played_at - (limit * 60 + 1).minutes) do
         expect(question).to be_bettable
@@ -135,6 +135,16 @@ describe Question do
       Timecop.freeze(question.played_at + 1.minute) do
         expect(question).to_not be_bettable
       end
+    end
+  end
+
+  describe '#score!' do
+    subject { build(:boolean_question) }
+    it 'delegates to QuestionScorer#score_all!' do
+      question_scorer = double('QuestionScorer', score_all!: true)
+      QuestionScorer.should_receive(:new).with(subject).and_return(question_scorer)
+      question_scorer.should_receive(:score_all!)
+      subject.score!
     end
   end
 
