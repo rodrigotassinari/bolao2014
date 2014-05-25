@@ -83,6 +83,10 @@ class Match < ActiveRecord::Base
     self.played_at <= HOURS_BEFORE_START_TIME_TO_BET.hour.from_now
   end
 
+  def tie?
+    self.goals_a == self.goals_b
+  end
+
   # TODO spec
   def played?
     self.played_at < Time.zone.now &&
