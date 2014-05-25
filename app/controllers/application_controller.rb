@@ -58,5 +58,10 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
   helper_method :logged_in?
+  
+  def show_questions?
+    !ENV['DISABLE_QUESTIONS'].present?
+  end
+  helper_method :show_questions?
 
 end
