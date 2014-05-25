@@ -3,6 +3,10 @@ require 'spec_helper'
 describe QuestionBetsController do
 
   describe '#edit' do
+    it "redirect back to home if questions module is disabled", disable_questions: true do
+      get :edit, question_id: 42
+      expect(response).to redirect_to(root_path)
+    end
     context 'when not logged in' do
       it 'redirects to login' do
         get :edit, question_id: 42
@@ -18,6 +22,11 @@ describe QuestionBetsController do
   end
 
   describe '#create' do
+    it "redirect back to home if questions module is disabled", disable_questions: true do
+      post :create, question_id: 42
+      expect(response).to redirect_to(root_path)
+    end
+
     context 'when not logged in' do
       it 'redirects to login' do
         post :create, question_id: 42
@@ -33,6 +42,10 @@ describe QuestionBetsController do
   end
 
   describe '#update' do
+    it "redirect back to home if questions module is disabled", disable_questions: true do
+      put :update, question_id: 42
+      expect(response).to redirect_to(root_path)
+    end
     context 'when not logged in' do
       it 'redirects to login' do
         put :update, question_id: 42

@@ -19,11 +19,13 @@
       <p class="panel callout radius"><strong><%= t('.you_have_matches_to_bet', count: @matches.size, link: link_to(t('.do_it_now'), match_bet_path(@matches.first))).html_safe %>!</strong></p>
     <% end %>
   </div>
-  <div class="small-6 column">
-    <% if @questions.any? %>
-      <p class="panel callout radius"><strong><%= t('.you_have_questions_to_bet', count: @questions.size, link: link_to(t('.do_it_now'), question_bet_path(@questions.first))).html_safe %>!</strong></p>
-    <% end %>
-  </div>
+  <% if show_questions? %>
+    <div class="small-6 column">
+      <% if @questions.any? %>
+        <p class="panel callout radius"><strong><%= t('.you_have_questions_to_bet', count: @questions.size, link: link_to(t('.do_it_now'), question_bet_path(@questions.first))).html_safe %>!</strong></p>
+      <% end %>
+    </div>
+  <% end %>
 </div>
 
 <div class="row">
@@ -35,12 +37,14 @@
     <p><%= t '.matches_betted', count: @bet.matches_count %> (<%= link_to t('common.view'), bet_matches_path(filter: :betted) %>)</p>
     <p><%= t '.matches_to_bet', count: @matches.size %> (<%= link_to t('common.view'), bet_matches_path(filter: :to_bet) %>)</p>
   </div>
-  <div class="small-6 column">
-    <h3>
-      <%= Question.model_name.human(count: 2) %>
-      <small>(<%= link_to t('common.view'), bet_questions_path %>)</small>
-    </h3>
-    <p><%= t '.questions_betted', count: @bet.questions_count %> (<%= link_to t('common.view'), bet_questions_path(filter: :betted) %>)</p>
-    <p><%= t '.questions_to_bet', count: @questions.size %> (<%= link_to t('common.view'), bet_questions_path(filter: :to_bet) %>)</p>
-  </div>
+  <% if show_questions? %>
+    <div class="small-6 column">
+      <h3>
+        <%= Question.model_name.human(count: 2) %>
+        <small>(<%= link_to t('common.view'), bet_questions_path %>)</small>
+      </h3>
+      <p><%= t '.questions_betted', count: @bet.questions_count %> (<%= link_to t('common.view'), bet_questions_path(filter: :betted) %>)</p>
+      <p><%= t '.questions_to_bet', count: @questions.size %> (<%= link_to t('common.view'), bet_questions_path(filter: :to_bet) %>)</p>
+    </div>
+  <% end %>
 </div>

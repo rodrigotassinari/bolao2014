@@ -1,5 +1,7 @@
 class QuestionBetsController < ApplicationController
 
+  prepend_before_filter :questions_module
+
   before_action :find_bet
   before_action :find_question
   before_action :find_question_bet
@@ -68,6 +70,13 @@ class QuestionBetsController < ApplicationController
       redirect_to question_bet_path(next_question)
     else
       redirect_to bet_path
+    end
+  end
+
+  def questions_module
+    if !show_questions?
+      redirect_to root_path
+      return
     end
   end
 

@@ -10,7 +10,9 @@
   <div class="small-12 column">
     <h3>Palpites e Prazos</h3>
     <p>Os palpites sobre partidas podem ser feitos e alterados até 1 hora antes do início de cada partida.</p>
-    <p>Os palpites sobre perguntas bônus podem ser feitos e alterados até 1 hora antes do início do torneio (isto é, 1 hora antes do início da <%= link_to 'primeira partida', match_path(@first_match) %>).</p>
+    <% if show_questions? %>
+      <p>Os palpites sobre perguntas bônus podem ser feitos e alterados até 1 hora antes do início do torneio (isto é, 1 hora antes do início da <%= link_to 'primeira partida', match_path(@first_match) %>).</p>
+    <% end %>
     <p>Os jogos que ainda não foram determinados (das fases finais) só poderão ser palpitados depois de cadastrados nos sistema, o que ocorrerá tão logo as equipes dos jogos sejam determinadas. Cada participante receberá um email avisando da disponibilidade de cada nova partida para ser palpitada.</p>
 
     <h3>Pontuação</h3>
@@ -22,18 +24,24 @@
       <li>Acertou os gols do time B: <%= Match.new.goal_points %> pontos</li>
     </ul>
     <p>Como teremos <%= Match.count %> jogos, o máximo de pontos possíveis nos palpites de partidas então é de <%= Match.count * Match.new.total_points %> pontos.</p>
-    <h4>Perguntas Bônus</h4>
-    <p>Cada pergunta bônus pode render para o apostador:</p>
-    <ul>
-      <li><%= Question.new(answer_type: 'team').total_points %> pontos para perguntas onde a resposta é uma seleção;</li>
-      <li><%= Question.new(answer_type: 'player').total_points %> pontos para perguntas onde a resposta é um jogador;</li>
-      <li><%= Question.new(answer_type: 'boolean').total_points %> pontos para perguntas onde a resposta é um sim ou não;</li>
-    </ul>
-    <p>Só há uma resposta correta para cada pergunta, então ou ganha-se todos pontos ou nenhum ponto em cada pergunta.</p>
-    <p>Como teremos <%= Question.count %> perguntas bônus, o máximo de pontos possíveis nas perguntas então é de <%= Question.where(answer_type: 'team').map(&:total_points).sum + Question.where(answer_type: 'player').map(&:total_points).sum + Question.where(answer_type: 'boolean').map(&:total_points).sum %> pontos.</p>
+    <% if show_questions? %>
+      <h4>Perguntas Bônus</h4>
+      <p>Cada pergunta bônus pode render para o apostador:</p>
+      <ul>
+        <li><%= Question.new(answer_type: 'team').total_points %> pontos para perguntas onde a resposta é uma seleção;</li>
+        <li><%= Question.new(answer_type: 'player').total_points %> pontos para perguntas onde a resposta é um jogador;</li>
+        <li><%= Question.new(answer_type: 'boolean').total_points %> pontos para perguntas onde a resposta é um sim ou não;</li>
+      </ul>
+      <p>Só há uma resposta correta para cada pergunta, então ou ganha-se todos pontos ou nenhum ponto em cada pergunta.</p>
+      <p>Como teremos <%= Question.count %> perguntas bônus, o máximo de pontos possíveis nas perguntas então é de <%= Question.where(answer_type: 'team').map(&:total_points).sum + Question.where(answer_type: 'player').map(&:total_points).sum + Question.where(answer_type: 'boolean').map(&:total_points).sum %> pontos.</p>
+    <% end %>
     <h4>Ranking</h4>
-    <p>Haverá um ranking geral, onde os pontos conquistados nos palpites de partidas e de perguntas serão somados. Este é o ranking que conta para a premiação (ver abaixo).</p>
-    <p>Além disso, haverá rankings apenas considerando as partidas e apenas considerando as perguntas. Estes rankings tem caráter informativo apenas.</p>
+    <% if show_questions? %>
+      <p>Haverá um ranking geral, onde os pontos conquistados nos palpites de partidas e de perguntas serão somados. Este é o ranking que conta para a premiação (ver abaixo).</p>
+      <p>Além disso, haverá rankings apenas considerando as partidas e apenas considerando as perguntas. Estes rankings tem caráter informativo apenas.</p>
+    <% else %>
+      <p>Haverá um ranking geral, onde os pontos conquistados nos palpites de partidas serão somados. Este é o ranking que conta para a premiação (ver abaixo).</p>
+    <% end %>
 
     <h3>Pagamento da aposta</h3>
     <p>Cada apostador pode fazer uma aposta apenas.</p>
