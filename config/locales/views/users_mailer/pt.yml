@@ -1,0 +1,6 @@
+pt:
+  users_mailer:
+    match_bet_scored:
+      subject: '[%{app_short_name}] ???'
+    question_bet_scored:
+      subject: '[%{app_short_name}] ???'
