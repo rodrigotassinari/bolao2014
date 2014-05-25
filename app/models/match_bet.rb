@@ -71,16 +71,6 @@ class MatchBet < ActiveRecord::Base
     correct_goals_b? ? self.match.goal_points : 0
   end
 
-  # Calculates and saves points for this match_bet.
-  #
-  def score!
-    calculate_score
-    self.save!
-    # TODO update / recalculate bet total points
-    # TODO notify user (only if first time scoring / points changed)
-    true
-  end
-
   private
 
   def calculate_score
@@ -90,6 +80,10 @@ class MatchBet < ActiveRecord::Base
     self.points += goals_a_points
     self.points += goals_b_points
     self.scored_at = Time.zone.now
+  end
+
+  def notify_user_of_points_change(previous_points, current_points)
+    # TODO
   end
 
   # validate
