@@ -9,7 +9,8 @@ class BetPresenter < Presenter
     :cost,
     :to_prize,
     :payment_deadline,
-    :prize_split
+    :prize_split,
+    :score
 
   # TODO spec
   def css_id

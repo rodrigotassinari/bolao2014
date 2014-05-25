@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   resources :matches, only: [:index, :show]
   resources :questions, only: [:index, :show]
+  resources :bets, only: [:index]
 
   resource :bet, only: [:show]
   get '/bet/matches' => 'bets#matches', as: 'bet_matches'

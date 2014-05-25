@@ -2,6 +2,13 @@ class BetsController < ApplicationController
 
   before_action :find_bet
 
+  # GET /users
+  # Via: users_path
+  def index
+    @_bets = Bet.all.sort_by(&:score).reverse
+    @bets = BetPresenter.map(@_bets)
+  end
+
   # GET /bet
   # Via: bet_path
   #
