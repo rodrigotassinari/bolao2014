@@ -39,17 +39,6 @@ class MatchBet < ActiveRecord::Base
     end
   end
 
-  # Calculates and saves points for this match_bet.
-  #
-  def score!
-    self.points = MatchBetPoints.points(self)
-    self.scored_at = Time.zone.now
-    self.save!
-    # TODO update / recalculate bet total points
-    # TODO notify user (only if first time scoring / points changed)
-    true
-  end
-
   private
 
   # validate

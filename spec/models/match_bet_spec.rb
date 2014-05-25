@@ -131,27 +131,6 @@ describe MatchBet do
     end
   end
 
-  describe '#score!' do
-    let(:bet) { create(:bet) }
-    let(:team_a) { create(:team) }
-    let(:team_b) { create(:other_team) }
-    let(:match) { create(:match, number: 1, played_at: 1.day.ago, goals_a: 2, goals_b: 0, team_a: team_a, team_b: team_b) }
-    let(:finals_match) { create(:match, number: 2, played_at: 1.day.ago, goals_a: 1, goals_b: 1, penalty_goals_a: 2, penalty_goals_b: 4, team_a: team_a, team_b: team_b, round: 'round_16') }
-    subject { create(:match_bet, bet: bet, match: match) }
-    it 'sets / updates scored_at' do
-      subject.stub(:scorable?).and_return(true)
-      expect(subject.scored_at).to be_nil
-      subject.score!
-      subject.reload
-      expect(subject.scored_at).to_not be_nil
-      expect(subject.scored_at).to be_between(5.seconds.ago, 5.seconds.from_now)
-      expect(subject.points).to eql(match.total_points)
-    end
-    it 'notifies user when if scoring changed the points'
-    it 'does not notify user if scoring did not change the points'
-    it 'sets / updates the bet points if points changed'
-  end
-
   describe '#scored?' do
     let(:bet) { create(:bet) }
     let(:match) { create(:match) }
