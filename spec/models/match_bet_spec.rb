@@ -138,10 +138,6 @@ describe MatchBet do
     let(:match) { create(:match, number: 1, played_at: 1.day.ago, goals_a: 2, goals_b: 0, team_a: team_a, team_b: team_b) }
     let(:finals_match) { create(:match, number: 2, played_at: 1.day.ago, goals_a: 1, goals_b: 1, penalty_goals_a: 2, penalty_goals_b: 4, team_a: team_a, team_b: team_b, round: 'round_16') }
     subject { create(:match_bet, bet: bet, match: match) }
-    it 'raises error if not scorable' do
-      subject.should_receive(:scorable?).and_return(false)
-      expect { subject.score! }.to raise_error(RuntimeError, 'match_bet is not scorable')
-    end
     it 'sets / updates scored_at' do
       subject.stub(:scorable?).and_return(true)
       expect(subject.scored_at).to be_nil
@@ -149,74 +145,11 @@ describe MatchBet do
       subject.reload
       expect(subject.scored_at).to_not be_nil
       expect(subject.scored_at).to be_between(5.seconds.ago, 5.seconds.from_now)
+      expect(subject.points).to eql(match.total_points)
     end
     it 'notifies user when if scoring changed the points'
     it 'does not notify user if scoring did not change the points'
     it 'sets / updates the bet points if points changed'
-    context 'when all is wrong' do
-      subject { create(:match_bet, bet: bet, match: match, goals_a: 0, goals_b: 1) }
-      it 'scores 0 points' do
-        expect(subject.points).to eql(0)
-        subject.score!
-        expect(subject.points).to eql(0)
-      end
-    end
-    context 'when all is correct' do
-      subject { create(:match_bet, bet: bet, match: match, goals_a: 2, goals_b: 0) }
-      it 'scores full points' do
-        expect(subject.points).to eql(0)
-        subject.score!
-        expect(subject.points).to eql(match.total_points)
-      end
-    end
-    context 'when only goals_a is correct' do
-      subject { create(:match_bet, bet: bet, match: match, goals_a: 2, goals_b: 3) }
-      it 'scores one goals points' do
-        expect(subject.points).to eql(0)
-        subject.score!
-        expect(subject.points).to eql(match.goal_points * 1)
-      end
-    end
-    context 'when only goals_b is correct' do
-      subject { create(:match_bet, bet: bet, match: match, goals_a: 0, goals_b: 0) }
-      it 'scores one goals points' do
-        expect(subject.points).to eql(0)
-        subject.score!
-        expect(subject.points).to eql(match.goal_points * 1)
-      end
-    end
-    context 'when only result is correct' do
-      subject { create(:match_bet, bet: bet, match: match, goals_a: 3, goals_b: 2) }
-      it 'scores result points' do
-        expect(subject.points).to eql(0)
-        subject.score!
-        expect(subject.points).to eql(match.result_points)
-      end
-    end
-    context 'when result and goals_a is correct' do
-      subject { create(:match_bet, bet: bet, match: match, goals_a: 2, goals_b: 1) }
-      it 'scores result and one goals points' do
-        expect(subject.points).to eql(0)
-        subject.score!
-        expect(subject.points).to eql(match.result_points + match.goal_points)
-      end
-    end
-    context 'when result and goals_b is correct' do
-      subject { create(:match_bet, bet: bet, match: match, goals_a: 3, goals_b: 0) }
-      it 'scores result and one goals points' do
-        expect(subject.points).to eql(0)
-        subject.score!
-        expect(subject.points).to eql(match.result_points + match.goal_points)
-      end
-    end
-    context 'when goals are corrent but not result' do
-      subject { create(:match_bet, bet: bet, match: finals_match, goals_a: 1, goals_b: 1, penalty_winner_id: team_a.id) }
-      it 'scores two goals points' do
-        expect(subject.points).to eql(0)
-        subject.score!
-        expect(subject.points).to eql(match.goal_points * 2)
-      end
-    end
   end
 
   describe '#scored?' do

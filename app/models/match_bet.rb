@@ -39,42 +39,11 @@ class MatchBet < ActiveRecord::Base
     end
   end
 
-  # Returns true if the match_bet result is correct (matches the match result). The
-  # result is the winner of the match (or a draw).
-  # TODO spec
-  def correct_result?
-    self.match.scorable? && self.result == self.match.result
-  end
-
-  # TODO spec
-  def correct_goals_a?
-    self.match.scorable? && self.goals_a == self.match.goals_a
-  end
-
-  # TODO spec
-  def correct_goals_b?
-    self.match.scorable? && self.goals_b == self.match.goals_b
-  end
-
-  # TODO spec
-  def result_points
-    correct_result? ? self.match.result_points : 0
-  end
-
-  # TODO spec
-  def goals_a_points
-    correct_goals_a? ? self.match.goal_points : 0
-  end
-
-  # TODO spec
-  def goals_b_points
-    correct_goals_b? ? self.match.goal_points : 0
-  end
-
   # Calculates and saves points for this match_bet.
   #
   def score!
-    calculate_score
+    self.points = MatchBetPoints.points(self)
+    self.scored_at = Time.zone.now
     self.save!
     # TODO update / recalculate bet total points
     # TODO notify user (only if first time scoring / points changed)
@@ -82,15 +51,6 @@ class MatchBet < ActiveRecord::Base
   end
 
   private
-
-  def calculate_score
-    raise 'match_bet is not scorable' unless scorable?
-    self.points = 0
-    self.points += result_points
-    self.points += goals_a_points
-    self.points += goals_b_points
-    self.scored_at = Time.zone.now
-  end
 
   # validate
   def no_draws_after_groups_phase
