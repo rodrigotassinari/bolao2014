@@ -14,7 +14,7 @@ You will need:
 - PostgreSQL 9.3+
 - Redis 2.8+
 
-Clone the repo and setup `.env` with values for your environment (use `.env.example` as a starting point, changing the values where needed). If you use [direnv](https://github.com/zimbatm/direnv) (highly recommended), also use `.envrc.example` as a starting point to your `.envrc`.
+Clone the repo and setup `.env` with values for your environment (use `.env.example` as a starting point, changing the values where needed).
 
 Next run the standard Rails app seup:
 
