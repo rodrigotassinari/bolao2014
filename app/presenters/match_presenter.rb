@@ -117,12 +117,20 @@ class MatchPresenter < Presenter
 
   def team_flag(letter, width=42, length=28)
     team = @subject.send("team_#{letter}")
-    h.image_tag("flags/#{team.acronym}.png", class: 'team-flag', alt: "#{team.acronym} flag", width: width, length: length)
+    if team
+      h.image_tag("flags/#{team.acronym}.png", class: 'team-flag', alt: "#{team.acronym} flag", width: width, length: length)
+    else
+      h.image_tag("flags/unknown.png", class: 'team-flag unknown', alt: "unknown flag", width: width, length: length)
+    end
   end
 
   def team_name(letter)
     team = @subject.send("team_#{letter}")
-    h.content_tag(:span, team.name, class: 'team-name')
+    if team
+      h.content_tag(:span, team.name, class: 'team-name')
+    else
+      h.content_tag(:span, '?', class: 'team-name unknown')
+    end
   end
 
   def team_info(letter)

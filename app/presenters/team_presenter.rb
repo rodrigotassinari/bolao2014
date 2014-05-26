@@ -12,4 +12,8 @@ class TeamPresenter < Presenter
     "teams_#{@subject.id}"
   end
 
+  def flag(width=42, length=28)
+    h.image_tag("flags/#{@subject.acronym}.png", class: 'team-flag', alt: "#{@subject.acronym} flag", width: width, length: length)
+  end
+
 end
