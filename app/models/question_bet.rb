@@ -39,15 +39,6 @@ class QuestionBet < ActiveRecord::Base
     correct_answer? ? self.question.result_points : 0
   end
 
-  # Calculates and saves points for this question_bet.
-  def score!
-    calculate_score
-    self.save!
-    # TODO update / recalculate bet total points
-    # TODO notify user (only if first time scoring / points changed)
-    true
-  end
-
   private
 
   def calculate_score
@@ -55,6 +46,15 @@ class QuestionBet < ActiveRecord::Base
     self.points = 0
     self.points += result_points
     self.scored_at = Time.zone.now
+  end
+
+  def notify_user_of_points_change(previous_points, current_points)
+    UsersMailer.async_deliver(
+      :question_bet_scored,
+      self.id,
+      previous_points,
+      current_points
+    )
   end
 
   # validate

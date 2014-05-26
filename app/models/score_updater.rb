@@ -5,11 +5,16 @@ class ScoreUpdater
       match_bet.points = MatchBetPoints.new(match_bet).points
       match_bet.scored_at = Time.zone.now
       match_bet.save!
-    end
-    # TODO: change it to use SQL
-    affected_bets = Bet.joins(:matches).where(["matches.id = ?", match.id])
-    affected_bets.find_each do |bet|
+      bet = match_bet.bet
+      previous_points = bet.points
       update_bet(bet)
+      current_points = bet.points
+      UsersMailer.async_deliver(
+        :match_bet_scored,
+        match_bet.id,
+        previous_points,
+        current_points
+      )
     end
   end
 

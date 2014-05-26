@@ -1,0 +1,17 @@
+Olá <%= @user.name_or_email %>,
+
+Você marcou <%= @to_points %> pontos na partida #<%= @match.id %>.
+
+Seu palpite foi:
+
+  <%= @match_bet.one_line_summary %>
+
+E o resultado da partida foi:
+
+  <%= @match.one_line_summary %>
+
+Veja mais informações em do seu palpite em <%= match_bet_url(@match) %>
+
+Veja mais informações da partida em <%= match_url(@match) %>
+
+E veja como está o ranking dos apostadores em <%= root_url %>

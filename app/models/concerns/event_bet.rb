@@ -34,4 +34,16 @@ module EventBet
     self.scored_at? && self.points >= 0
   end
 
+  # Calculates and saves points for this event_bet.
+  def score!
+    previous_points = self.points
+    calculate_score
+    self.save!
+    current_points = self.points
+    # TODO update / recalculate bet total points
+    # notify user of the score
+    notify_user_of_points_change(previous_points, current_points)
+    true
+  end
+
 end

@@ -47,6 +47,21 @@ describe ScoreUpdater do
       expect(bet_2.points).to eql(match.total_points)
     end
 
+    it 'notifies users of the score' do
+      UsersMailer.should_receive(:async_deliver).with(
+        :match_bet_scored,
+        match_bet_1.id,
+        0,
+        match.total_points
+      )
+      UsersMailer.should_receive(:async_deliver).with(
+        :match_bet_scored,
+        match_bet_2.id,
+        0,
+        match.total_points
+      )
+      match.update_attributes!(played_at: 1.day.ago, goals_a: 2, goals_b: 0)
+    end
   end
 
 end

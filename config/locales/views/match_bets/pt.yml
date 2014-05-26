@@ -1,5 +1,7 @@
 pt:
   match_bets:
+    presenter:
+      with_winner_by_penaltys: ', com %{team_name} ganhando nos pênaltis'
     match_bet:
       change: 'Alterar'
     edit:

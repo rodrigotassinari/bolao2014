@@ -28,6 +28,7 @@ class QuestionBetPresenter < Presenter
     self.send("#{question.answer_type}_possible_answers_options")
   end
 
+  # TODO spec
   def answer_text
     return if answer.blank?
     case question.answer_type

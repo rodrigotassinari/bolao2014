@@ -1,0 +1,21 @@
+Olá <%= @user.name_or_email %>,
+
+Você marcou <%= @to_points %> pontos na pergunta #<%= @question.id %>.
+
+A pergunta era:
+
+  <%= @question.body %>
+
+Sua resposta foi:
+
+  <%= @question_bet.answer_text %>
+
+E a resposta correta da pergunta foi:
+
+  <%= @question.answer_text %>
+
+Veja mais informações da sua resposta em <%= question_bet_url(@question) %>
+
+Veja mais informações da pergunta em <%= question_url(@question) %>
+
+E veja como está o ranking dos apostadores em <%= root_url %>
