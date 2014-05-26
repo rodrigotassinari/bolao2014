@@ -16,7 +16,7 @@ class BetsController < ApplicationController
     # TODO
     @_bet = Bet.find(params[:id])
     @bet = BetPresenter.new(@_bet)
-    @_matches = Match.all_in_order
+    @_matches = Match.includes([:team_a, :team_b]).all_in_order
     @matches = MatchPresenter.map(@_matches)
   end
 
