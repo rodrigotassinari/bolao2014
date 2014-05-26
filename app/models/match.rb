@@ -184,7 +184,7 @@ class Match < ActiveRecord::Base
 
   def update_match_bets
     # TODO: move it into an async event
-    MatchBetScore.update(self) if played?
+    ScoreUpdater.update_match(self) if played?
     true
   end
 
