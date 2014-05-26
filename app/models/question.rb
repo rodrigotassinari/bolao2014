@@ -23,6 +23,8 @@ class Question < ActiveRecord::Base
   scope :bettable, -> { not_locked }
   scope :scorable, -> { with_known_answer.locked }
 
+  after_update :update_question_bets
+
   def body
     self.send("body_#{I18n.locale}".to_sym)
   end
@@ -120,6 +122,11 @@ class Question < ActiveRecord::Base
 
   def boolean_possible_answers
     ['true', 'false']
+  end
+
+  def update_question_bets
+    ScoreUpdater.update_question(self)
+    true
   end
 
 end

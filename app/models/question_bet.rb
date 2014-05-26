@@ -28,35 +28,6 @@ class QuestionBet < ActiveRecord::Base
     self.next_event_to_bet
   end
 
-  # Returns true if the question_bet answer is correct (matches the question answer).
-  # TODO spec
-  def correct_answer?
-    self.question.scorable? && self.answer == self.question.answer
-  end
-
-  # TODO spec
-  def result_points
-    correct_answer? ? self.question.result_points : 0
-  end
-
-  private
-
-  def calculate_score
-    raise 'question_bet is not scorable' unless scorable?
-    self.points = 0
-    self.points += result_points
-    self.scored_at = Time.zone.now
-  end
-
-  def notify_user_of_points_change(previous_points, current_points)
-    UsersMailer.async_deliver(
-      :question_bet_scored,
-      self.id,
-      previous_points,
-      current_points
-    )
-  end
-
   # validate
   def answer_must_match_answer_type
     return unless (self.answer.present? && self.question.present?)

@@ -2,7 +2,40 @@ require 'spec_helper'
 
 describe ScoreUpdater do
 
-  describe '.update' do
+  describe '.update_question' do
+    let!(:bet) { create(:bet) }
+    let!(:question) { create(:boolean_question, played_at: 1.day.ago) }
+    let!(:question_bet) { create(:boolean_question_bet, bet: bet, question: question, answer: 'true') }
+
+    it "set question points" do
+      expect(question_bet.scored_at).to be_nil
+      question.update_attributes!(answer: 'true')
+      question_bet.reload
+      expect(question_bet.scored_at).to be_between(5.seconds.ago, 5.seconds.from_now)
+      expect(question_bet.points).to eql(question.total_points)
+    end
+
+    it "set question points when incorrect" do
+      expect(question_bet.scored_at).to be_nil
+      question.update_attributes!(answer: 'false')
+      question_bet.reload
+      expect(question_bet.scored_at).to be_between(5.seconds.ago, 5.seconds.from_now)
+      expect(question_bet.points).to eql(0)
+    end
+
+    it 'notifies user of the score' do
+      UsersMailer.should_receive(:async_deliver).with(
+        :question_bet_scored,
+        question_bet.id,
+        0,
+        question.total_points
+      )
+      question.update_attributes!(answer: 'true')
+    end
+  end
+
+
+  describe '.update_match' do
     let!(:user_1) { create(:user)}
     let!(:user_2) { create(:user, email: 'tapajos@gmail.com')}
     let!(:bet_1) { create(:bet, user: user_1) }
