@@ -9,10 +9,11 @@
 - [X] page listing all question bets by the current user
 - [X] make user select a winner when submitting match bet in case of draw on round > group phase
 - [X] accept bet payment via PagSeguro
-- [ ] (WIP) match bet scoring when match is updated
-- [ ] (WIP) question bet scoring when question is updated
-- [ ] email notification to users when their match bets are scored with points and current rank
-- [ ] email notification to users when their question bets are scored with points and current rank
+- [X] match bet scoring when match is updated
+- [X] question bet scoring when question is updated
+- [X] email notification to users when their match bets are scored with points and current rank
+- [X] email notification to users when their question bets are scored with points and current rank
+- [ ] re-calculate full bet score when match_bet or question_bet changes
 - [ ] admin interface to edit matches
 - [ ] admin interface to edit questions
 - [ ] email notification to users with incomplete bets (notify x, y and z hours before lock time on each *_bet)
