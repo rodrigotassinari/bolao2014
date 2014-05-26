@@ -21,6 +21,10 @@ class BetPresenter < Presenter
     @user_presenter ||= UserPresenter.new(@subject.user) if @subject.user
   end
 
+  def match_bets
+    @match_bets ||= MatchBetPresenter.map(@subject.match_bets.all)
+  end
+
   # TODO spec
   def matches_count
     @subject.matches.count

@@ -16,6 +16,8 @@ class BetsController < ApplicationController
     # TODO
     @_bet = Bet.find(params[:id])
     @bet = BetPresenter.new(@_bet)
+    @_matches = Match.all_in_order
+    @matches = MatchPresenter.map(@_matches)
   end
 
 end
