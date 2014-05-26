@@ -1,13 +1,14 @@
-<% content_for(:title) { t('users.index.title') } %>
+<% content_for(:title) { t('bets.index.title') } %>
 
 <div class="row">
   <div class="small-12 column">
-    <h2><%= t('users.index.title') %></h2>
+    <h2><%= t('bets.index.title') %></h2>
     <table style="width:300px">
       <tr>
-        <td><%= t('users.index.raking') %></td>
-        <td><%= t('users.index.email') %></td>
-        <td><%= t('users.index.score') %></td>
+        <td><%= t('bets.index.raking') %></td>
+        <td><%= t('bets.index.email') %></td>
+        <td><%= t('bets.index.score') %></td>
+        <td><%= t('bets.index.payment_status') %></td>
       </tr>
       <%= render partial: 'bets/bet', collection: @bets %>
     </table>
