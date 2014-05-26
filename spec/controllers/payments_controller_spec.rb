@@ -3,7 +3,7 @@ require 'spec_helper'
 describe PaymentsController do
 
   # GET /bet/payment
-  # Via: bet_payment_path
+  # Via: my_bet_payment_path
   describe '#new' do
     context 'when not logged in' do
       it 'redirects with an error message' do
@@ -55,7 +55,7 @@ describe PaymentsController do
   end
 
   # POST /bet/payment
-  # Via: bet_payment_path
+  # Via: my_bet_payment_path
   describe '#create' do
     context 'when logged in' do
       let(:bet) { create(:bet) }
@@ -82,7 +82,7 @@ describe PaymentsController do
           end
           it 'redirects with an error', locale: :pt do # error with payment gateway
             post :create
-            expect(response).to redirect_to(bet_payment_path)
+            expect(response).to redirect_to(my_bet_payment_path)
             expect(flash[:error]).to eql('Não foi possível iniciar seu pagamento, tente novamente em breve ou entre em contato caso o erro continue.')
           end
         end
@@ -91,7 +91,7 @@ describe PaymentsController do
         let!(:payment) { create(:unpaid_payment, bet: bet) }
         it 'redirects with an error', locale: :pt do # in normal use should never get here in this state
           post :create
-          expect(response).to redirect_to(bet_payment_path)
+          expect(response).to redirect_to(my_bet_payment_path)
           expect(flash[:error]).to eql('Houve um erro interno ao iniciar seu pagamento, por favor entre em contato.')
         end
       end
@@ -99,7 +99,7 @@ describe PaymentsController do
         let!(:payment) { create(:paid_payment, bet: bet) }
         it 'redirects with an error', locale: :pt do # in normal use should never get here in this state
           post :create
-          expect(response).to redirect_to(bet_payment_path)
+          expect(response).to redirect_to(my_bet_payment_path)
           expect(flash[:error]).to eql('Houve um erro interno ao iniciar seu pagamento, por favor entre em contato.')
         end
       end

@@ -4,12 +4,12 @@
   <% if bet.paying? %>
     <p class="panel radius">
       <%= t '.bet_is_paying' %>
-      <%= link_to t('.check_payment'), bet_payment_path %>.
+      <%= link_to t('.check_payment'), my_bet_payment_path %>.
     </p>
   <% else %>
     <p class="panel callout radius">
       <%= t '.bet_is_not_paid', date: l(bet.payment_deadline, format: :detailed) %>
-      <%= link_to t('.pay_now'), bet_payment_path %>.
+      <%= link_to t('.pay_now'), my_bet_payment_path %>.
     </p>
   <% end %>
 <% end %>

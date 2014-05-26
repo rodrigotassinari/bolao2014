@@ -26,7 +26,7 @@
     </div>
   </div>
 <% else %>
-  <%= form_for @_question_bet, url: question_bet_path(@question), method: (@_question_bet.new_record? ? :post : :put) do |f| %>
+  <%= form_for @_question_bet, url: my_question_bet_path(@question), method: (@_question_bet.new_record? ? :post : :put) do |f| %>
     <div class="row">
       <div class="small-12 column">
         <%= f.label :answer, t('.your_answer') %>
@@ -47,6 +47,6 @@
 
 <div class="row">
   <div class="small-12 column">
-    <p><%= link_to t('.my_bet').downcase, bet_path %> | <%= link_to t('.all_questions'), bet_questions_path %> | <%= @question.link_to_previous %> | <%= @question.link_to_next %></p>
+    <p><%= link_to t('.my_bet').downcase, my_bet_path %> | <%= link_to t('.all_questions'), my_bet_questions_path %> | <%= @question.link_to_previous %> | <%= @question.link_to_next %></p>
   </div>
 </div>

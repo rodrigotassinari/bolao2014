@@ -2,19 +2,14 @@ require 'spec_helper'
 
 describe BetsController do
 
+  describe '#index' do
+    it { expect(get('/bets')).to route_to(controller: 'bets', action: 'index') }
+    it { expect(bets_path).to eq('/bets') }
+  end
+
   describe '#show' do
-    it { expect(get('/bet')).to route_to(controller: 'bets', action: 'show') }
-    it { expect(bet_path).to eq('/bet') }
-  end
-
-  describe '#matches' do
-    it { expect(get('/bet/matches')).to route_to(controller: 'bets', action: 'matches') }
-    it { expect(bet_matches_path).to eq('/bet/matches') }
-  end
-
-  describe '#questions' do
-    it { expect(get('/bet/questions')).to route_to(controller: 'bets', action: 'questions') }
-    it { expect(bet_questions_path).to eq('/bet/questions') }
+    it { expect(get('/bets/42')).to route_to(controller: 'bets', action: 'show', id: '42') }
+    it { expect(bet_path(42)).to eq('/bets/42') }
   end
 
 end

@@ -4,16 +4,16 @@ class QuestionBetsController < ApplicationController
   before_action :find_question
   before_action :find_question_bet
 
-  # GET /bet/questions/:question_id
-  # Via: question_bet_path(:question_id)
+  # GET /my_bet/questions/:question_id
+  # Via: my_question_bet_path
   #
   # Shows the bet of the current user on the supplied question, if any.
   # TODO spec
   def edit
   end
 
-  # POST /bet/questions/:question_id
-  # Via: question_bet_path(:question_id)
+  # POST /my_bet/questions/:question_id
+  # Via: my_question_bet_path
   #
   # Creates a bet on the supplied question by the current user.
   # TODO spec
@@ -28,7 +28,7 @@ class QuestionBetsController < ApplicationController
   end
 
   # PUT /bet/questions/:question_id
-  # Via: question_bet_path(:question_id)
+  # Via: my_question_bet_path
   #
   # Updates the bet on the supplied question by the current user.
   # TODO spec
@@ -65,9 +65,9 @@ class QuestionBetsController < ApplicationController
 
   def redirect_to_next_bettable(question_bet)
     if next_question = question_bet.next_question_to_bet
-      redirect_to question_bet_path(next_question)
+      redirect_to my_question_bet_path
     else
-      redirect_to bet_path
+      redirect_to my_bet_path
     end
   end
 

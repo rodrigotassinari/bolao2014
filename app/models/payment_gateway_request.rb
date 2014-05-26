@@ -60,8 +60,8 @@ class PaymentGatewayRequest
   def build_gateway_request_from_payment
     gateway_request.reference = payment.reference
     gateway_request.notification_url = payment_notifications_url(host: notification_host)
-    gateway_request.redirect_url = bet_payment_url(host: app_host)
-    gateway_request.abandon_url = bet_payment_url(host: app_host) # TODO use a diferent page?
+    gateway_request.redirect_url = my_bet_payment_url(host: app_host)
+    gateway_request.abandon_url = my_bet_payment_url(host: app_host) # TODO use a diferent page?
     # gateway_request.max_age = ??? # TODO use this?
     # gateway_request.max_uses = ??? # TODO use this?
     # gateway_request.sender = {email: payment.bet.user.email} # TODO use this?

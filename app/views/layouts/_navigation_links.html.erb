@@ -2,12 +2,12 @@
 <% if logged_in? %>
   <ul class="right">
     <li class="has-dropdown">
-      <%= link_to t('bets.show.title'), bet_path %>
+      <%= link_to t('my_bet.show.title'), my_bet_path %>
       <ul class="dropdown">
-        <li><%= link_to t('bets.show.overview'), bet_path %></li>
-        <li><%= link_to Match.model_name.human(count: 2), bet_matches_path %></li>
-        <li><%= link_to Question.model_name.human(count: 2), bet_questions_path %></li>
-        <li><%= link_to Payment.model_name.human(count: 1), bet_payment_path %></li>
+        <li><%= link_to t('my_bet.show.overview'), my_bet_path %></li>
+        <li><%= link_to Match.model_name.human(count: 2), my_bet_matches_path %></li>
+        <li><%= link_to Question.model_name.human(count: 2), my_bet_questions_path %></li>
+        <li><%= link_to Payment.model_name.human(count: 1), my_bet_payment_path %></li>
       </ul>
     </li>
 
