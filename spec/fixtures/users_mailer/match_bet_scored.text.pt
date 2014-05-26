@@ -1,0 +1,17 @@
+Olá someone@example.com,
+
+Você marcou 42 pontos na partida #1.
+
+Seu palpite foi:
+
+  Brasil 2 x 0 Croácia
+
+E o resultado da partida foi:
+
+  Brasil 3 x 2 Croácia
+
+Veja mais informações em do seu palpite em http://localhost:3000/bet/matches/1
+
+Veja mais informações da partida em http://localhost:3000/matches/1
+
+E veja como está o ranking dos apostadores em http://localhost:3000/

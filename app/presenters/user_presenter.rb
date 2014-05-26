@@ -6,7 +6,9 @@ class UserPresenter < Presenter
     :time_zone,
     :locale,
     :created_at,
-    :updated_at
+    :updated_at,
+    :name_or_email,
+    :email_with_name
 
   # TODO spec
   def css_id

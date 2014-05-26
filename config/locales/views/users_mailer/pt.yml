@@ -1,6 +1,6 @@
 pt:
   users_mailer:
     match_bet_scored:
-      subject: '[%{app_short_name}] ???'
+      subject: '[%{subject_prefix}] Veja quantos pontos você fez na partida #%{match_number}'
     question_bet_scored:
-      subject: '[%{app_short_name}] ???'
+      subject: '[%{subject_prefix}] Veja quantos pontos você fez na pergunta #%{question_number}'

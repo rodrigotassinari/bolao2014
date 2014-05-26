@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe MatchPresenter do
-  let(:team_a) { build(:team, name_en: 'Brazil', name_pt: 'Brasil', acronym: 'BRA', group: 'A') }
-  let(:team_b) { build(:other_team, name_en: 'Croatia', name_pt: 'Croácia', acronym: 'CRO', group: 'A') }
+  let(:team_a) { create(:team, name_en: 'Brazil', name_pt: 'Brasil', acronym: 'BRA', group: 'A') }
+  let(:team_b) { create(:other_team, name_en: 'Croatia', name_pt: 'Croácia', acronym: 'CRO', group: 'A') }
   let(:match) do
     build(:match,
       id: 49,
@@ -42,6 +42,23 @@ describe MatchPresenter do
   it 'wraps associated team_b in a presenter' do
     expect(subject.team_b).to be_an_instance_of(TeamPresenter)
     expect(subject.team_b.send(:subject)).to eq(team_b)
+  end
+
+  describe 'one_line_summary', locale: :pt do
+    it 'returns a string with all information of the match with penalty information' do
+      expect(subject.one_line_summary).to eql('Brasil 2 x 2 Croácia, nos pênaltis Brasil 4 x 3 Croácia')
+    end
+    it 'returns a string with all information of the match when draw' do
+      match.penalty_goals_a = nil
+      match.penalty_goals_b = nil
+      expect(subject.one_line_summary).to eql('Brasil 2 x 2 Croácia')
+    end
+    it 'returns a string with all information of the match when normal victory' do
+      match.penalty_goals_a = nil
+      match.penalty_goals_b = nil
+      match.goals_b = 1
+      expect(subject.one_line_summary).to eql('Brasil 2 x 1 Croácia')
+    end
   end
 
 end

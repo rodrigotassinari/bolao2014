@@ -1,0 +1,21 @@
+Olá someone@example.com,
+
+Você marcou 42 pontos na pergunta #2.
+
+A pergunta era:
+
+  Haverá alguma invasão de campo durante o campeonato?
+
+Sua resposta foi:
+
+  Sim
+
+E a resposta correta da pergunta foi:
+
+  Sim
+
+Veja mais informações da sua resposta em http://localhost:3000/bet/questions/2
+
+Veja mais informações da pergunta em http://localhost:3000/questions/2
+
+E veja como está o ranking dos apostadores em http://localhost:3000/

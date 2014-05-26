@@ -23,6 +23,15 @@ class MatchPresenter < Presenter
     "matches_#{@subject.id}"
   end
 
+  def one_line_summary
+    summary = "#{@subject.team_a.name} #{@subject.goals_a} x #{@subject.goals_b} #{@subject.team_b.name}"
+    if @subject.penalty_goals_a.present? && @subject.penalty_goals_b.present?
+      summary << I18n.t('match_presenter.with_penaltys')
+      summary << "#{@subject.team_a.name} #{@subject.penalty_goals_a} x #{@subject.penalty_goals_b} #{@subject.team_b.name}"
+    end
+    summary
+  end
+
   def link_to_next
     if @subject.next
       h.link_to(I18n.t('match_presenter.next_match'), r.match_bet_path(@subject.next))
