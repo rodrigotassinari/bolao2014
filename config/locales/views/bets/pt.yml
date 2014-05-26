@@ -1,7 +1,11 @@
 pt:
   bets:
     index:
-      title: 'Apostas'
+      title: 'Apostadores'
+      email: 'Email'
+      raking: 'Ranking'
+      score: 'Pontuação'
+      payment_status: "Pago?"
     show:
       title: 'Minha Aposta'
       overview: 'Visão Geral'

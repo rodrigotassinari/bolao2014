@@ -1,5 +1,7 @@
 # https://github.com/svenfuchs/rails-i18n/blob/master/rails/locale/pt-BR.yml
 pt:
+  true: "Sim"
+  false: "Não"
   date:
     abbr_day_names:
     - Dom
