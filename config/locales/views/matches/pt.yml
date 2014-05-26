@@ -8,6 +8,7 @@ pt:
     no_next_bettable_match: 'não há próxima partida palpitável'
     previous_bettable_match: 'partida anterior'
     no_previous_bettable_match: 'não há partida anterior palpitável'
+    with_penaltys: ', nos pênaltis '
   matches:
     match:
       view: 'Visualizar'

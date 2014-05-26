@@ -26,6 +26,14 @@ class MatchBetPresenter < Presenter
     end
   end
 
+  def one_line_summary
+    summary = "#{@subject.match.team_a.name} #{@subject.goals_a} x #{@subject.goals_b} #{@subject.match.team_b.name}"
+    if @subject.penalty_winner_id.present?
+      summary << I18n.t('match_bets.presenter.with_winner_by_penaltys', team_name: @subject.penalty_winner.name)
+    end
+    summary
+  end
+
   def goals_a_or_blank
     goals_or_blank(:a)
   end

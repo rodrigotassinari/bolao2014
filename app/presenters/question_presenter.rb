@@ -41,6 +41,18 @@ class QuestionPresenter < Presenter
     end
   end
 
+  def answer_text
+    return if @subject.answer.blank?
+    case @subject.answer_type
+    when 'team'
+      answer_object.name_and_acronym
+    when 'player'
+      answer_object.name_position_and_team
+    when 'boolean'
+      {'true' => t('common.yesyes'), 'false' => t('common.nono')}[@subject.answer.to_s]
+    end
+  end
+
   def betted_by?(bet)
     @subject.betted_by?(bet)
   end

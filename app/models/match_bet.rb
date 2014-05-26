@@ -21,6 +21,11 @@ class MatchBet < ActiveRecord::Base
 
   validate :no_penalty_winner_after_groups_phase_if_no_draw
 
+  def penalty_winner
+    return if penalty_winner_id.nil?
+    Team.find(penalty_winner_id)
+  end
+
   def next_match_to_bet
     self.next_event_to_bet
   end
@@ -83,7 +88,12 @@ class MatchBet < ActiveRecord::Base
   end
 
   def notify_user_of_points_change(previous_points, current_points)
-    # TODO
+    UsersMailer.async_deliver(
+      :match_bet_scored,
+      self.id,
+      previous_points,
+      current_points
+    )
   end
 
   # validate

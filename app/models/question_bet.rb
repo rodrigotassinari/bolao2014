@@ -49,7 +49,12 @@ class QuestionBet < ActiveRecord::Base
   end
 
   def notify_user_of_points_change(previous_points, current_points)
-    # TODO
+    UsersMailer.async_deliver(
+      :question_bet_scored,
+      self.id,
+      previous_points,
+      current_points
+    )
   end
 
   # validate

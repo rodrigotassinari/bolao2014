@@ -41,8 +41,8 @@ module EventBet
     self.save!
     current_points = self.points
     # TODO update / recalculate bet total points
-    # notify user (only if first time scoring / points changed)
-    notify_user_of_points_change(previous_points, current_points) if current_points != previous_points
+    # notify user of the score
+    notify_user_of_points_change(previous_points, current_points)
     true
   end
 

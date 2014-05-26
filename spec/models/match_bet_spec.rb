@@ -150,9 +150,17 @@ describe MatchBet do
       expect(subject.scored_at).to_not be_nil
       expect(subject.scored_at).to be_between(5.seconds.ago, 5.seconds.from_now)
     end
-    it 'notifies user when if scoring changed the points'
-    it 'does not notify user if scoring did not change the points'
-    it 'sets / updates the bet points if points changed'
+    it 'notifies user of the score' do
+      match_bet = create(:match_bet, bet: bet, match: match, goals_a: 2, goals_b: 0) # all is correct
+      UsersMailer.should_receive(:async_deliver).with(
+        :match_bet_scored,
+        match_bet.id,
+        0,
+        match.total_points
+      )
+      match_bet.score!
+    end
+    it 'sets / updates the bet total points'
     context 'when all is wrong' do
       subject { create(:match_bet, bet: bet, match: match, goals_a: 0, goals_b: 1) }
       it 'scores 0 points' do

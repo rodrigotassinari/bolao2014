@@ -142,10 +142,17 @@ describe QuestionBet do
       expect(subject.scored_at).to_not be_nil
       expect(subject.scored_at).to be_between(5.seconds.ago, 5.seconds.from_now)
     end
-    it 'notifies user when if scoring changed the points'
-    it 'does not notify user if scoring did not change the points'
-    it 'sets / updates the bet points if points changed'
-    it 'does not sets / updates the bet points if points did not change'
+    it 'notifies user of the score' do
+      question_bet = create(:boolean_question_bet, bet: bet, question: question, answer: 'true') # answer is correct
+      UsersMailer.should_receive(:async_deliver).with(
+        :question_bet_scored,
+        question_bet.id,
+        0,
+        question.total_points
+      )
+      question_bet.score!
+    end
+    it 'sets / updates the bet total points'
     context 'when answer is wrong' do
       subject { create(:boolean_question_bet, bet: bet, question: question, answer: 'false') }
       it 'scores 0 points' do
