@@ -14,10 +14,6 @@ class Bet < ActiveRecord::Base
     presence: true,
     numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
 
-  def score
-    match_bets.sum(:points) + question_bets.sum(:points)
-  end
-
   def cost
     BigDecimal(ENV.fetch('APP_BET_COST', 25))
   end
