@@ -2,14 +2,36 @@
 
 <div class="row">
   <div class="small-12 column">
-    <h2><%= t('users.index.title') %></h2>
-    <table style="width:300px">
-      <tr>
-        <td><%= t('users.index.raking') %></td>
-        <td><%= t('users.index.email') %></td>
-        <td><%= t('users.index.score') %></td>
-      </tr>
-      <%= render partial: 'bets/bet', collection: @bets %>
+    <h2><%= Bet.model_name.human(count: 2) %></h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 column">
+    <h3><%= t('.general_classification') %></h3>
+    <table>
+      <thead>
+        <tr>
+          <th class="hide-for-small-only"><%= t('.ranking') %></th>
+          <th><%= t('.user') %></th>
+          <th class="hide-for-small-only"><%= t('.completeness') %></th>
+          <th><%= t('.points') %></th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% index = 0 %>
+        <% @bets.each do |bet| %>
+          <% index += 1 %>
+          <tr>
+            <td class="hide-for-small-only"><%= index %></td>
+            <td><%= bet.user.name_or_email %></td>
+            <td class="hide-for-small-only"><%= bet.percentage %></td>
+            <td><%= bet.points %></td>
+            <td><%= link_to t('.view'), 'javascript:void(0)', onclick: "alert('#{I18n.t('common.soon')}');" %></td>
+          </tr>
+        <% end %>
+      </tbody>
     </table>
   </div>
 </div>

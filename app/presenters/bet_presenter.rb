@@ -31,4 +31,19 @@ class BetPresenter < Presenter
     @subject.questions.count
   end
 
+  # TODO spec
+  def match_bets_percentage
+    h.number_to_percentage @subject.match_bets_percentage, precision: 2
+  end
+
+  # TODO spec
+  def question_bets_percentage
+    h.number_to_percentage @subject.question_bets_percentage, precision: 2
+  end
+
+  # TODO spec
+  def percentage
+    h.number_to_percentage @subject.percentage, precision: 2
+  end
+
 end

@@ -49,11 +49,22 @@ class Bet < ActiveRecord::Base
   end
 
   # TODO spec
-  # TODO move to presenter?
   def match_bets_percentage
     bettable_count = Match.bettable.count
     return 0.0 if bettable_count == 0
-    ((self.match_bets.count / bettable_count.to_f) * 100.0).round(2)
+    (self.match_bets.count / bettable_count.to_f) * 100.0
+  end
+  # TODO spec
+  def question_bets_percentage
+    bettable_count = Question.bettable.count
+    return 0.0 if bettable_count == 0
+    (self.question_bets.count / bettable_count.to_f) * 100.0
+  end
+  # TODO spec
+  def percentage
+    bettable_count = (Match.bettable.count + Question.bettable.count)
+    return 0.0 if bettable_count == 0
+    ((self.match_bets.count + self.question_bets.count) / bettable_count.to_f) * 100.0
   end
 
   def matches_still_to_bet

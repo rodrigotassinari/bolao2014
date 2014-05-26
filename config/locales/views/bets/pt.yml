@@ -2,6 +2,14 @@ pt:
   bets:
     index:
       title: 'Apostas'
+      general_classification: 'Classificação Geral'
+      matches_classification: 'Classificação por Partidas'
+      questions_classification: 'Classificação por Perguntas'
+      ranking: 'Ranking'
+      user: 'Apostador'
+      completeness: '% preenchida'
+      points: 'Pontos'
+      view: 'Ver aposta'
     show:
       title: 'Minha Aposta'
       overview: 'Visão Geral'
