@@ -18,7 +18,7 @@ class UsersMailer < ActionMailer::Base
     @bet = @match_bet.bet
     @user = @bet.user
     mail(
-      subject: t('.subject', subject_prefix: subject_prefix, match_number: @match.number),
+      subject: t('users_mailer.match_bet_scored.subject', subject_prefix: subject_prefix, match_number: @match.number),
       to: @user.email_with_name
     )
   end
@@ -32,7 +32,7 @@ class UsersMailer < ActionMailer::Base
     @bet = @question_bet.bet
     @user = @bet.user
     mail(
-      subject: t('.subject', subject_prefix: subject_prefix, question_number: @question.number),
+      subject: t('users_mailer.question_bet_scored.subject', subject_prefix: subject_prefix, question_number: @question.number),
       to: @user.email_with_name
     )
   end
