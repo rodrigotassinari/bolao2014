@@ -2,6 +2,22 @@ require 'spec_helper'
 
 describe BetsController do
 
+  describe "GET /bets" do
+    let!(:user_1) { create(:user)}
+    let!(:user_2) { create(:user, email: 'tapajos@gmail.com')}
+    let!(:bet_1) { create(:bet, user: user_1, points: 10) }
+    let!(:bet_2) { create(:bet, user: user_2, points: 20) }
+
+    before(:each) { login_user(user_1) }
+
+    it "assigns bets sorted by score" do
+      get :index
+      expect(response).to be_success
+      expect(assigns(:bets).first.points).to eql(bet_2.points)
+      expect(assigns(:bets).last.points).to eql(bet_1.points)
+    end
+  end
+
   # GET /bet
   describe '#show' do
     context 'when not logged in' do
