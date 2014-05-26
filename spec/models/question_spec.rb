@@ -138,14 +138,4 @@ describe Question do
     end
   end
 
-  describe '#score!' do
-    subject { build(:boolean_question) }
-    it 'delegates to QuestionScorer#score_all!' do
-      question_scorer = double('QuestionScorer', score_all!: true)
-      QuestionScorer.should_receive(:new).with(subject).and_return(question_scorer)
-      question_scorer.should_receive(:score_all!)
-      subject.score!
-    end
-  end
-
 end

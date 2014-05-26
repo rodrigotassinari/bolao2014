@@ -131,20 +131,4 @@ describe MatchBet do
     end
   end
 
-  describe '#scored?' do
-    let(:bet) { create(:bet) }
-    let(:match) { create(:match) }
-    subject { create(:match_bet, bet: bet, match: match) }
-    it 'returns true if has been scored' do
-      subject.points = 10
-      subject.scored_at = 1.hour.ago
-      expect(subject).to be_scored
-    end
-    it 'returns false if has not been scored' do
-      subject.points = 0
-      subject.scored_at = nil
-      expect(subject).to_not be_scored
-    end
-  end
-
 end
