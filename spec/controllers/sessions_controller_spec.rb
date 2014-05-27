@@ -128,14 +128,85 @@ describe SessionsController do
       end
     end
     context 'when not logged in' do
-      context 'with matching email and authentication_token' do
-        # TODO
+      let(:user) { create(:user) }
+      before(:each) do
+        expect(user.remember_me_token).to_not be_blank
+        @password = user.generate_authentication_token!
       end
-      context 'with invalid email or authentication_token' do
-        # TODO
+      context 'with matching email and authentication_token' do
+        let(:params) { {email: user.email, password: @password} }
+        it 'logs in the user' do
+          expect(cookies.signed[:remember_me_token]).to be_blank
+          post :create, params
+          expect(cookies.signed[:remember_me_token]).to eq(user.remember_me_token)
+          expect(controller.send(:current_user)).to eq(user)
+        end
+        it 'remembers the login via permanent cookie if requested' do
+          expect(cookies.permanent.signed[:remember_me_token]).to be_blank
+          post :create, params.merge(remember_me: 'true')
+          expect(cookies.permanent.signed[:remember_me_token]).to eq(user.remember_me_token)
+          expect(controller.send(:current_user)).to eq(user)
+        end
+        it 'redirects to the bet page with a success message' do
+          post :create, params
+          expect(response).to redirect_to(my_bet_path)
+          expect(flash[:success]).to eq(I18n.t('sessions.create.flash.authentication_success'))
+        end
+      end
+      context 'with invalid email' do
+        let(:params) { {email: 'wrong email', password: @password} }
+        it 'redirects back to the login page with an error message' do
+          post :create, params
+          expect(response).to redirect_to(login_path)
+          expect(flash[:error]).to eq(I18n.t('sessions.create.flash.authentication_failed'))
+        end
+        it 'does not login the user and resets the session' do
+          expect(cookies.signed[:remember_me_token]).to be_blank
+          post :create, params
+          expect(cookies.signed[:remember_me_token]).to be_blank
+        end
+      end
+      context 'with invalid authentication_token' do
+        let(:params) { {email: user.email, password: 'wrong password'} }
+        it 'redirects back to the login page with an error message' do
+          post :create, params
+          expect(response).to redirect_to(login_path)
+          expect(flash[:error]).to eq(I18n.t('sessions.create.flash.authentication_failed'))
+        end
+        it 'does not login the user and resets the session' do
+          expect(cookies.signed[:remember_me_token]).to be_blank
+          post :create, params
+          expect(cookies.signed[:remember_me_token]).to be_blank
+        end
+        it 'invalidates the authentication_token' do
+          expect(user.authentication_token).to_not be_blank
+          expect(user.authentication_token_expires_at).to_not be_blank
+          post :create, params
+          user.reload
+          expect(user.authentication_token).to be_blank
+          expect(user.authentication_token_expires_at).to be_blank
+        end
       end
       context 'with missing authentication_token' do
-        # TODO
+        let(:params) { {email: user.email} }
+        it 'redirects back to the login page with an error message' do
+          post :create, params
+          expect(response).to redirect_to(login_path)
+          expect(flash[:error]).to eq(I18n.t('sessions.create.flash.authentication_failed'))
+        end
+        it 'does not login the user and resets the session' do
+          expect(cookies.signed[:remember_me_token]).to be_blank
+          post :create, params
+          expect(cookies.signed[:remember_me_token]).to be_blank
+        end
+        it 'invalidates the authentication_token' do
+          expect(user.authentication_token).to_not be_blank
+          expect(user.authentication_token_expires_at).to_not be_blank
+          post :create, params
+          user.reload
+          expect(user.authentication_token).to be_blank
+          expect(user.authentication_token_expires_at).to be_blank
+        end
       end
     end
   end
@@ -150,7 +221,22 @@ describe SessionsController do
       end
     end
     context 'when logged in' do
-      # TODO
+      let(:user) { build(:user) }
+      before(:each) { login_user(user) }
+      it 'destroys the session' do
+        controller.should_receive(:reset_session)
+        get :destroy
+      end
+      it 'erases the cookies' do
+        get :destroy
+        expect(cookies.signed[:remember_me_token]).to be_blank
+        expect(cookies.permanent.signed[:remember_me_token]).to be_blank
+      end
+      it 'redirects to the root page with a message' do
+        get :destroy
+        expect(response).to redirect_to(root_path)
+        expect(flash[:notice]).to eq(I18n.t('sessions.destroy.flash.logged_out'))
+      end
     end
   end
 

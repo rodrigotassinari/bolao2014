@@ -24,11 +24,10 @@ class SessionsController < ApplicationController
 
   # POST /login
   # Via: login_path
-  # TODO spec
   def create
-    email = sign_in_params[:email]
-    password = sign_in_params[:password]
-    remember_me = (sign_in_params[:remember_me] == 'true')
+    email = sign_in_params[:email].to_s
+    password = sign_in_params[:password].to_s
+    remember_me = (sign_in_params[:remember_me].to_s == 'true')
 
     @user = OneTimeLogin.find_user(email)
 
@@ -45,7 +44,6 @@ class SessionsController < ApplicationController
 
   # GET /logout
   # Via: logout_path
-  # TODO spec
   def destroy
     destroy_session
     flash[:notice] = t('.flash.logged_out')
