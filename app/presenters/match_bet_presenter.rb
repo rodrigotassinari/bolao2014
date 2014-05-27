@@ -87,7 +87,26 @@ class MatchBetPresenter < Presenter
       @subject.goals_a == @subject.goals_b
   end
 
+  # TODO spec
+  def points_with_explanation
+    if @subject.scored?
+      # TODO explain the points on the tooltip
+      tooltip_span(@subject.points.to_s, points_explanation, 'points known')
+    else
+      tooltip_span('?', t('match_bet_presenter.will_show_when_match_scored'), 'points unknown')
+    end.html_safe
+  end
+
   private
+
+  def tooltip_span(text, title, extra_css_class=nil)
+    h.content_tag(:span, text, 'data-tooltip' => true, 'class' => "has-tip #{extra_css_class}", 'title' => title)
+  end
+
+  def points_explanation
+    # TODO explain the points on the tooltip
+    I18n.t('common.soon')
+  end
 
   def goals_or_blank(letter)
     goals = @subject.send("goals_#{letter}")

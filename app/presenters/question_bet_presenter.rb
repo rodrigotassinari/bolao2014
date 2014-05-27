@@ -49,7 +49,27 @@ class QuestionBetPresenter < Presenter
     end
   end
 
+  # TODO spec
+  def points_with_explanation
+    if @subject.scored?
+      tooltip_span(@subject.points.to_s, points_explanation, 'points known')
+    else
+      tooltip_span('?', t('question_bet_presenter.will_show_when_question_scored'), 'points unknown')
+    end
+  end
+
   private
+
+  def tooltip_span(text, title, extra_css_class)
+    h.content_tag(:span, text, 'data-tooltip' => true, 'class' => "has-tip #{extra_css_class}", 'title' => title)
+  end
+
+  def points_explanation
+    t(
+      "question_bet_presenter.got_the_answer_#{@subject.correct_answer? ? 'right' : 'wrong'}",
+      points: @subject.points
+    )
+  end
 
   def team_possible_answers_options
     h.options_from_collection_for_select(question.possible_answers, :id, :name_and_acronym, answer_literal)
