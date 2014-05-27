@@ -1,0 +1,9 @@
+Olá <%= @user.name_or_email %>,
+
+Você ainda não deu sua resposta para a pergunta #<%= @question.id %>: "<%= @question.body %>"
+
+Você pode fazer isso em <%= my_question_bet_url(@question) %> até <%= l @question.bettable_until, format: :detailed %>.
+
+Veja mais informações da partida em <%= question_url(@question) %>
+
+E veja como está o ranking dos apostadores em <%= root_url %>

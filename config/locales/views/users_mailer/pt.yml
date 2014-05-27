@@ -5,4 +5,6 @@ pt:
     question_bet_scored:
       subject: '[%{subject_prefix}] Veja quantos pontos você fez na pergunta #%{question_number}'
     match_bet_reminder:
-      subject: '[%{subject_prefix}] Você ainda não deu o seu palpite para a partida #%{match_number}'
+      subject: '[%{subject_prefix}] Você ainda não deu seu palpite para a partida #%{match_number}'
+    question_bet_reminder:
+      subject: '[%{subject_prefix}] Você ainda não deu sua resposta para a pergunta #%{question_number}'

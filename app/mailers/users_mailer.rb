@@ -9,10 +9,23 @@ class UsersMailer < ActionMailer::Base
     )
   end
 
+  def self.send_bet_reminders(hours_before)
+    send_match_bet_reminders(hours_before)
+    send_question_bet_reminders(hours_before)
+  end
+
   def self.send_match_bet_reminders(hours_before)
     Bet.find_each do |bet|
       bet.bettable_matches_still_to_bet.hours_from_being_locked(hours_before).find_each do |match|
         async_deliver(:match_bet_reminder, match.id, bet.id)
+      end
+    end
+  end
+
+  def self.send_question_bet_reminders(hours_before)
+    Bet.find_each do |bet|
+      bet.bettable_questions_still_to_bet.hours_from_being_locked(hours_before).find_each do |question|
+        async_deliver(:question_bet_reminder, question.id, bet.id)
       end
     end
   end
@@ -52,6 +65,17 @@ class UsersMailer < ActionMailer::Base
     @user = UserPresenter.new(_bet.user)
     mail(
       subject: t('users_mailer.match_bet_reminder.subject', subject_prefix: subject_prefix, match_number: @match.number),
+      to: @user.email_with_name
+    )
+  end
+
+  def question_bet_reminder(question_id, bet_id)
+    _question = Question.find(question_id)
+    _bet = Bet.find(bet_id)
+    @question = QuestionPresenter.new(_question)
+    @user = UserPresenter.new(_bet.user)
+    mail(
+      subject: t('users_mailer.question_bet_reminder.subject', subject_prefix: subject_prefix, question_number: @question.number),
       to: @user.email_with_name
     )
   end
