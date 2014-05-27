@@ -35,7 +35,7 @@ class SessionsController < ApplicationController
     if @user.valid? && @user.validate_authentication_token!(password)
       create_session(@user, remember_me)
       flash[:success] = t('.flash.authentication_success')
-      redirect_to bet_path
+      redirect_to my_bet_path
     else
       destroy_session
       flash[:error] = t('.flash.authentication_failed')
