@@ -13,12 +13,17 @@
 - [X] question bet scoring when question is updated
 - [X] email notification to users when their match bets are scored with points and current rank
 - [X] email notification to users when their question bets are scored with points and current rank
+- [ ] send match_bet_reminder and question_bet_reminder email notifications to users with incomplete bets x, y and z hours before lock time on each event
+- [ ] improve `/my_bet` page
+- [ ] improve `/my_bet/matches` page
+- [ ] improve `/my_bet/questions` page
+- [ ] improve match bet form on mobile browsers
+- [ ] improve question bet form on mobile browsers
+- [ ] send email notification to users when new matches become available to bet on
 - [ ] re-calculate full bet score when match_bet or question_bet changes
+- [ ] allow current user to change name, avatar, time zone, locale, etc
 - [ ] admin interface to edit matches
 - [ ] admin interface to edit questions
-- [ ] (WIP - question reminder is missing) email notification to users with incomplete bets (notify x, y and z hours before lock time on each *_bet)
-- [ ] email notification to users when new matches become available to bet on
-- [ ] allow current user to change name, avatar, time zone, locale, etc
 - [ ] list all bets in order of points in 3 rankings: overall, matches only, questions only
 - [ ] graph all bets' points / rank evolution through time
 - [ ] allow users to comment on matches
