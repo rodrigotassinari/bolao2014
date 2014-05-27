@@ -40,12 +40,12 @@ class Bet < ActiveRecord::Base
 
   # TODO spec
   def paid?
-    self.payment && self.payment.paid?
+    self.payment.present? && self.payment.paid?
   end
 
   # TODO spec
   def paying?
-    self.payment && self.payment.paying?
+    self.payment.present? && self.payment.paying?
   end
 
   # TODO spec

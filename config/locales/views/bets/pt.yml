@@ -1,4 +1,8 @@
 pt:
+  bet_presenter:
+    paid: 'Paga'
+    paying: 'Pagando'
+    unpaid: 'Não paga'
   bets:
     index:
       title: 'Apostas'
@@ -8,6 +12,7 @@ pt:
       ranking: 'Ranking'
       user: 'Apostador'
       completeness: '% preenchida'
+      payment: 'Pagamento'
       points: 'Pontos'
       view: 'Ver aposta'
     show:

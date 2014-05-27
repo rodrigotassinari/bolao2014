@@ -46,4 +46,11 @@ class BetPresenter < Presenter
     h.number_to_percentage @subject.percentage, precision: 2
   end
 
+  # TODO spec
+  def payment_status
+    return t('bet_presenter.paid') if @subject.paid?
+    return t('bet_presenter.paying') if @subject.paying?
+    t('bet_presenter.unpaid')
+  end
+
 end
