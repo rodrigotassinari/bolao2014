@@ -29,9 +29,17 @@ class MatchBetPresenter < Presenter
   def one_line_summary
     summary = "#{@subject.match.team_a.name} #{@subject.goals_a} x #{@subject.goals_b} #{@subject.match.team_b.name}"
     if @subject.penalty_winner_id.present?
-      summary << I18n.t('match_bets.presenter.with_winner_by_penaltys', team_name: @subject.penalty_winner.name)
+      summary << I18n.t('match_bet_presenter.with_winner_by_penaltys', team_name: @subject.penalty_winner.name)
     end
     summary
+  end
+
+  def goals_a_if_locked
+    goals_if_locked(:a)
+  end
+
+  def goals_b_if_locked
+    goals_if_locked(:b)
   end
 
   def goals_a_or_blank
@@ -72,6 +80,14 @@ class MatchBetPresenter < Presenter
   def goals_or_blank(letter)
     goals = @subject.send("goals_#{letter}")
     goals.blank? ? 'N/A' : goals.to_s
+  end
+
+  def goals_if_locked(letter)
+    if @subject.match.locked?
+      goals_or_blank(letter)
+    else
+      h.content_tag(:span, '?', 'data-tooltip' => true, 'class' => 'has-tip', 'title' => t('match_bet_presenter.will_show_when_match_locked'))
+    end
   end
 
 end

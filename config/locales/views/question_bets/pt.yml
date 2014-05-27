@@ -1,4 +1,6 @@
 pt:
+  question_bet_presenter:
+    will_show_when_question_locked: 'Exibido apenas após pergunta estar com apostas encerradas'
   question_bets:
     question_bet:
       change: 'Alterar'

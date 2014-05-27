@@ -22,7 +22,19 @@ class BetPresenter < Presenter
   end
 
   def match_bets
-    @match_bets ||= MatchBetPresenter.map(@subject.match_bets.all)
+    @match_bets ||= MatchBetPresenter.map(@subject.match_bets.all.sort_by { |mb| mb.match.number })
+  end
+
+  def question_bets
+    @question_bets ||= QuestionBetPresenter.map(@subject.question_bets.all.sort_by { |mb| mb.question.number })
+  end
+
+  def match_bets_points
+    @subject.match_bets.sum(:points)
+  end
+
+  def question_bets_points
+    @subject.question_bets.sum(:points)
   end
 
   # TODO spec
@@ -33,6 +45,16 @@ class BetPresenter < Presenter
   # TODO spec
   def questions_count
     @subject.questions.count
+  end
+
+  # TODO spec
+  def bettable_matches_count
+    @subject.bettable_matches.count
+  end
+
+  # TODO spec
+  def bettable_questions_count
+    @subject.bettable_questions.count
   end
 
   # TODO spec

@@ -17,3 +17,11 @@ pt:
       view: 'Ver aposta'
     show:
       title: 'Aposta de %{user_name}'
+      completeness: 'Percentual preenchida'
+      payment: 'Status do pagamento'
+      points: 'Pontos'
+      guess: 'Palpite'
+      answer: 'Resposta'
+      showing_only_locked_events: 'Apenas as partidas e perguntas com apostas já encerradas serão exibidas por completo abaixo.'
+      matches_betted: 'palpitadas'
+      questions_betted: 'respondidas'

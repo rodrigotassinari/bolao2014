@@ -1,31 +1,70 @@
-<% content_for(:title) { Bet.model_name.human(count: 2) } %>
+<% content_for(:title) { t('.title', user_name: @bet.user.name_or_email) } %>
 
 <div class="row">
   <div class="small-12 column">
-    <h2><%= Bet.model_name.human(count: 2) %> - <%= @bet.user.email %></h2>
-  </div>
-</div>
+    <h2><%= Bet.model_name.human(count: 2) %></h2>
+    <h3><%= @bet.user.name_or_email %></h3>
 
-<div class="row">
-  <div class="small-12 column">
-    <table>
+    <div class="bet-info">
+      <ul class="disc">
+        <li><%= t('.completeness') %>: <%= @bet.percentage %></li>
+        <li><%= t('.payment') %>: <%= @bet.payment_status %></li>
+        <li><%= t('.points') %>: <%= @bet.points %></li>
+      </ul>
+    </div>
+
+    <p class="panel radius"><%= t('.showing_only_locked_events') %></p>
+
+    <h4><%= Match.model_name.human(count: 2) %></h4>
+    <p><%= @bet.matches_count %> / <%= @bet.bettable_matches_count %> (<%= @bet.match_bets_percentage %>) <%= t('.matches_betted') %>, <%= @bet.match_bets_points %> <%= t('.points').downcase %></p>
+    <table id="match_bets_table">
+      <thead>
+        <tr>
+          <th class="text-center hide-for-small-only"><%= Match.model_name.human(count: 1) %></th>
+          <th class="text-center" colspan="7"><%= t('.guess') %></th>
+          <th class="text-center"><%= t('.points') %></th>
+        </tr>
+      </thead>
       <tbody>
-        <% @matches.each do |match| %>
-          <% match_bet = @bet.match_bets.detect {|mb| mb.match_id == match.id } %>
+        <% @bet.match_bets.each do |match_bet| %>
+          <% match = match_bet.match %>
           <tr>
             <td><%= link_to "##{match.number}", match_path(match) %></td>
-            <td class="hide-for-small-only"><%= match.round_text %></td>
-            <td class="hide-for-small-only"><%= l match.played_at, format: :short %></td>
             <td class="text-center hide-for-small-only"><%= match.team_a_flag %></td>
             <td class="text-left"><%= match.team_a_name %></td>
-            <td class="text-center"><%= match_bet && match_bet.goals_a || '?' %></td>
+            <td class="text-center"><%= match_bet.goals_a_if_locked %></td>
             <td class="text-center">x</td>
-            <td class="text-center"><%= match_bet && match_bet.goals_b || '?' %></td>
+            <td class="text-center"><%= match_bet.goals_b_if_locked %></td>
             <td class="text-right"><%= match.team_b_name %></td>
             <td class="text-center hide-for-small-only"><%= match.team_b_flag %></td>
+            <td class="text-center"><%= match_bet.points %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
+
+    <h4><%= Question.model_name.human(count: 2) %></h4>
+    <p><%= @bet.questions_count %> / <%= @bet.bettable_questions_count %> (<%= @bet.question_bets_percentage %>) <%= t('.questions_betted') %>, <%= @bet.question_bets_points %> <%= t('.points').downcase %></p>
+    <table id="question_bets_table">
+      <thead>
+        <tr>
+          <th class="text-center" colspan=2><%= Question.model_name.human(count: 1) %></th>
+          <th class="text-center"><%= t('.answer') %></th>
+          <th class="text-center"><%= t('.points') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @bet.question_bets.each do |question_bet| %>
+          <% question = question_bet.question %>
+          <tr>
+            <td><%= link_to "##{question.number}", 'javascript:void(0)', onclick: "alert('#{I18n.t('common.soon')}');" %></td>
+            <td class="text-left"><%= truncate question.body, length: 50 %></td>
+            <td class="text-left"><%= question_bet.answer_text_if_locked %></td>
+            <td class="text-center"><%= question_bet.points %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
   </div>
 </div>

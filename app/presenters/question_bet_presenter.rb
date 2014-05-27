@@ -41,6 +41,14 @@ class QuestionBetPresenter < Presenter
     end
   end
 
+  def answer_text_if_locked
+    if @subject.question.locked?
+      answer_text
+    else
+      h.content_tag(:span, '?', 'data-tooltip' => true, 'class' => 'has-tip', 'title' => t('question_bet_presenter.will_show_when_question_locked'))
+    end
+  end
+
   private
 
   def team_possible_answers_options
