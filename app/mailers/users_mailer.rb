@@ -9,10 +9,10 @@ class UsersMailer < ActionMailer::Base
     )
   end
 
-  def self.send_match_bet_reminder(hours_before)
+  def self.send_match_bet_reminders(hours_before)
     Bet.find_each do |bet|
-      bet.bettable_matches_still_to_bet.where(["AGE(played_at, ?) <= '? hours'", Time.now, hours_before + 1]).find_each do |match|
-        async_deliver('match_bet_reminder', match.id, bet.id)
+      bet.bettable_matches_still_to_bet.where(["AGE(matches.played_at, ?) <= '? hours'", Time.now, hours_before + 1]).find_each do |match|
+        async_deliver(:match_bet_reminder, match.id, bet.id)
       end
     end
   end
@@ -47,9 +47,9 @@ class UsersMailer < ActionMailer::Base
 
   def match_bet_reminder(match_id, bet_id)
     _match = Match.find(match_id)
+    _bet = Bet.find(bet_id)
     @match = MatchPresenter.new(_match)
-    bet = Bet.find(bet_id)
-    @user = bet.user
+    @user = UserPresenter.new(_bet.user)
     mail(
       subject: t('users_mailer.match_bet_reminder.subject', subject_prefix: subject_prefix, match_number: @match.number),
       to: @user.email_with_name

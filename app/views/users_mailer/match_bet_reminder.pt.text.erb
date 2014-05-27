@@ -1,8 +1,8 @@
 Olá <%= @user.name_or_email %>,
 
-Você ainda não deu o seu palpite para a partida #<%= @match.id %> entre <%= @match.team_a.name_pt %> e <%= @match.team_b.name_pt %>.
+Você ainda não deu o seu palpite para a partida #<%= @match.id %> entre <%= @match.team_a.name %> e <%= @match.team_b.name %>.
 
-Você pode fazer isso em <%= my_match_bet_url(@match) %>.
+Você pode fazer isso em <%= my_match_bet_url(@match) %> até <%= l @match.bettable_until, format: :detailed %>.
 
 Veja mais informações da partida em <%= match_url(@match) %>
 
