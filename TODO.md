@@ -16,7 +16,7 @@
 - [ ] re-calculate full bet score when match_bet or question_bet changes
 - [ ] admin interface to edit matches
 - [ ] admin interface to edit questions
-- [X] email notification to users with incomplete bets (notify x, y and z hours before lock time on each *_bet)
+- [ ] (WIP - question reminder is missing) email notification to users with incomplete bets (notify x, y and z hours before lock time on each *_bet)
 - [ ] email notification to users when new matches become available to bet on
 - [ ] allow current user to change name, avatar, time zone, locale, etc
 - [ ] list all bets in order of points in 3 rankings: overall, matches only, questions only
