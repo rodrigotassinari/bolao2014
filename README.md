@@ -1,6 +1,6 @@
 # bolao2014
 
-The "bolão" software running powering [Bolão PiTTlândia Copa do Mundo 2014](http://bolao.pittlandia.net)
+The "bolão" software powering [Bolão PiTTlândia Copa do Mundo 2014](http://bolao.pittlandia.net)
 
 [![Build Status](https://travis-ci.org/rtopitt/bolao2014.svg?branch=master)](https://travis-ci.org/rtopitt/bolao2014)
 [![Code Climate](https://codeclimate.com/github/rtopitt/bolao2014.png)](https://codeclimate.com/github/rtopitt/bolao2014)
@@ -16,7 +16,7 @@ You will need:
 
 Clone the repo and setup `.env` with values for your environment (use `.env.example` as a starting point, changing the values where needed).
 
-Next run the standard Rails app seup:
+Next run the standard Rails app setup:
 
 ```
 $ bundle install
