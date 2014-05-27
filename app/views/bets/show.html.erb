@@ -1,46 +1,31 @@
-<% content_for(:title) { t('.title') } %>
+<% content_for(:title) { Bet.model_name.human(count: 2) } %>
 
 <div class="row">
   <div class="small-12 column">
-    <h2><%= t '.title' %></h2>
-    <p><%= t '.current_score' %>: <%= @bet.points %></p>
+    <h2><%= Bet.model_name.human(count: 2) %> - <%= @bet.user.email %></h2>
   </div>
 </div>
 
 <div class="row">
   <div class="small-12 column">
-    <%= render partial: 'bets/payment', locals: {bet: @bet} %>
-  </div>
-</div>
-
-<div class="row">
-  <div class="small-6 column">
-    <% if @matches.any? %>
-      <p class="panel callout radius"><strong><%= t('.you_have_matches_to_bet', count: @matches.size, link: link_to(t('.do_it_now'), match_bet_path(@matches.first))).html_safe %>!</strong></p>
-    <% end %>
-  </div>
-  <div class="small-6 column">
-    <% if @questions.any? %>
-      <p class="panel callout radius"><strong><%= t('.you_have_questions_to_bet', count: @questions.size, link: link_to(t('.do_it_now'), question_bet_path(@questions.first))).html_safe %>!</strong></p>
-    <% end %>
-  </div>
-</div>
-
-<div class="row">
-  <div class="small-6 column">
-    <h3>
-      <%= Match.model_name.human(count: 2) %>
-      <small>(<%= link_to t('common.view'), bet_matches_path %>)</small>
-    </h3>
-    <p><%= t '.matches_betted', count: @bet.matches_count %> (<%= link_to t('common.view'), bet_matches_path(filter: :betted) %>)</p>
-    <p><%= t '.matches_to_bet', count: @matches.size %> (<%= link_to t('common.view'), bet_matches_path(filter: :to_bet) %>)</p>
-  </div>
-  <div class="small-6 column">
-    <h3>
-      <%= Question.model_name.human(count: 2) %>
-      <small>(<%= link_to t('common.view'), bet_questions_path %>)</small>
-    </h3>
-    <p><%= t '.questions_betted', count: @bet.questions_count %> (<%= link_to t('common.view'), bet_questions_path(filter: :betted) %>)</p>
-    <p><%= t '.questions_to_bet', count: @questions.size %> (<%= link_to t('common.view'), bet_questions_path(filter: :to_bet) %>)</p>
+    <table>
+      <tbody>
+        <% @matches.each do |match| %>
+          <% match_bet = @bet.match_bets.detect {|mb| mb.match_id == match.id } %>
+          <tr>
+            <td><%= link_to "##{match.number}", match_path(match) %></td>
+            <td class="hide-for-small-only"><%= match.round_text %></td>
+            <td class="hide-for-small-only"><%= l match.played_at, format: :short %></td>
+            <td class="text-center hide-for-small-only"><%= match.team_a_flag %></td>
+            <td class="text-left"><%= match.team_a_name %></td>
+            <td class="text-center"><%= match_bet && match_bet.goals_a || '?' %></td>
+            <td class="text-center">x</td>
+            <td class="text-center"><%= match_bet && match_bet.goals_b || '?' %></td>
+            <td class="text-right"><%= match.team_b_name %></td>
+            <td class="text-center hide-for-small-only"><%= match.team_b_flag %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>

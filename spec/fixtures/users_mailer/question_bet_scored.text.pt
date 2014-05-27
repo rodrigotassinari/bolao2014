@@ -14,8 +14,8 @@ E a resposta correta da pergunta foi:
 
   Sim
 
-Veja mais informações da sua resposta em http://localhost:3000/bet/questions/2
+Veja mais informações da sua resposta em http://test.host/my_bet/questions/2
 
-Veja mais informações da pergunta em http://localhost:3000/questions/2
+Veja mais informações da pergunta em http://test.host/questions/2
 
-E veja como está o ranking dos apostadores em http://localhost:3000/
+E veja como está o ranking dos apostadores em http://test.host/

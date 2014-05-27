@@ -4,16 +4,16 @@ class MatchBetsController < ApplicationController
   before_action :find_match
   before_action :find_match_bet
 
-  # GET /bet/matches/:match_id
-  # Via: match_bet_path(:match_id)
+  # GET /my_bet/matches/:match_id
+  # Via: my_match_bet_path(:match_id)
   #
   # Shows the bet of the current user on the supplied match, if any.
   # TODO spec
   def edit
   end
 
-  # POST /bet/matches/:match_id
-  # Via: match_bet_path(:match_id)
+  # POST /my_bet/matches/:match_id
+  # Via: my_match_bet_path(:match_id)
   #
   # Creates a bet on the supplied match by the current user.
   # TODO spec
@@ -27,8 +27,8 @@ class MatchBetsController < ApplicationController
     end
   end
 
-  # PUT /bet/matches/:match_id
-  # Via: match_bet_path(:match_id)
+  # PUT /my_bet/matches/:match_id
+  # Via: my_match_bet_path(:match_id)
   #
   # Updates the bet on the supplied match by the current user.
   # TODO spec
@@ -65,9 +65,9 @@ class MatchBetsController < ApplicationController
 
   def redirect_to_next_bettable(match_bet)
     if next_match = match_bet.next_match_to_bet
-      redirect_to match_bet_path(next_match)
+      redirect_to my_match_bet_path(next_match)
     else
-      redirect_to bet_path
+      redirect_to my_bet_path
     end
   end
 

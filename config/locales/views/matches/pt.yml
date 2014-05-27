@@ -10,6 +10,8 @@ pt:
     no_previous_bettable_match: 'não há partida anterior palpitável'
     with_penaltys: ', nos pênaltis '
   matches:
+    index:
+      view: 'Visualizar'
     match:
       view: 'Visualizar'
     show:

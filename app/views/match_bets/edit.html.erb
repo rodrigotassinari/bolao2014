@@ -55,7 +55,7 @@
     </div>
   </div>
 <% else %>
-  <%= form_for @_match_bet, url: match_bet_path(@match), method: (@_match_bet.new_record? ? :post : :put), html: {id: @match_bet.form_id} do |f| %>
+  <%= form_for @_match_bet, url: my_match_bet_path(@match), method: (@_match_bet.new_record? ? :post : :put), html: {id: @match_bet.form_id} do |f| %>
     <div class="row">
       <div class="small-3 columns text-left">
         <p><%= @match.team_a_name %></p>
@@ -118,8 +118,8 @@
 <div class="row">
   <div class="small-12 column">
     <p>
-      <%= link_to t('.my_bet').downcase, bet_path %> |
-      <%= link_to t('.all_matches'), bet_matches_path %> |
+      <%= link_to t('.my_bet').downcase, my_bet_path %> |
+      <%= link_to t('.all_matches'), my_bet_matches_path %> |
       <%= @match.link_to_previous_bettable %> |
       <%= @match.link_to_next_bettable %>
     </p>

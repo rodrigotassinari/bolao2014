@@ -3,7 +3,7 @@ class MatchesController < ApplicationController
   # GET /matches
   # Via: matches_path
   def index
-    @_matches = Match.all_in_order
+    @_matches = Match.includes([:team_a, :team_b]).all_in_order
     @matches = MatchPresenter.map(@_matches)
   end
 

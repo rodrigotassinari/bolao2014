@@ -13,6 +13,7 @@
 - [X] question bet scoring when question is updated
 - [X] email notification to users when their match bets are scored with points and current rank
 - [X] email notification to users when their question bets are scored with points and current rank
+- [X] re-calculate full bet score when match_bet or question_bet changes
 - [ ] admin interface to edit matches
 - [ ] admin interface to edit questions
 - [ ] email notification to users with incomplete bets (notify x, y and z hours before lock time on each *_bet)

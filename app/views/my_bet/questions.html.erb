@@ -7,9 +7,9 @@
 
     <dl class="sub-nav">
       <dt><%= t '.filter' %>:</dt>
-      <dd class="<%= 'active' if current_filter.blank? %>"><%= link_to t('.all'), bet_questions_path %></dd>
-      <dd class="<%= 'active' if current_filter.betted? %>"><%= link_to t('.betted'), bet_questions_path(filter: :betted) %></dd>
-      <dd class="<%= 'active' if current_filter.to_bet? %>"><%= link_to t('.to_bet'), bet_questions_path(filter: :to_bet) %></dd>
+      <dd class="<%= 'active' if current_filter.blank? %>"><%= link_to t('.all'), my_bet_questions_path %></dd>
+      <dd class="<%= 'active' if current_filter.betted? %>"><%= link_to t('.betted'), my_bet_questions_path(filter: :betted) %></dd>
+      <dd class="<%= 'active' if current_filter.to_bet? %>"><%= link_to t('.to_bet'), my_bet_questions_path(filter: :to_bet) %></dd>
     </dl>
 
     <% if @questions.empty? %>

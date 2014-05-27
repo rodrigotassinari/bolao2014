@@ -7,15 +7,15 @@ class PaymentsController < ApplicationController
   before_action :find_bet, except: [:update]
   before_action :find_payment, except: [:update]
 
-  # GET /bet/payment
-  # Via: bet_payment_path
+  # GET /my_bet/payment
+  # Via: my_bet_payment_path
   #
   # Shows the payment form / information before redirecting to the payment gateway.
   def new
   end
 
-  # POST /bet/payment
-  # Via: bet_payment_path
+  # POST /my_bet/payment
+  # Via: my_bet_payment_path
   #
   # Creates the payment data on the payment gateway and redirects the user to proceed with paying for the bet.
   def create
@@ -25,14 +25,14 @@ class PaymentsController < ApplicationController
       # TODO notify admin of gateway @_payment.errors.get(:payment_gateway)
       Rails.logger.error @_payment.errors.full_messages.join(', ')
       flash[:error] = t('.error_with_gateway')
-      redirect_to bet_payment_path
+      redirect_to my_bet_payment_path
     end
   rescue ActiveRecord::RecordInvalid => invalid
     # @_payment was not in initiated stage or was invalid
     # TODO notify admin of @_payment.errors
     Rails.logger.error @_payment.errors.full_messages.join(', ')
     flash[:error] = t('.internal_error')
-    redirect_to bet_payment_path
+    redirect_to my_bet_payment_path
   end
 
   # POST /payment_notifications

@@ -34,7 +34,7 @@ class MatchPresenter < Presenter
 
   def link_to_next
     if @subject.next
-      h.link_to(I18n.t('match_presenter.next_match'), r.match_bet_path(@subject.next))
+      h.link_to(I18n.t('match_presenter.next_match'), r.my_match_bet_path(@subject.next))
     else
       h.content_tag(:span, I18n.t('match_presenter.no_next_match'))
     end
@@ -42,7 +42,7 @@ class MatchPresenter < Presenter
 
   def link_to_previous
     if @subject.previous
-      h.link_to(I18n.t('match_presenter.previous_match'), r.match_bet_path(@subject.previous))
+      h.link_to(I18n.t('match_presenter.previous_match'), r.my_match_bet_path(@subject.previous))
     else
       h.content_tag(:span, I18n.t('match_presenter.no_previous_match'))
     end
@@ -51,7 +51,7 @@ class MatchPresenter < Presenter
   # TODO spec
   def link_to_next_bettable
     if @subject.next_bettable
-      h.link_to(I18n.t('match_presenter.next_bettable_match'), r.match_bet_path(@subject.next))
+      h.link_to(I18n.t('match_presenter.next_bettable_match'), r.my_match_bet_path(@subject.next))
     else
       h.content_tag(:span, I18n.t('match_presenter.no_next_bettable_match'))
     end
@@ -60,7 +60,7 @@ class MatchPresenter < Presenter
   # TODO spec
   def link_to_previous_bettable
     if @subject.previous_bettable
-      h.link_to(I18n.t('match_presenter.previous_bettable_match'), r.match_bet_path(@subject.previous))
+      h.link_to(I18n.t('match_presenter.previous_bettable_match'), r.my_match_bet_path(@subject.previous))
     else
       h.content_tag(:span, I18n.t('match_presenter.no_previous_bettable_match'))
     end
@@ -117,12 +117,20 @@ class MatchPresenter < Presenter
 
   def team_flag(letter, width=42, length=28)
     team = @subject.send("team_#{letter}")
-    h.image_tag("flags/#{team.acronym}.png", class: 'team-flag', alt: "#{team.acronym} flag", width: width, length: length)
+    if team
+      h.image_tag("flags/#{team.acronym}.png", class: 'team-flag', alt: "#{team.acronym} flag", width: width, length: length)
+    else
+      h.image_tag("flags/unknown.png", class: 'team-flag unknown', alt: "unknown flag", width: width, length: length)
+    end
   end
 
   def team_name(letter)
     team = @subject.send("team_#{letter}")
-    h.content_tag(:span, team.name, class: 'team-name')
+    if team
+      h.content_tag(:span, team.name, class: 'team-name')
+    else
+      h.content_tag(:span, '?', class: 'team-name unknown')
+    end
   end
 
   def team_info(letter)

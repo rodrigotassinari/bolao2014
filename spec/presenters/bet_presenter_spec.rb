@@ -24,4 +24,22 @@ describe BetPresenter do
     expect(subject.user.send(:subject)).to eq(user)
   end
 
+  describe '#payment_status', locale: :pt do
+    it 'returns paid' do
+      bet.stub(:paid?).and_return(true)
+      bet.stub(:paying?).and_return(false)
+      expect(subject.payment_status).to eql('Paga')
+    end
+    it 'returns paying' do
+      bet.stub(:paid?).and_return(false)
+      bet.stub(:paying?).and_return(true)
+      expect(subject.payment_status).to eql('Pagando')
+    end
+    it 'returns unpaid' do
+      bet.stub(:paid?).and_return(false)
+      bet.stub(:paying?).and_return(false)
+      expect(subject.payment_status).to eql('Não paga')
+    end
+  end
+
 end

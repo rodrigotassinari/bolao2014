@@ -2,6 +2,3 @@ pt:
   users:
     index:
       title: 'Apostadores'
-      email: 'Email'
-      raking: 'Ranking'
-      score: 'Pontuação'
