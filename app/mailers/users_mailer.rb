@@ -11,7 +11,7 @@ class UsersMailer < ActionMailer::Base
 
   def self.send_match_bet_reminders(hours_before)
     Bet.find_each do |bet|
-      bet.bettable_matches_still_to_bet.where(["AGE(matches.played_at, ?) <= '? hours'", Time.now, hours_before + 1]).find_each do |match|
+      bet.bettable_matches_still_to_bet.hours_from_being_locked(hours_before).find_each do |match|
         async_deliver(:match_bet_reminder, match.id, bet.id)
       end
     end

@@ -52,6 +52,59 @@ describe Question do
     end
   end
 
+  describe 'scopes' do
+    describe '.hours_from_being_played' do
+      let!(:question1) { create(:boolean_question, number: 1, body_en: '1 en', body_pt: '1 pt', played_at: '2014-06-12 17:00:00 -0300'.to_time) }
+      let!(:question2) { create(:boolean_question, number: 2, body_en: '2 en', body_pt: '2 pt', played_at: '2014-06-12 18:00:00 -0300'.to_time) }
+      let!(:question3) { create(:boolean_question, number: 3, body_en: '3 en', body_pt: '3 pt', played_at: '2014-06-12 18:00:00 -0300'.to_time) }
+      let!(:question4) { create(:boolean_question, number: 4, body_en: '4 en', body_pt: '4 pt', played_at: '2014-06-12 19:00:00 -0300'.to_time) }
+      let!(:question5) { create(:boolean_question, number: 5, body_en: '5 en', body_pt: '5 pt', played_at: '2014-06-12 19:00:01 -0300'.to_time) }
+      it 'returns questions all questions with at least X hours before starting' do
+        Timecop.freeze('2014-06-12 17:00:00 -0300'.to_time) do
+          expect(described_class.hours_from_being_played(-1).count).to eq(0)
+          expect(described_class.hours_from_being_played(-1).order(number: :asc).pluck(:number)).to eq([])
+
+          expect(described_class.hours_from_being_played(0).count).to eq(1)
+          expect(described_class.hours_from_being_played(0).order(number: :asc).pluck(:number)).to eq([1])
+
+          expect(described_class.hours_from_being_played(1).count).to eq(3)
+          expect(described_class.hours_from_being_played(1).order(number: :asc).pluck(:number)).to eq([1, 2, 3])
+
+          expect(described_class.hours_from_being_played(2).count).to eq(4)
+          expect(described_class.hours_from_being_played(2).order(number: :asc).pluck(:number)).to eq([1, 2, 3, 4])
+
+          expect(described_class.hours_from_being_played(5).count).to eq(5)
+          expect(described_class.hours_from_being_played(5).order(number: :asc).pluck(:number)).to eq([1, 2, 3, 4, 5])
+        end
+      end
+    end
+    describe '.hours_from_being_locked' do
+      let!(:question1) { create(:boolean_question, number: 1, body_en: '1 en', body_pt: '1 pt', played_at: '2014-06-12 17:00:00 -0300'.to_time) } # locks at 16:00
+      let!(:question2) { create(:boolean_question, number: 2, body_en: '2 en', body_pt: '2 pt', played_at: '2014-06-12 18:00:00 -0300'.to_time) } # locks at 17:00
+      let!(:question3) { create(:boolean_question, number: 3, body_en: '3 en', body_pt: '3 pt', played_at: '2014-06-12 18:00:00 -0300'.to_time) } # locks at 17:00
+      let!(:question4) { create(:boolean_question, number: 4, body_en: '4 en', body_pt: '4 pt', played_at: '2014-06-12 19:00:00 -0300'.to_time) } # locks at 18:00
+      let!(:question5) { create(:boolean_question, number: 5, body_en: '5 en', body_pt: '5 pt', played_at: '2014-06-12 19:00:01 -0300'.to_time) } # locks at 18:01
+      it 'returns questions with at least X hours before being locked for betting' do
+        Timecop.freeze('2014-06-12 15:00:00 -0300'.to_time) do
+          expect(described_class.hours_from_being_locked(-1).count).to eq(0)
+          expect(described_class.hours_from_being_locked(-1).order(number: :asc).pluck(:number)).to eq([])
+
+          expect(described_class.hours_from_being_locked(0).count).to eq(0)
+          expect(described_class.hours_from_being_locked(0).order(number: :asc).pluck(:number)).to eq([])
+
+          expect(described_class.hours_from_being_locked(1).count).to eq(1)
+          expect(described_class.hours_from_being_locked(1).order(number: :asc).pluck(:number)).to eq([1])
+
+          expect(described_class.hours_from_being_locked(2).count).to eq(3)
+          expect(described_class.hours_from_being_locked(2).order(number: :asc).pluck(:number)).to eq([1, 2, 3])
+
+          expect(described_class.hours_from_being_locked(5).count).to eq(5)
+          expect(described_class.hours_from_being_locked(5).order(number: :asc).pluck(:number)).to eq([1, 2, 3, 4, 5])
+        end
+      end
+    end
+  end
+
   describe '#body' do
     subject { build(:team_question, body_en: 'Foo', body_pt: 'Fú') }
     it 'returns the :pt body', locale: :pt do

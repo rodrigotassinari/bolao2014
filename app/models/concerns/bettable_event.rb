@@ -16,6 +16,8 @@ module BettableEvent
     scope :ordered, -> { order(played_at: :asc, number: :asc) }
     scope :locked, -> { where('played_at <= ?', hours_before_start_time_to_bet.hour.from_now) }
     scope :not_locked, -> { where('played_at > ?', hours_before_start_time_to_bet.hour.from_now) }
+    scope :hours_from_being_played, ->(hours) { where(["AGE(played_at, ?) <= '? hours'", Time.zone.now, hours]) }
+    scope :hours_from_being_locked, ->(hours) { where(["AGE(played_at, ?) <= '? hours'", Time.zone.now, hours + hours_before_start_time_to_bet]) }
   end
 
   module ClassMethods
