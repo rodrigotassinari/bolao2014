@@ -22,6 +22,8 @@ class Match < ActiveRecord::Base
   belongs_to :team_b, class_name: 'Team'
   has_many :match_bets
 
+  after_update :update_match_bets
+
   # belongs_to :winner, :class_name => 'Team' # TODO add winner_id to matches
   # belongs_to :loser, :class_name => 'Team' # TODO add loser_id to matches
 
@@ -178,6 +180,12 @@ class Match < ActiveRecord::Base
 
   def penalty_goals_draw?
     with_known_penalty_goals? && self.penalty_goals_a == self.penalty_goals_b
+  end
+
+  def update_match_bets
+    # TODO: move it into an async event
+    ScoreUpdater.update_match(self) if played?
+    true
   end
 
 end

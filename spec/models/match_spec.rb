@@ -194,14 +194,4 @@ describe Match do
     end
   end
 
-  describe '#score!' do
-    subject { build(:match) }
-    it 'delegates to MatchScorer#score_all!' do
-      match_scorer = double('MatchScorer', score_all!: true)
-      MatchScorer.should_receive(:new).with(subject).and_return(match_scorer)
-      match_scorer.should_receive(:score_all!)
-      subject.score!
-    end
-  end
-
 end
