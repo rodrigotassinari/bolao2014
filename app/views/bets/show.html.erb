@@ -1,0 +1,31 @@
+<% content_for(:title) { Bet.model_name.human(count: 2) } %>
+
+<div class="row">
+  <div class="small-12 column">
+    <h2><%= Bet.model_name.human(count: 2) %> - <%= @bet.user.email %></h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 column">
+    <table>
+      <tbody>
+        <% @matches.each do |match| %>
+          <% match_bet = @bet.match_bets.detect {|mb| mb.match_id == match.id } %>
+          <tr>
+            <td><%= link_to "##{match.number}", match_path(match) %></td>
+            <td class="hide-for-small-only"><%= match.round_text %></td>
+            <td class="hide-for-small-only"><%= l match.played_at, format: :short %></td>
+            <td class="text-center hide-for-small-only"><%= match.team_a_flag %></td>
+            <td class="text-left"><%= match.team_a_name %></td>
+            <td class="text-center"><%= match_bet && match_bet.goals_a || '?' %></td>
+            <td class="text-center">x</td>
+            <td class="text-center"><%= match_bet && match_bet.goals_b || '?' %></td>
+            <td class="text-right"><%= match.team_b_name %></td>
+            <td class="text-center hide-for-small-only"><%= match.team_b_flag %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

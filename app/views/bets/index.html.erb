@@ -30,7 +30,7 @@
             <td class="hide-for-small-only"><%= bet.percentage %></td>
             <td class="hide-for-small-only"><%= bet.payment_status %></td>
             <td><%= bet.points %></td>
-            <td><%= link_to t('.view'), 'javascript:void(0)', onclick: "alert('#{I18n.t('common.soon')}');" %></td>
+            <td><%= link_to t('.view'), bet_path(bet) %></td>
           </tr>
         <% end %>
       </tbody>
