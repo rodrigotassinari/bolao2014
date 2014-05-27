@@ -21,7 +21,7 @@
       <thead>
         <tr>
           <th class="text-center hide-for-small-only"><%= Match.model_name.human(count: 1) %></th>
-          <th class="text-center" colspan="7"><%= t('.guess') %></th>
+          <th class="text-center" colspan="5"><%= t('.guess') %></th>
           <th class="text-center"><%= t('.points') %></th>
         </tr>
       </thead>
@@ -32,9 +32,12 @@
             <td><%= link_to "##{match.number}", match_path(match) %></td>
             <td class="text-center hide-for-small-only"><%= match.team_a_flag %></td>
             <td class="text-left"><%= match.team_a_name %></td>
-            <td class="text-center"><%= match_bet.goals_a_if_locked %></td>
-            <td class="text-center">x</td>
-            <td class="text-center"><%= match_bet.goals_b_if_locked %></td>
+
+            <td class="text-center">
+              <%= match_bet.goals_a_if_locked %> x <%= match_bet.goals_b_if_locked %>
+              <%= match_bet.penalty_winner_if_locked %>
+            </td>
+
             <td class="text-right"><%= match.team_b_name %></td>
             <td class="text-center hide-for-small-only"><%= match.team_b_flag %></td>
             <td class="text-center"><%= match_bet.points %></td>

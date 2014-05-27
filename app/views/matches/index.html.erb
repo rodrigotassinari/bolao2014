@@ -15,13 +15,17 @@
             <td><%= link_to "##{match.number}", match_path(match) %></td>
             <td class="hide-for-small-only"><%= match.round_text %></td>
             <td class="hide-for-small-only"><%= l match.played_at, format: :short %></td>
-            <td class="text-center hide-for-small-only"><%= match.team_a_flag %></td>
-            <td class="text-left"><%= match.team_a_name %></td>
-            <td class="text-center"><%= match.goals_a || '?' %></td>
-            <td class="text-center">x</td>
-            <td class="text-center"><%= match.goals_b || '?' %></td>
-            <td class="text-right"><%= match.team_b_name %></td>
-            <td class="text-center hide-for-small-only"><%= match.team_b_flag %></td>
+            <td class="text-center hide-for-small-only"><%= match.team_a_flag_or_? %></td>
+            <td class="text-left"><%= match.team_a_name_or_? %></td>
+            <td class="text-center">
+              <%= match.goals_a_or_? %> x <%= match.goals_b_or_? %>
+              <% if match.with_known_penalty_goals? %>
+                <br /><%= match.penalty_goals_a_or_? %> x <%= match.penalty_goals_a_or_? %>
+                <br />(<%= t('.on_penaltys') %>)
+              <% end %>
+            </td>
+            <td class="text-right"><%= match.team_b_name_or_? %></td>
+            <td class="text-center hide-for-small-only"><%= match.team_b_flag_or_? %></td>
             <td class="hide-for-small-only"><%= link_to t('.view'), match_path(match) %></td>
           </tr>
         <% end %>

@@ -3,6 +3,7 @@ class MatchBetPresenter < Presenter
   expose :to_key, :to_param,
     :goals_a,
     :goals_b,
+    :penalty_winner,
     :penalty_winner_id,
     :points,
     :created_at,
@@ -29,17 +30,28 @@ class MatchBetPresenter < Presenter
   def one_line_summary
     summary = "#{@subject.match.team_a.name} #{@subject.goals_a} x #{@subject.goals_b} #{@subject.match.team_b.name}"
     if @subject.penalty_winner_id.present?
-      summary << I18n.t('match_bet_presenter.with_winner_by_penaltys', team_name: @subject.penalty_winner.name)
+      summary << ", #{t('match_bet_presenter.with_winner_by_penaltys', team_name: @subject.penalty_winner.name)}"
     end
     summary
   end
 
+  # TODO spec
   def goals_a_if_locked
     goals_if_locked(:a)
   end
 
+  # TODO spec
   def goals_b_if_locked
     goals_if_locked(:b)
+  end
+
+  # TODO spec
+  def penalty_winner_if_locked
+    if @subject.match.locked? && @subject.penalty_winner.present?
+      html = '<br />'
+      html << h.content_tag(:span, t('match_bet_presenter.with_winner_by_penaltys', team_name: @subject.penalty_winner.name), class: 'team-name penalty-winner')
+      html.html_safe
+    end
   end
 
   def goals_a_or_blank

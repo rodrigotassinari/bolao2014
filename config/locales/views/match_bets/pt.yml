@@ -1,6 +1,6 @@
 pt:
   match_bet_presenter:
-    with_winner_by_penaltys: ', com %{team_name} ganhando nos pênaltis'
+    with_winner_by_penaltys: 'com %{team_name} ganhando nos pênaltis'
     will_show_when_match_locked: 'Exibido apenas após partida estar com apostas encerradas'
   match_bets:
     match_bet:

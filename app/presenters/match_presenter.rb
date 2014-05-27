@@ -16,7 +16,10 @@ class MatchPresenter < Presenter
     :bettable?,
     :bettable_until,
     :played?,
-    :drawable?
+    :drawable?,
+    :with_known_teams?,
+    :with_known_goals?,
+    :with_known_penalty_goals?
 
   # TODO spec
   def css_id
@@ -84,9 +87,17 @@ class MatchPresenter < Presenter
     team_flag(:a, width, length)
   end
 
+  def team_a_flag_or_?(width=42, length=28)
+    team_flag_or_?(:a, width, length)
+  end
+
   # TODO spec
   def team_a_name
     team_name(:a)
+  end
+
+  def team_a_name_or_?
+    team_name_or_?(:a)
   end
 
   # TODO spec
@@ -103,9 +114,17 @@ class MatchPresenter < Presenter
     team_flag(:b, width, length)
   end
 
+  def team_b_flag_or_?(width=42, length=28)
+    team_flag_or_?(:b, width, length)
+  end
+
   # TODO spec
   def team_b_name
     team_name(:b)
+  end
+
+  def team_b_name_or_?
+    team_name_or_?(:b)
   end
 
   # TODO spec
@@ -113,23 +132,64 @@ class MatchPresenter < Presenter
     team_info(:b)
   end
 
+  def goals_a_or_?
+    goals_or_?(:goals, :a)
+  end
+
+  def goals_b_or_?
+    goals_or_?(:goals, :b)
+  end
+
+  def penalty_goals_a_or_?
+    goals_or_?(:penalty_goals, :a)
+  end
+
+  def penalty_goals_b_or_?
+    goals_or_?(:penalty_goals, :b)
+  end
+
   private
+
+  def goals_or_?(type, letter)
+    goal = @subject.send("#{type}_#{letter}")
+    if goal.present?
+      h.content_tag(:span, goal.to_s, class: 'goal')
+    else
+      h.content_tag(:span, '?', 'data-tooltip' => true, 'class' => 'goal unknown has-tip', 'title' => t('match_presenter.not_yet_known'))
+    end
+  end
+
+  def flag_image(name, width=42, length=28)
+    h.image_tag("flags/#{name}.png", class: "team-flag #{name}", alt: "#{name} flag", width: width, length: length)
+  end
 
   def team_flag(letter, width=42, length=28)
     team = @subject.send("team_#{letter}")
+    return '' unless team.present?
+    flag_image(team.acronym, width, length)
+  end
+
+  def team_flag_or_?(letter, width=42, length=28)
+    team = @subject.send("team_#{letter}")
     if team
-      h.image_tag("flags/#{team.acronym}.png", class: 'team-flag', alt: "#{team.acronym} flag", width: width, length: length)
+      flag_image(team.acronym, width, length)
     else
-      h.image_tag("flags/unknown.png", class: 'team-flag unknown', alt: "unknown flag", width: width, length: length)
+      flag_image('unknown', width, length)
     end
   end
 
   def team_name(letter)
     team = @subject.send("team_#{letter}")
+    return '' unless team.present?
+    h.content_tag(:span, team.name, class: 'team-name')
+  end
+
+  def team_name_or_?(letter)
+    team = @subject.send("team_#{letter}")
     if team
       h.content_tag(:span, team.name, class: 'team-name')
     else
-      h.content_tag(:span, '?', class: 'team-name unknown')
+      h.content_tag(:span, '?', 'data-tooltip' => true, 'class' => 'team-name unknown has-tip', 'title' => t('match_presenter.not_yet_known'))
     end
   end
 

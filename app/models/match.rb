@@ -112,6 +112,10 @@ class Match < ActiveRecord::Base
     self.goals_a.present? && self.goals_b.present?
   end
 
+  def with_known_penalty_goals?
+    self.penalty_goals_a.present? && self.penalty_goals_b.present?
+  end
+
   # TODO spec
   def betted_by?(bet)
     bet.matches.exists?(id: self.id)
@@ -170,10 +174,6 @@ class Match < ActiveRecord::Base
 
   def goals_draw?
     with_known_goals? && self.goals_a == self.goals_b
-  end
-
-  def with_known_penalty_goals?
-    self.penalty_goals_a.present? && self.penalty_goals_b.present?
   end
 
   def penalty_goals_draw?
