@@ -1,0 +1,9 @@
+Olá <%= @user.name_or_email %>,
+
+Você ainda não deu o seu palpite para a partida #<%= @match.id %> entre <%= @match.team_a.name_pt %> e <%= @match.team_b.name_pt %>.
+
+Você pode fazer isso em <%= my_match_bet_url(@match) %>.
+
+Veja mais informações da partida em <%= match_url(@match) %>
+
+E veja como está o ranking dos apostadores em <%= root_url %>

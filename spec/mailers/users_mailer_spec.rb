@@ -34,6 +34,21 @@ describe UsersMailer do
     end
   end
 
+  describe "match_bet_reminder" do
+    let(:team_a) { create(:team) }
+    let(:team_b) { create(:other_team) }
+    let(:match) { create(:match, id: 1, number: 1, team_a: team_a, team_b: team_b) }
+    let(:mail) { UsersMailer.match_bet_reminder(match.id, bet.id) }
+    it 'renders the headers' do
+      expect(mail.subject).to eql("[#{ENV['APP_SHORT_NAME']}] Você ainda não deu o seu palpite para a partida ##{match.number}")
+      expect(mail.to).to eql([user.email])
+      expect(mail.from).to eq([ENV['EMAIL_FROM']])
+    end
+    it 'renders the body' do
+      expect(mail.body.to_s.chomp).to eq(read_fixture('match_bet_reminder.text').join)
+    end
+  end
+
   def read_fixture(action)
     IO.readlines(File.join(Rails.root, 'spec', 'fixtures', self.class.mailer_class.name.underscore, "#{action}.#{I18n.locale}"))
   end

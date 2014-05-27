@@ -86,6 +86,7 @@ class MatchPresenter < Presenter
 
   # TODO spec
   def team_a_name
+    binding.pry
     team_name(:a)
   end
 
