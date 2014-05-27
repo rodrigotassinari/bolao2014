@@ -6,7 +6,7 @@
     <title><%= content_for?(:title) ? "#{yield(:title)} - #{ENV['APP_NAME']}" : ENV['APP_NAME'] %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : ENV['APP_DESCRIPTION'] %>">
     <%= render 'layouts/favicon' %>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%# Modernizr is required for Zurb Foundation %>
     <%= javascript_include_tag 'vendor/modernizr', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
@@ -19,6 +19,9 @@
        <%= render 'layouts/messages' %>
        <%= yield %>
     </main>
+    <footer>
+      <%= render 'layouts/footer' %>
+    </footer>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 
     <% if Rails.env.production? %>
