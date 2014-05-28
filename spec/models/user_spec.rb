@@ -42,6 +42,11 @@ describe User do
       user.save!
       expect(user.email).to eql('someone@example.com')
     end
+    it 'is not an admin' do
+      user = build(:user)
+      user.save!
+      expect(user.admin).to be_false
+    end
   end
 
   describe '#generate_authentication_token!' do

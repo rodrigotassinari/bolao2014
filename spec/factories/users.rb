@@ -7,6 +7,13 @@ FactoryGirl.define do
     locale 'pt' # default locale
   end
 
+  factory :admin_user, class: User do
+    email 'admin@example.com'
+    time_zone 'Brasilia' # default time zone
+    locale 'pt' # default locale
+    admin true # default is false
+  end
+
   factory :user_en, class: User do
     name 'John Doe'
     email 'john.doe@example.com'

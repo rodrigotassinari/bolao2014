@@ -42,6 +42,15 @@ class ApplicationController < ActionController::Base
   end
 
   # TODO spec
+  # before_action
+  def require_admin
+    unless admin_logged_in?
+      flash[:notice] = I18n.t('common.admin_login_required')
+      redirect_to root_path
+    end
+  end
+
+  # TODO spec
   def current_user
     @current_user ||= User.find_by_remember_me_token(cookies.signed[:remember_me_token]) if cookies.signed[:remember_me_token]
   end
@@ -58,5 +67,11 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
   helper_method :logged_in?
+
+  # TODO spec
+  def admin_logged_in?
+    logged_in? && current_user.admin?
+  end
+  helper_method :admin_logged_in?
 
 end
