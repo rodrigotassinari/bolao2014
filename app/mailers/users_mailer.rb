@@ -30,6 +30,12 @@ class UsersMailer < ActionMailer::Base
     end
   end
 
+  def self.send_unpaid_bet_reminders
+    Bet.includes(:payment).find_each do |bet|
+      async_deliver(:unpaid_bet_reminder, bet.id) unless bet.paid?
+    end
+  end
+
   def match_bet_scored(match_bet_id, from_points, to_points)
     _match_bet = MatchBet.find(match_bet_id)
     @match_bet = MatchBetPresenter.new(_match_bet)
