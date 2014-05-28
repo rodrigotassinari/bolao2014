@@ -80,10 +80,25 @@ class UsersMailer < ActionMailer::Base
     )
   end
 
+  def unpaid_bet_reminder(bet_id)
+    _bet = Bet.find(bet_id)
+    @bet = BetPresenter.new(_bet)
+    @user = @bet.user
+    @app_name = app_name
+    mail(
+      subject: t('users_mailer.unpaid_bet_reminder.subject', subject_prefix: subject_prefix, app_name: @app_name),
+      to: @user.email_with_name
+    )
+  end
+
   private
 
   def subject_prefix
     ENV['APP_SHORT_NAME'].dup.force_encoding('UTF-8')
+  end
+
+  def app_name
+    ENV['APP_NAME'].dup.force_encoding('UTF-8')
   end
 
 end

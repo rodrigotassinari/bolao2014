@@ -27,7 +27,7 @@ class Bet < ActiveRecord::Base
   end
 
   def payment_deadline
-    Match.ordered.first.played_at
+    Time.zone.parse('2014-06-12 17:00:00 -0300')
   end
 
   def prize_split

@@ -8,3 +8,5 @@ pt:
       subject: '[%{subject_prefix}] Você ainda não deu seu palpite para a partida #%{match_number}'
     question_bet_reminder:
       subject: '[%{subject_prefix}] Você ainda não deu sua resposta para a pergunta #%{question_number}'
+    unpaid_bet_reminder:
+      subject: '[%{subject_prefix}] Você ainda não pagou sua aposta no %{app_name}'

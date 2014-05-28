@@ -1,0 +1,11 @@
+Olá <%= @user.name_or_email %>,
+
+Você ainda pagou sua aposta no <%= @app_name %>!
+
+Você tem apenas até <%= l @bet.payment_deadline, format: :detailed %> para efetuar o pagamento. Caso contrário, sua aposta será excluída do sistema.
+
+Você pode efetuar o pagamento e acompanhar o status dele neste link abaixo:
+
+  <%= my_bet_payment_url %>
+
+Caso já tenha pago, o sistema ainda não reconheceu o pagamento. Em caso de pagamento via boleto bancário, isso pode demorar até 3 dias úteis. Após esse período, se seu pagamento continuar pendente, entre em contato imediatamente via <%= ENV['APP_CONTACT_EMAIL'] %>

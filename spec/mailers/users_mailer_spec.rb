@@ -100,6 +100,21 @@ describe UsersMailer do
     end
   end
 
+  describe 'unpaid_bet_reminder' do
+    let(:mail) { UsersMailer.unpaid_bet_reminder(bet.id) }
+    it 'renders the headers' do
+      expect(mail.subject).to eql("[#{ENV['APP_SHORT_NAME']}] Você ainda não pagou sua aposta no #{ENV['APP_NAME']}")
+      expect(mail.to).to eql([user.email])
+      expect(mail.from).to eq([ENV['EMAIL_FROM']])
+    end
+    it 'renders the body' do
+      current_app_name = ENV['APP_NAME']
+      ENV['APP_NAME'] = 'Bolão 2014'
+      expect(mail.body.to_s.chomp).to eq(read_fixture('unpaid_bet_reminder.text').join)
+      ENV['APP_NAME'] = current_app_name
+    end
+  end
+
   def read_fixture(action)
     IO.readlines(File.join(Rails.root, 'spec', 'fixtures', self.class.mailer_class.name.underscore, "#{action}.#{I18n.locale}"))
   end
