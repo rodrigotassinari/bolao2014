@@ -15,10 +15,14 @@
       <%= link_to current_user.email, 'javascript:void(0)' %>
       <ul class="dropdown">
         <li><%= link_to t('common.settings'), 'javascript:void(0)', onclick: "alert('#{I18n.t('common.soon')}');" %></li>
+        <% if current_user.admin? %>
+          <%= render 'layouts/admin_navigation_links' %>
+        <% end %>
         <li><%= link_to t('common.logout'), logout_path %></li>
       </ul>
     </li>
   </ul>
+
   <ul class="left">
     <li><%= link_to Match.model_name.human(count: 2), matches_path %></li>
     <li><%= link_to Question.model_name.human(count: 2), 'javascript:void(0)', onclick: "alert('#{I18n.t('common.soon')}');" %></li>
@@ -29,6 +33,7 @@
   <ul class="right">
     <li><%= link_to t('common.login'), login_path %></li>
   </ul>
+
   <ul class="left">
     <li><%= link_to t('pages.help.title'), help_path %></li>
   </ul>
