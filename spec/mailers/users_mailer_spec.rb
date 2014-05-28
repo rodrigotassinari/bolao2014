@@ -109,9 +109,12 @@ describe UsersMailer do
     end
     it 'renders the body', locale: :pt do
       current_app_name = ENV['APP_NAME']
+      current_app_contact_email = ENV['APP_CONTACT_EMAIL']
       ENV['APP_NAME'] = 'Bolão 2014'
+      ENV['APP_CONTACT_EMAIL'] = 'contact@bolao2014.test'
       expect(mail.body.to_s.chomp).to eq(read_fixture('unpaid_bet_reminder.text').join)
       ENV['APP_NAME'] = current_app_name
+      ENV['APP_CONTACT_EMAIL'] = current_app_contact_email
     end
   end
 
