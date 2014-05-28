@@ -67,7 +67,7 @@ describe UsersMailer do
       expect(mail.to).to eql([user.email])
       expect(mail.from).to eq([ENV['EMAIL_FROM']])
     end
-    it 'renders the body' do
+    it 'renders the body', locale: :pt do
       expect(mail.body.to_s.chomp).to eq(read_fixture('question_bet_scored.text').join)
     end
   end
@@ -82,7 +82,7 @@ describe UsersMailer do
       expect(mail.to).to eql([user.email])
       expect(mail.from).to eq([ENV['EMAIL_FROM']])
     end
-    it 'renders the body' do
+    it 'renders the body', locale: :pt do
       expect(mail.body.to_s.chomp).to eq(read_fixture('match_bet_reminder.text').join)
     end
   end
@@ -95,7 +95,7 @@ describe UsersMailer do
       expect(mail.to).to eql([user.email])
       expect(mail.from).to eq([ENV['EMAIL_FROM']])
     end
-    it 'renders the body' do
+    it 'renders the body', locale: :pt do
       expect(mail.body.to_s.chomp).to eq(read_fixture('question_bet_reminder.text').join)
     end
   end
@@ -107,11 +107,26 @@ describe UsersMailer do
       expect(mail.to).to eql([user.email])
       expect(mail.from).to eq([ENV['EMAIL_FROM']])
     end
-    it 'renders the body' do
+    it 'renders the body', locale: :pt do
       current_app_name = ENV['APP_NAME']
       ENV['APP_NAME'] = 'Bolão 2014'
       expect(mail.body.to_s.chomp).to eq(read_fixture('unpaid_bet_reminder.text').join)
       ENV['APP_NAME'] = current_app_name
+    end
+  end
+
+  describe 'match_bettable_notification' do
+    let(:team_a) { create(:team) }
+    let(:team_b) { create(:other_team) }
+    let(:match) { create(:match, id: 49, number: 49, round: 'round_16', group: nil, team_a: team_a, team_b: team_b, goals_a: nil, goals_b: nil) }
+    let(:mail) { UsersMailer.match_bettable_notification(match.id, user.id) }
+    it 'renders the headers' do
+      expect(mail.subject).to eql("[#{ENV['APP_SHORT_NAME']}] A partida ##{match.number} está disponível para palpitar")
+      expect(mail.to).to eql([user.email])
+      expect(mail.from).to eq([ENV['EMAIL_FROM']])
+    end
+    it 'renders the body', locale: :pt do
+      expect(mail.body.to_s.chomp).to eq(read_fixture('match_bettable_notification.text').join)
     end
   end
 

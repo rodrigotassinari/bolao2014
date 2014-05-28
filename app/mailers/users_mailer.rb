@@ -97,6 +97,17 @@ class UsersMailer < ActionMailer::Base
     )
   end
 
+  def match_bettable_notification(match_id, user_id)
+    _user = User.find(user_id)
+    _match = Match.find(match_id)
+    @user = UserPresenter.new(_user)
+    @match = MatchPresenter.new(_match)
+    mail(
+      subject: t('users_mailer.match_bettable_notification.subject', subject_prefix: subject_prefix, match_number: @match.number),
+      to: @user.email_with_name
+    )
+  end
+
   private
 
   def subject_prefix

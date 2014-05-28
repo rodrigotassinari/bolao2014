@@ -1,0 +1,13 @@
+Olá <%= @user.name_or_email %>,
+
+A partida #<%= @match.id %> entre <%= @match.team_a.name %> e <%= @match.team_b.name %> acaba de ficar disponível para receber seu palpite!
+
+Clique aqui para deixar seu palpite nesta partida:
+
+  <%= my_match_bet_url(@match) %>
+
+Corra! Você tem apenas até <%= l @match.bettable_until, format: :detailed %> para enviar seu palpite.
+
+Veja mais informações da partida em <%= match_url(@match) %>
+
+E veja como está o ranking dos apostadores em <%= bets_url %>
