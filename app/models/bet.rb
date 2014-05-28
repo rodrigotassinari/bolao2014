@@ -27,7 +27,7 @@ class Bet < ActiveRecord::Base
   end
 
   def payment_deadline
-    Match.where(round: 'round_16').ordered.first.played_at
+    Match.ordered.first.played_at
   end
 
   def prize_split
