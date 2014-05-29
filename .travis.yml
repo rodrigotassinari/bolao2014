@@ -2,7 +2,7 @@ language: ruby
 bundler_args: "--without development"
 rvm:
   - 2.1.1
-#  - 2.1.2 # debugger gem can not be installed in 2.1.2 yet :(
+  - 2.1.2
 env:
   matrix:
     - SECRET_KEY_BASE=bolao2014-test-key APP_NAME=bolao2014-test APP_SHORT_NAME=bolao-test APP_HOST=test.host APP_ADMIN_EMAIL=admin@bolao2014.test APP_CONTACT_EMAIL=contact@bolao2014.test EMAIL_FROM=notifications@bolao2014.test REDIS_URL='redis://localhost:6379'
