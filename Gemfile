@@ -82,6 +82,6 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.4'
   gem 'database_cleaner', '~> 1.2'
   gem 'fuubar', '~> 1.3'
-  gem 'pry-debugger', '~> 0.2.2'
+  gem 'pry-byebug', '~> 1.3'
   gem 'pry-remote', '~> 0.1'
 end
