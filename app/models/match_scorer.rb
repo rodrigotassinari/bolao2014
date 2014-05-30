@@ -1,5 +1,5 @@
 class MatchScorer
-  # include Scorer # TODO?
+  # include EventScorer # TODO?
 
   attr_reader :match
 

@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
   # before_action
   def require_admin
     unless admin_logged_in?
-      flash[:notice] = I18n.t('common.admin_login_required')
+      flash[:error] = I18n.t('common.admin_login_required')
       redirect_to root_path
     end
   end

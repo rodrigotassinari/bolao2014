@@ -19,7 +19,8 @@ class MatchPresenter < Presenter
     :drawable?,
     :with_known_teams?,
     :with_known_goals?,
-    :with_known_penalty_goals?
+    :with_known_penalty_goals?,
+    :errors
 
   # TODO spec
   def css_id

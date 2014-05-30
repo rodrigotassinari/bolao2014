@@ -33,6 +33,10 @@ Rails.application.routes.draw do
   post '/my_bet/questions/:question_id' => 'question_bets#create'
   put  '/my_bet/questions/:question_id' => 'question_bets#update'
 
+  namespace :admin do
+    resources :matches, only: [:index, :show, :edit, :update]
+  end
+
   # TODO limit access to admins, see https://github.com/mperham/sidekiq/wiki/Monitoring#security
   mount Sidekiq::Web => '/admin/sidekiq'
 
