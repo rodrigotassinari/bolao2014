@@ -201,4 +201,19 @@ describe Question do
     end
   end
 
+  describe '#betted_by?' do
+    let!(:question1) { create(:boolean_question, number: 1) }
+    let!(:question2) { create(:boolean_question, number: 2, body_pt: 'Foo2', body_en: 'Bar2') }
+    let!(:bet1) { create(:bet, user: create(:user)) }
+    let!(:bet2) { create(:bet, user: create(:user_pt)) }
+    let!(:question_bet11) { create(:boolean_question_bet, bet: bet1, question: question1) }
+    let!(:question_bet22) { create(:boolean_question_bet, bet: bet2, question: question2) }
+    it 'returns true if the question has been betted by the supplied bet, false otherwise' do
+      expect(question1.betted_by?(bet1)).to be_true
+      expect(question1.betted_by?(bet2)).to be_false
+      expect(question2.betted_by?(bet1)).to be_false
+      expect(question2.betted_by?(bet2)).to be_true
+    end
+  end
+
 end

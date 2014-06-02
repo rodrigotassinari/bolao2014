@@ -116,9 +116,8 @@ class Match < ActiveRecord::Base
     self.penalty_goals_a.present? && self.penalty_goals_b.present?
   end
 
-  # TODO spec
   def betted_by?(bet)
-    bet.matches.exists?(id: self.id)
+    MatchBet.exists?(match_id: self.id, bet_id: bet.id)
   end
 
   def played_on_text

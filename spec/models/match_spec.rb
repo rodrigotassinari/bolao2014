@@ -204,4 +204,19 @@ describe Match do
     end
   end
 
+  describe '#betted_by?' do
+    let!(:match1) { create(:match) }
+    let!(:match2) { create(:future_match) }
+    let!(:bet1) { create(:bet, user: create(:user)) }
+    let!(:bet2) { create(:bet, user: create(:user_pt)) }
+    let!(:match_bet11) { create(:match_bet, bet: bet1, match: match1) }
+    let!(:match_bet22) { create(:match_bet, bet: bet2, match: match2) }
+    it 'returns true if the match has been betted by the supplied bet, false otherwise' do
+      expect(match1.betted_by?(bet1)).to be_true
+      expect(match1.betted_by?(bet2)).to be_false
+      expect(match2.betted_by?(bet1)).to be_false
+      expect(match2.betted_by?(bet2)).to be_true
+    end
+  end
+
 end

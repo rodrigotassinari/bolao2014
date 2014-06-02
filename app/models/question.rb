@@ -52,9 +52,8 @@ class Question < ActiveRecord::Base
     !self.locked?
   end
 
-  # TODO spec
   def betted_by?(bet)
-    bet.questions.exists?(id: self.id)
+    QuestionBet.exists?(question_id: self.id, bet_id: bet.id)
   end
 
   # TODO spec

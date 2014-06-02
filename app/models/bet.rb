@@ -119,21 +119,23 @@ class Bet < ActiveRecord::Base
     end
   end
 
+  # TODO spec
   def filtered_question_bets(filter=nil)
     case filter.to_s
     when 'to_bet'
       self.question_bets.where('1=2')
     else
-      self.question_bets.unscoped
+      self.question_bets.scope
     end
   end
 
+  # TODO spec
   def filtered_match_bets(filter=nil)
     case filter.to_s
     when 'to_bet'
       self.match_bets.where('1=2')
     else
-      self.match_bets.unscoped
+      self.match_bets.scope
     end
   end
 
