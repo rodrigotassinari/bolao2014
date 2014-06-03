@@ -1,0 +1,5 @@
+pt:
+  match_updater:
+    match_changed: 'Partida alterada.'
+    users_notified: 'Apostadores notificados sobre nova disponibilidade de palpites nesta partida.'
+    match_scored: 'Pontos de palpites sobre esta partida (re-)calculados.'

@@ -160,7 +160,12 @@ describe MatchBet do
       )
       match_bet.score!
     end
-    it 'sets / updates the bet total points'
+    it 'sets / updates the bet total points' do
+      BetScoreWorker.should_receive(:perform_async).with(bet.id)
+      BetScoreWorker.should_receive(:perform_in).with(5.minutes, bet.id)
+      match_bet = create(:match_bet, bet: bet, match: match, goals_a: 2, goals_b: 0) # all is correct
+      match_bet.score!
+    end
     context 'when all is wrong' do
       subject { create(:match_bet, bet: bet, match: match, goals_a: 0, goals_b: 1) }
       it 'scores 0 points' do

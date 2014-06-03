@@ -131,11 +131,12 @@ class Match < ActiveRecord::Base
   end
 
   # Returns `true` if the match is ready to be scored.
-  # TODO spec
   def scorable?
-    with_known_teams? &&
-      with_known_goals? &&
-      locked?
+    return false unless locked?
+    return false unless with_known_teams?
+    return false unless with_known_goals?
+    return false if goals_draw? && !drawable? && !with_known_penalty_goals?
+    true
   end
 
   private

@@ -152,7 +152,12 @@ describe QuestionBet do
       )
       question_bet.score!
     end
-    it 'sets / updates the bet total points'
+    it 'sets / updates the bet total points' do
+      BetScoreWorker.should_receive(:perform_async).with(bet.id)
+      BetScoreWorker.should_receive(:perform_in).with(5.minutes, bet.id)
+      question_bet = create(:boolean_question_bet, bet: bet, question: question, answer: 'true') # answer is correct
+      question_bet.score!
+    end
     context 'when answer is wrong' do
       subject { create(:boolean_question_bet, bet: bet, question: question, answer: 'false') }
       it 'scores 0 points' do

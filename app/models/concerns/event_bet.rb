@@ -40,10 +40,17 @@ module EventBet
     calculate_score
     self.save!
     current_points = self.points
-    # TODO update / recalculate bet total points
     # notify user of the score
     notify_user_of_points_change(previous_points, current_points)
+    # update / recalculate bet total points
+    recalculate_bet
     true
   end
+
+  def recalculate_bet
+    BetScoreWorker.perform_async(self.bet.id)
+    BetScoreWorker.perform_in(5.minutes, self.bet.id)
+  end
+  private :recalculate_bet
 
 end

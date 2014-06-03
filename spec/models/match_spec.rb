@@ -219,4 +219,66 @@ describe Match do
     end
   end
 
+  describe '#scorable?' do
+    let!(:game_time) { Time.zone.now }
+    let(:team_a) { create(:team) }
+    let(:team_b) { create(:other_team) }
+    let(:group_match) { build(:match, round: 'group', played_at: game_time, team_a: team_a, team_b: team_b, goals_a: nil, goals_b: nil) }
+    let(:finals_match) { build(:future_match, round: 'quarter', played_at: game_time, team_a: nil, team_b: nil, goals_a: nil, goals_b: nil) }
+    context 'when locked' do
+      it 'returns true if group phase and has known teams and goals' do
+        group_match.should_receive(:locked?).and_return(true)
+        group_match.goals_a = 2
+        group_match.goals_b = 1
+        expect(group_match).to be_scorable
+      end
+      it 'returns true if group phase and has known teams and goals (when draw)' do
+        group_match.should_receive(:locked?).and_return(true)
+        group_match.goals_a = 2
+        group_match.goals_b = 2
+        expect(group_match).to be_scorable
+      end
+      it 'returns true if finals phase and has known teams and goals' do
+        finals_match.should_receive(:locked?).and_return(true)
+        finals_match.team_a = team_a
+        finals_match.team_b = team_b
+        finals_match.goals_a = 2
+        finals_match.goals_b = 1
+        expect(finals_match).to be_scorable
+      end
+      it 'returns true if finals phase and has known teams and goals and penalty_goals (when draw)' do
+        finals_match.should_receive(:locked?).and_return(true)
+        finals_match.team_a = team_a
+        finals_match.team_b = team_b
+        finals_match.goals_a = 2
+        finals_match.goals_b = 2
+        finals_match.penalty_goals_a = 4
+        finals_match.penalty_goals_b = 3
+        expect(finals_match).to be_scorable
+      end
+      it 'returns false if not known teams' do
+        finals_match.should_receive(:locked?).and_return(true)
+        expect(finals_match).to_not be_scorable
+      end
+      it 'returns false if not known goals' do
+        group_match.should_receive(:locked?).and_return(true)
+        expect(group_match).to_not be_scorable
+      end
+      it 'returns false if not known penalty goals on draw on finals' do
+        finals_match.should_receive(:locked?).and_return(true)
+        finals_match.team_a = team_a
+        finals_match.team_b = team_b
+        finals_match.goals_a = 2
+        finals_match.goals_b = 2
+        expect(finals_match).to_not be_scorable
+      end
+    end
+    it 'returns false if not locked' do
+      group_match.should_receive(:locked?).and_return(false)
+      group_match.goals_a = 2
+      group_match.goals_b = 1
+      expect(group_match).to_not be_scorable
+    end
+  end
+
 end

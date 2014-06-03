@@ -1,0 +1,2 @@
+class QuestionScoreWorker < BaseScoreWorker
+end

@@ -1,0 +1,2 @@
+class BetScoreWorker < BaseScoreWorker
+end

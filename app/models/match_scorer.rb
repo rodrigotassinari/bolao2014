@@ -3,16 +3,16 @@ class MatchScorer
 
   attr_reader :match
 
-  # TODO spec
   def initialize(match)
     @match = match
   end
 
   # Score all existing match_bets for this match (calculates the points and saves on the match_bets).
   # Can be run any number of times.
-  # TODO spec
   def score_all!
-    false # TODO
+    match.match_bets.find_each do |match_bet|
+      match_bet.score!
+    end
   end
 
 end

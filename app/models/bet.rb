@@ -18,6 +18,11 @@ class Bet < ActiveRecord::Base
     match_bets.sum(:points) + question_bets.sum(:points)
   end
 
+  # TODO spec
+  def score!
+    self.update_attributes!(points: self.score)
+  end
+
   def cost
     BigDecimal(ENV.fetch('APP_BET_COST', 25))
   end

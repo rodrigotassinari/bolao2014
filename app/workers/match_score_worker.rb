@@ -1,0 +1,2 @@
+class MatchScoreWorker < BaseScoreWorker
+end

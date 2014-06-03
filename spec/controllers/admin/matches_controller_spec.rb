@@ -115,7 +115,7 @@ describe Admin::MatchesController do
   end
 
   # PUT /admin/matches/:id
-  describe '#edit' do
+  describe '#update' do
     let(:match) { create(:match) }
     let(:params) { {id: match.id, match: {'goals_a'=>'2', 'goals_b'=>'1'}} }
     context 'when not logged in' do
@@ -171,6 +171,7 @@ describe Admin::MatchesController do
           put :update, params
           expect(response).to be_success
           expect(response).to render_template('edit')
+          expect(assigns(:match).errors).to_not be_empty
         end
       end
     end
