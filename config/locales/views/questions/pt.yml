@@ -9,8 +9,8 @@ pt:
     question:
       view: 'Visualizar'
     show:
+      all: 'Todas as perguntas'
       previous: 'Pergunta anterior'
       next: 'Próxima pergunta'
-      all: 'Todas as perguntas'
     index:
       view: 'Visualizar'

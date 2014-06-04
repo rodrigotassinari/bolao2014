@@ -1,2 +1,22 @@
-<h1>Questions#show</h1>
-<p>Find me in app/views/questions/show.html.erb</p>
+<% content_for(:title) { "#{Question.model_name.human(count: 1)} ##{@question.number}" } %>
+
+<div class="row">
+  <div class="small-12 column">
+    <h2><%= Question.model_name.human(count: 1) %> #<%= @question.number %></h2>
+  </div>
+</div>
+
+<div class="question" id="<%= @question.css_id %>">
+  <div class="row">
+    <div class="small-12 column">
+      <p><strong><%= @question.body %></strong></p>
+      <p><%= Question.human_attribute_name(:answer) %>: <%= @question.answer_text_or_? %></p>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 column">
+    <p><%= link_to t('.all'), questions_path %> | <%= link_to t('.previous'), '#TODO' %> | <%= link_to t('.next'), '#TODO' %></p>
+  </div>
+</div>
