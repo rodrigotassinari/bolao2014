@@ -42,23 +42,25 @@
           <% end %>
         </div>
       </div>
-
-      <div class="row">
-        <div class="small-6 columns">
-          <%= f.label :penalty_goals_a %>
-          <%= f.text_field :penalty_goals_a, {class: ('error' if @match.errors.include?(:penalty_goals_a))} %>
-          <% if @match.errors.include?(:penalty_goals_a) %>
-            <small class="error"><%= @match.errors.get(:penalty_goals_a).to_sentence %></small>
-          <% end %>
+      
+      <% if !@match.drawable? %>
+        <div class="row">
+          <div class="small-6 columns">
+            <%= f.label :penalty_goals_a %>
+            <%= f.text_field :penalty_goals_a, {class: ('error' if @match.errors.include?(:penalty_goals_a))} %>
+            <% if @match.errors.include?(:penalty_goals_a) %>
+              <small class="error"><%= @match.errors.get(:penalty_goals_a).to_sentence %></small>
+            <% end %>
+          </div>
+          <div class="small-6 columns">
+            <%= f.label :penalty_goals_b %>
+            <%= f.text_field :penalty_goals_b, {class: ('error' if @match.errors.include?(:penalty_goals_b))} %>
+            <% if @match.errors.include?(:penalty_goals_b) %>
+              <small class="error"><%= @match.errors.get(:penalty_goals_b).to_sentence %></small>
+            <% end %>
+          </div>
         </div>
-        <div class="small-6 columns">
-          <%= f.label :penalty_goals_b %>
-          <%= f.text_field :penalty_goals_b, {class: ('error' if @match.errors.include?(:penalty_goals_b))} %>
-          <% if @match.errors.include?(:penalty_goals_b) %>
-            <small class="error"><%= @match.errors.get(:penalty_goals_b).to_sentence %></small>
-          <% end %>
-        </div>
-      </div>
+      <% end %>
 
       <div class="row">
         <div class="small-12 column">
