@@ -12,3 +12,5 @@ pt:
       previous: 'Pergunta anterior'
       next: 'Próxima pergunta'
       all: 'Todas as perguntas'
+    index:
+      view: 'Visualizar'

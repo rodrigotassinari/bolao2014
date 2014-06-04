@@ -53,6 +53,15 @@ class QuestionPresenter < Presenter
     end
   end
 
+  # TODO spec
+  def answer_text_or_?
+    if answer_text.present?
+      h.content_tag(:span, answer_text, class: 'answer')
+    else
+      h.content_tag(:span, '?', 'data-tooltip' => true, 'class' => 'answer_ unknown has-tip', 'title' => t('question_presenter.no_answer_yet'))
+    end
+  end
+
   def betted_by?(bet)
     @subject.betted_by?(bet)
   end
