@@ -171,6 +171,7 @@ describe Admin::MatchesController do
           put :update, params
           expect(response).to be_success
           expect(response).to render_template('edit')
+          expect(controller).to set_the_flash[:error].to(I18n.t('admin.matches.update.update_error')).now
           expect(assigns(:match).errors).to_not be_empty
         end
       end

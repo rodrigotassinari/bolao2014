@@ -1,2 +1,45 @@
-<h1>Admin::Matches#show</h1>
-<p>Find me in app/views/admin/matches/show.html.erb</p>
+<% content_for(:title) { t('.title') } %>
+
+<div class="row">
+  <div class="small-12 column">
+    <h2><%= t('.title') %> #<%= @match.number %></h2>
+  </div>
+</div>
+
+<div class="match" id="<%= @match.css_id %>">
+  <div class="row">
+    <div class="small-3 column">
+      <p><%= Match.model_name.human(count: 1) %> #<%= @match.number %></p>
+    </div>
+    <div class="small-3 column">
+      <p><%= l @match.played_at, format: :short %></p>
+    </div>
+    <div class="small-6 column">
+      <p><%= @match.played_on_text %></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-4 column">
+      <p>
+        <%= @match.team_a_info %>
+      </p>
+    </div>
+    <div class="small-1 column">
+      <p>X</p>
+    </div>
+    <div class="small-4 column">
+      <p>
+        <%= @match.team_b_info %>
+      </p>
+    </div>
+    <div class="small-3 column">
+      <p><%= link_to t('.edit'), edit_admin_match_path(@match) %></p>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 column">
+    <p><%= link_to t('.all'), admin_matches_path %> | <%= link_to t('.previous'), '#TODO' %> | <%= link_to t('.next'), '#TODO' %></p>
+  </div>
+</div>

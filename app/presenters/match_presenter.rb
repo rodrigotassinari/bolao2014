@@ -22,9 +22,27 @@ class MatchPresenter < Presenter
     :with_known_penalty_goals?,
     :errors
 
+  def self.model_name
+    Match.model_name
+  end
+
   # TODO spec
   def css_id
     "matches_#{@subject.id}"
+  end
+
+  # TODO spec
+  def teams_select_options(which_one)
+    h.options_from_collection_for_select(Team.ordered.all, :id, :name_and_acronym, @subject.send(which_one))
+  end
+
+  # TODO spec
+  def admin_edit_team_partial
+    if @subject.locked? || @subject.round == 'group'
+      'admin/matches/non_editable_team'
+    else
+      'admin/matches/editable_team'
+    end
   end
 
   def one_line_summary
@@ -34,6 +52,10 @@ class MatchPresenter < Presenter
       summary << "#{@subject.team_a.name} #{@subject.penalty_goals_a} x #{@subject.penalty_goals_b} #{@subject.team_b.name}"
     end
     summary
+  end
+
+  def group_or_na
+    @subject.group.blank? ? I18n.t('match_presenter.no_group') : @subject.group
   end
 
   def link_to_next

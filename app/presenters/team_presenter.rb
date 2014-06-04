@@ -6,6 +6,7 @@ class TeamPresenter < Presenter
     :name_pt,
     :acronym,
     :group,
+    :name_and_acronym
 
   # TODO spec
   def css_id

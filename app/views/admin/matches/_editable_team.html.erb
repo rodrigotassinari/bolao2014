@@ -1,0 +1,6 @@
+<% team_id = "#{team}_id".to_sym %>
+<%= form.label team_id %>
+<%= form.select team_id, match.teams_select_options(team_id), {include_blank: true}, {class: ('error' if match.errors.include?(team_id))} %>
+<% if match.errors.include?(team_id) %>
+  <small class="error"><%= match.errors.get(team_id).to_sentence %></small>
+<% end %>

@@ -35,6 +35,7 @@ class Admin::MatchesController < AdminController
       flash[:success] = updater.message
       redirect_to admin_match_path(@match)
     else
+      flash.now[:error] = t('.update_error')
       render :edit
     end
   end

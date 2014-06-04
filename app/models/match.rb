@@ -49,10 +49,9 @@ class Match < ActiveRecord::Base
     numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_blank: true }
 
   validate :teams_are_not_the_same
-
   validate :teams_must_be_of_the_same_group_as_the_match
-
   validate :no_draw_after_group_phase
+  validate :no_penalty_goals_during_group_phase
 
   scope :with_known_teams, -> { where.not(team_a: nil, team_b: nil) }
   scope :with_known_goals, -> { where.not(goals_a: nil, goals_b: nil) }
@@ -168,6 +167,17 @@ class Match < ActiveRecord::Base
       end
       if penalty_goals_draw?
         errors.add(:penalty_goals_b, :equal)
+      end
+    end
+  end
+
+  # validation
+  def no_penalty_goals_during_group_phase
+    if self.round == 'group'
+      [:penalty_goals_a, :penalty_goals_b].each do |field|
+        if !self.send(field).blank?
+          errors.add(field, :present)
+        end
       end
     end
   end

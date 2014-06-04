@@ -80,6 +80,18 @@ describe Match do
       match = build(:match, team_a: team1, team_b: team2, round: 'round_16', goals_a: 0, goals_b: 0, penalty_goals_a: 2, penalty_goals_b: 1)
       expect(match).to be_valid
     end
+
+    it 'ensures no penalty_goals during group phase', locale: :pt do
+      team1 = create(:team)
+      team2 = create(:other_team)
+      match = build(:match, team_a: team1, team_b: team2, round: 'group', goals_a: 0, goals_b: 0)
+      expect(match).to be_valid
+      match.penalty_goals_a = 2
+      match.penalty_goals_b = 1
+      expect(match).to_not be_valid
+      expect(match.errors.get(:penalty_goals_a)).to eq(['deve ficar em branco'])
+      expect(match.errors.get(:penalty_goals_b)).to eq(['deve ficar em branco'])
+    end
   end
 
   describe '#locked?' do
