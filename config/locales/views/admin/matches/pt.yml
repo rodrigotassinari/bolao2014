@@ -13,5 +13,7 @@ pt:
         next: 'Próxima partida'
       edit:
         title: 'Admin :: Editar Partida'
+        all: 'Todas as partidas'
+        view: 'visualizar esta partida'
       update:
         update_error: 'Partida não foi alterada.'

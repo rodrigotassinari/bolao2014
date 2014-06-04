@@ -68,3 +68,9 @@
     </div>
   </div>
 <% end %>
+
+<div class="row">
+  <div class="small-12 column">
+    <p><%= link_to t('.all'), admin_matches_path %> | <%= link_to t('.view'), admin_match_path(@match) %> | <%= @match.link_to_previous_admin_edit %> | <%= @match.link_to_next_admin_edit %></p>
+  </div>
+</div>
