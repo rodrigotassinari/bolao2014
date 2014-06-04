@@ -69,7 +69,7 @@ class QuestionPresenter < Presenter
   # TODO spec
   def link_to_next
     if @subject.next
-      h.link_to(I18n.t('question_presenter.next_question'), r.my_question_bet_path(@subject.next))
+      h.link_to(I18n.t('question_presenter.next_question'), r.question_path(@subject.next))
     else
       h.content_tag(:span, I18n.t('question_presenter.no_next_question'))
     end
@@ -77,6 +77,24 @@ class QuestionPresenter < Presenter
 
   # TODO spec
   def link_to_previous
+    if @subject.previous
+      h.link_to(I18n.t('question_presenter.previous_question'), r.question_path(@subject.previous))
+    else
+      h.content_tag(:span, I18n.t('question_presenter.no_previous_question'))
+    end
+  end
+
+  # TODO spec
+  def link_to_next_to_bet
+    if @subject.next
+      h.link_to(I18n.t('question_presenter.next_question'), r.my_question_bet_path(@subject.next))
+    else
+      h.content_tag(:span, I18n.t('question_presenter.no_next_question'))
+    end
+  end
+
+  # TODO spec
+  def link_to_previous_to_bet
     if @subject.previous
       h.link_to(I18n.t('question_presenter.previous_question'), r.my_question_bet_path(@subject.previous))
     else

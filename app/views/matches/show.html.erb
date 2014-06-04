@@ -10,6 +10,6 @@
 
 <div class="row">
   <div class="small-12 column">
-    <p><%= link_to t('.all'), matches_path %> | <%= link_to t('.previous'), '#TODO' %> | <%= link_to t('.next'), '#TODO' %></p>
+    <p><%= link_to t('.all'), matches_path %> | <%= @match.link_to_previous %> | <%= @match.link_to_next %></p>
   </div>
 </div>

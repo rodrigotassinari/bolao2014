@@ -60,13 +60,29 @@ class MatchPresenter < Presenter
 
   def link_to_next
     if @subject.next
-      h.link_to(I18n.t('match_presenter.next_match'), r.my_match_bet_path(@subject.next))
+      h.link_to(I18n.t('match_presenter.next_match'), r.match_path(@subject.next))
     else
       h.content_tag(:span, I18n.t('match_presenter.no_next_match'))
     end
   end
 
   def link_to_previous
+    if @subject.previous
+      h.link_to(I18n.t('match_presenter.previous_match'), r.match_path(@subject.previous))
+    else
+      h.content_tag(:span, I18n.t('match_presenter.no_previous_match'))
+    end
+  end
+
+  def link_to_next_to_bet
+    if @subject.next
+      h.link_to(I18n.t('match_presenter.next_match'), r.my_match_bet_path(@subject.next))
+    else
+      h.content_tag(:span, I18n.t('match_presenter.no_next_match'))
+    end
+  end
+
+  def link_to_previous_to_bet
     if @subject.previous
       h.link_to(I18n.t('match_presenter.previous_match'), r.my_match_bet_path(@subject.previous))
     else

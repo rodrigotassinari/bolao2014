@@ -17,6 +17,6 @@
 
 <div class="row">
   <div class="small-12 column">
-    <p><%= link_to t('.all'), questions_path %> | <%= link_to t('.previous'), '#TODO' %> | <%= link_to t('.next'), '#TODO' %></p>
+    <p><%= link_to t('.all'), questions_path %> | <%= @question.link_to_previous %> | <%= @question.link_to_next %></p>
   </div>
 </div>
