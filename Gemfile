@@ -30,14 +30,14 @@ gem 'unicorn', '4.8.3'
 
 gem 'http_accept_language', '2.0.1'
 
-gem 'foundation-rails', '5.2.2.0'
+gem 'foundation-rails', '5.2.3.0'
 
 gem 'simple_presenter', '0.2.3'
 
-gem 'skylight', '0.3.13'
+gem 'skylight', '0.3.14'
 
 gem 'sinatra', '>= 1.3.0', require: nil
-gem 'sidekiq', '3.0.2'
+gem 'sidekiq', '3.1.3'
 
 gem 'google-analytics-turbolinks', '0.0.4'
 
@@ -69,7 +69,7 @@ end
 
 group :test do
   gem 'timecop', '~> 0.7'
-  gem 'webmock', '~> 1.17'
+  gem 'webmock', '~> 1.18'
   gem 'vcr', '~> 2.9'
   # require: false because of https://github.com/rspec/rspec-rails/pull/772#issuecomment-35805617
   gem 'shoulda-matchers', '~> 2.6', require: false
@@ -78,9 +78,9 @@ end
 
 group :development, :test do
   gem 'awesome_print', '~> 1.2'
-  gem 'rspec-rails', '~> 2.14'
+  gem 'rspec-rails', '~> 2.14.2'
   gem 'factory_girl_rails', '~> 4.4'
-  gem 'database_cleaner', '~> 1.2'
+  gem 'database_cleaner', '~> 1.3'
   gem 'fuubar', '~> 1.3'
   gem 'pry-byebug', '~> 1.3'
   gem 'pry-remote', '~> 0.1'
