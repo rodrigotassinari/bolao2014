@@ -1,0 +1,4 @@
+pt:
+  question_updater:
+    question_changed: 'Pergunta alterada.'
+    question_scored: 'Pontos de respostas sobre esta pergunta (re-)calculados.'
