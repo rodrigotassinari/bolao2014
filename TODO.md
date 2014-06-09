@@ -17,9 +17,10 @@
 - [X] re-calculate full bet score when match_bet changes
 - [x] send email notification to users when new matches become available to bet on
 - [X] admin interface to edit matches
-- [ ] admin interface to edit questions
-- [ ] re-calculate full bet score when question_bet changes
-- [ ] send match_bet_reminder and question_bet_reminder email notifications to users with incomplete bets x, y and z hours before lock time on each event (mailer done)
+- [X] admin interface to edit questions
+- [X] re-calculate full bet score when question_bet changes
+- [ ] show match_bets on match page (only of that match)
+- [ ] show question_bets on question page (only of that match)
 - [ ] allow current user to change name, avatar, time zone, locale, etc
 - [ ] improve `/matches/:id` page, with warning and link to bet on if not betted yet
 - [ ] improve `/questions/:id` page, with warning and link to bet on if not betted yet
@@ -32,8 +33,10 @@
 - [ ] list all bets in order of points in questions only ranking
 - [ ] graph all bets' points / rank evolution through time
 - [ ] allow users to comment on matches
+- [ ] allow users to comment on questions
 - [ ] allow users to comment on match bets
 - [ ] allow users to comment on question bets
+- [ ] send match_bet_reminder and question_bet_reminder email notifications to users with incomplete bets x, y and z hours before lock time on each event (mailer done)
 - [ ] create timeline of events on (logged in) home page
 - [ ] improve test coverage
 - [ ] admin interface to delete user & bet
