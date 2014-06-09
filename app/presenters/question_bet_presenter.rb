@@ -45,7 +45,7 @@ class QuestionBetPresenter < Presenter
     if @subject.question.locked?
       answer_text
     else
-      h.content_tag(:span, '?', 'data-tooltip' => true, 'class' => 'has-tip', 'title' => t('question_bet_presenter.will_show_when_question_locked'))
+      h.content_tag(:span, '?', 'class' => 'has-tip', 'title' => t('question_bet_presenter.will_show_when_question_locked'))
     end
   end
 
@@ -61,7 +61,7 @@ class QuestionBetPresenter < Presenter
   private
 
   def tooltip_span(text, title, extra_css_class)
-    h.content_tag(:span, text, 'data-tooltip' => true, 'class' => "has-tip #{extra_css_class}", 'title' => title)
+    h.content_tag(:span, text, 'class' => "has-tip #{extra_css_class}", 'title' => title)
   end
 
   def points_explanation

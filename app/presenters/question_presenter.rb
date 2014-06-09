@@ -58,7 +58,7 @@ class QuestionPresenter < Presenter
     if answer_text.present?
       h.content_tag(:span, answer_text, class: 'answer')
     else
-      h.content_tag(:span, '?', 'data-tooltip' => true, 'class' => 'answer_ unknown has-tip', 'title' => t('question_presenter.no_answer_yet'))
+      h.content_tag(:span, '?', 'class' => 'answer_ unknown has-tip', 'title' => t('question_presenter.no_answer_yet'))
     end
   end
 

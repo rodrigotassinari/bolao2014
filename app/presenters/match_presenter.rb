@@ -226,7 +226,7 @@ class MatchPresenter < Presenter
     if goal.present?
       h.content_tag(:span, goal.to_s, class: 'goal')
     else
-      h.content_tag(:span, '?', 'data-tooltip' => true, 'class' => 'goal unknown has-tip', 'title' => t('match_presenter.not_yet_known'))
+      h.content_tag(:span, '?', 'class' => 'goal unknown has-tip', 'title' => t('match_presenter.not_yet_known'))
     end
   end
 
@@ -260,7 +260,7 @@ class MatchPresenter < Presenter
     if team
       h.content_tag(:span, team.name, class: 'team-name')
     else
-      h.content_tag(:span, '?', 'data-tooltip' => true, 'class' => 'team-name unknown has-tip', 'title' => t('match_presenter.not_yet_known'))
+      h.content_tag(:span, '?', 'class' => 'team-name unknown has-tip', 'title' => t('match_presenter.not_yet_known'))
     end
   end
 

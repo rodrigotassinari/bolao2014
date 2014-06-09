@@ -100,7 +100,7 @@ class MatchBetPresenter < Presenter
   private
 
   def tooltip_span(text, title, extra_css_class=nil)
-    h.content_tag(:span, text, 'data-tooltip' => true, 'class' => "has-tip #{extra_css_class}", 'title' => title)
+    h.content_tag(:span, text, 'class' => "has-tip #{extra_css_class}", 'title' => title)
   end
 
   def points_explanation
@@ -117,7 +117,7 @@ class MatchBetPresenter < Presenter
     if @subject.match.locked?
       goals_or_blank(letter)
     else
-      h.content_tag(:span, '?', 'data-tooltip' => true, 'class' => 'has-tip', 'title' => t('match_bet_presenter.will_show_when_match_locked'))
+      h.content_tag(:span, '?', 'class' => 'has-tip', 'title' => t('match_bet_presenter.will_show_when_match_locked'))
     end
   end
 
