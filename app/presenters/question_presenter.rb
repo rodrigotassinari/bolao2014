@@ -136,4 +136,36 @@ class QuestionPresenter < Presenter
     end
   end
 
+  # TODO spec
+  def possible_answers_options(answer_literal=nil)
+    answer_literal ||= question_answer_literal
+    self.send("#{@subject.answer_type}_possible_answers_options", answer_literal)
+  end
+
+  private
+
+  def team_possible_answers_options(answer_literal)
+    h.options_from_collection_for_select(@subject.possible_answers, :id, :name_and_acronym, answer_literal)
+  end
+
+  def player_possible_answers_options(answer_literal)
+    h.options_from_collection_for_select(@subject.possible_answers, :id, :name_position_and_team, answer_literal)
+  end
+
+  def boolean_possible_answers_options(answer_literal)
+    h.options_for_select({t('common.yesyes') => 'true', t('common.nono') => 'false'}, answer_literal)
+  end
+
+  def question_answer_literal
+    return if @subject.answer.blank?
+    case @subject.answer_type
+    when 'team'
+      Integer(answer)
+    when 'player'
+      Integer(answer)
+    when 'boolean'
+      answer.to_s
+    end
+  end
+
 end
