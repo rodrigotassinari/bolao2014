@@ -1,2 +1,32 @@
-<h1>Admin::Questions#edit</h1>
-<p>Find me in app/views/admin/questions/edit.html.erb</p>
+<% content_for(:title) { t('.title') } %>
+
+<div class="row">
+  <div class="small-12 columns">
+    <h2><%= t('.title') %> #<%= @question.number %></h2>
+  </div>
+</div>
+
+<%= form_for @_question, url: admin_question_path(@question), method: :put, html: {} do |f| %>
+  <div class="row">
+    <div class="small-12 columns">
+      <ul>
+        <li><%= Question.human_attribute_name(:number) %>: <%= @question.number %></li>
+        <li><%= Question.human_attribute_name(:played_at) %>: <%= l @question.played_at, format: :detailed %></li>
+        <li><%= Question.human_attribute_name(:answer_type) %>: <%= @question.answer_type %></li>
+        <li><%= Question.human_attribute_name(:body) %>: <%= @question.body %></li>
+      </ul>
+
+      <div class="row">
+        <div class="small-12 column">
+          <%= f.submit t('common.submit'), class: 'button' %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="row">
+  <div class="small-12 column">
+    <p><%= link_to t('.all'), admin_questions_path %> | <%= link_to t('.view'), admin_question_path(@question) %> | <%= @question.link_to_previous_admin_edit %> | <%= @question.link_to_next_admin_edit %></p>
+  </div>
+</div>

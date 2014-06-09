@@ -15,5 +15,6 @@ pt:
         title: 'Admin :: Editar Pergunta'
         all: 'Todas as perguntas'
         view: 'visualizar esta pergunta'
+        edit: 'Editar'
       update:
         update_error: 'Pergunta não foi alterada.'
