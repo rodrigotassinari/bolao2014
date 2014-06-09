@@ -25,7 +25,7 @@ class QuestionBetPresenter < Presenter
 
   # TODO spec
   def possible_answers_options
-    self.send("#{question.answer_type}_possible_answers_options")
+    question.possible_answers_options(answer_literal)
   end
 
   # TODO spec
@@ -69,18 +69,6 @@ class QuestionBetPresenter < Presenter
       "question_bet_presenter.got_the_answer_#{@subject.correct_answer? ? 'right' : 'wrong'}",
       points: @subject.points
     )
-  end
-
-  def team_possible_answers_options
-    h.options_from_collection_for_select(question.possible_answers, :id, :name_and_acronym, answer_literal)
-  end
-
-  def player_possible_answers_options
-    h.options_from_collection_for_select(question.possible_answers, :id, :name_position_and_team, answer_literal)
-  end
-
-  def boolean_possible_answers_options
-    h.options_for_select({t('common.yesyes') => 'true', t('common.nono') => 'false'}, answer_literal)
   end
 
   def answer_literal

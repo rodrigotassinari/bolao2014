@@ -1,0 +1,25 @@
+<% content_for(:title) { t('.title') } %>
+
+<div class="row">
+  <div class="small-12 column">
+    <h2><%= t('.title') %> #<%= @question.number %></h2>
+  </div>
+</div>
+
+<div class="question" id="<%= @question.css_id %>">
+  <div class="row">
+    <div class="small-12 column">
+      <p><strong><%= @question.body %></strong></p>
+      <p>
+        <%= Question.human_attribute_name(:answer) %>: <%= @question.answer_text_or_? %>
+        <%= link_to t('.edit'), edit_admin_question_path(@question) %>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 column">
+    <p><%= link_to t('.all'), admin_questions_path %> | <%= @question.link_to_previous_admin %> | <%= @question.link_to_next_admin %></p>
+  </div>
+</div>

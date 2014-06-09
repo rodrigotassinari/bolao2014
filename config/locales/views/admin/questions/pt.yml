@@ -1,0 +1,20 @@
+pt:
+  admin:
+    questions:
+      index:
+        title: 'Admin :: Perguntas'
+        view: 'Visualizar'
+        edit: 'Editar'
+      show:
+        title: 'Admin :: Pergunta'
+        edit: 'Editar'
+        all: 'Todas as perguntas'
+        previous: 'Pergunta anterior'
+        next: 'Próxima pergunta'
+      edit:
+        title: 'Admin :: Editar Pergunta'
+        all: 'Todas as perguntas'
+        view: 'visualizar esta pergunta'
+        edit: 'Editar'
+      update:
+        update_error: 'Pergunta não foi alterada.'

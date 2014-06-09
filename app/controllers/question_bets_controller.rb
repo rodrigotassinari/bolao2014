@@ -65,7 +65,7 @@ class QuestionBetsController < ApplicationController
 
   def redirect_to_next_bettable(question_bet)
     if next_question = question_bet.next_question_to_bet
-      redirect_to my_question_bet_path
+      redirect_to my_question_bet_path(next_question)
     else
       redirect_to my_bet_path
     end

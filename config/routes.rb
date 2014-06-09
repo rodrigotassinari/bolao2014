@@ -33,6 +33,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :matches, only: [:index, :show, :edit, :update]
+    resources :questions, only: [:index, :show, :edit, :update]
   end
 
   # TODO limit access to admins, see https://github.com/mperham/sidekiq/wiki/Monitoring#security

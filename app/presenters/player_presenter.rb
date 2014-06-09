@@ -2,7 +2,8 @@ class PlayerPresenter < Presenter
 
   expose :to_key, :to_param,
     :name,
-    :position
+    :position,
+    :name_position_and_team
 
   # TODO spec
   def css_id
