@@ -31,6 +31,9 @@ Rails.application.routes.draw do
   post '/my_bet/questions/:question_id' => 'question_bets#create'
   put  '/my_bet/questions/:question_id' => 'question_bets#update'
 
+  get '/profile' => 'users#edit', as: 'profile_path'
+  put '/profile' => 'users#update'
+
   namespace :admin do
     resources :matches, only: [:index, :show, :edit, :update]
     resources :questions, only: [:index, :show, :edit, :update]

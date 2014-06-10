@@ -2,3 +2,8 @@ pt:
   users:
     index:
       title: 'Apostadores'
+    edit:
+      title: 'Meu perfil'
+    update:
+      flash_success: 'Perfil atualizado com sucesso.'
+      flash_error: 'Não foi possível atualizar seu perfil, veja abaixo:'

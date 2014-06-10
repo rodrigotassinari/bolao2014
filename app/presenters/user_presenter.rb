@@ -10,6 +10,10 @@ class UserPresenter < Presenter
     :name_or_email,
     :email_with_name
 
+  def self.model_name
+    User.model_name
+  end
+
   # TODO spec
   def css_id
     "users_#{@subject.id}"

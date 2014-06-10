@@ -1,0 +1,15 @@
+<% content_for(:title) { t('.title') } %>
+
+<div class="row">
+  <div class="small-12 column">
+    <h2><%= t('.title') %></h2>
+  </div>
+</div>
+
+<%= form_for @user, url: profile_path, method: :put do |f| %>
+  <div class="row">
+    <div class="small-12 column">
+      <p><%= User.human_attribute_name(:email) %>: <%= @user.email %></p>
+    </div>
+  </div>
+<% end %>
