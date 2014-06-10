@@ -71,9 +71,7 @@ class Payment < ActiveRecord::Base
   def paid?
     self.persisted? &&
       self.paid_at.present? &&
-      !self.status.initiated? &&
-      !self.status.waiting_payment? &&
-      !self.status.in_analysis?
+      (self.status.paid? || self.status.available? || self.status.in_dispute?)
   end
 
   # TODO spec
