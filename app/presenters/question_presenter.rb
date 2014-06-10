@@ -19,6 +19,11 @@ class QuestionPresenter < Presenter
     "questions_#{@subject.id}"
   end
 
+  def question_bets
+    QuestionBetPresenter.map(@subject.question_bets.all)
+  end
+
+
   # TODO spec
   def answer
     if @subject.answer.blank?

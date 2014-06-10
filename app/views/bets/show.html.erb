@@ -29,7 +29,10 @@
         <% @bet.match_bets.each do |match_bet| %>
           <% match = match_bet.match %>
           <tr>
-            <td><%= link_to "##{match.number}", match_path(match) %></td>
+            <td>
+              <a name="<%= match.css_id %>"></a>
+              <%= link_to "##{match.number}", match_path(match) %>
+            </td>
             <td class="text-center hide-for-small-only"><%= match.team_a_flag %></td>
             <td class="text-left"><%= match.team_a_name %></td>
 
@@ -60,7 +63,10 @@
         <% @bet.question_bets.each do |question_bet| %>
           <% question = question_bet.question %>
           <tr>
-            <td><%= link_to "##{question.number}", question_path(question) %></td>
+            <td>
+              <a name="<%= question.css_id %>"></a>
+              <%= link_to "##{question.number}", question_path(question) %>
+            </td>
             <td class="text-left"><%= truncate question.body, length: 50 %></td>
             <td class="text-left"><%= question_bet.answer_text_if_locked %></td>
             <td class="text-center"><%= question_bet.points_with_explanation %></td>

@@ -35,7 +35,10 @@
           <% bet = match_bet.bet %>
           <% user = bet.user %>
           <tr>
-            <td><%= link_to user.name_or_email, bet_path(bet) %></td>
+            <td>
+              <a name="<%= bet.css_id %>"></a>
+              <%= link_to user.name_or_email, bet_path(bet, anchor: @match.css_id) %>
+            </td>
             <td class="text-left"><%= @match.team_a_name %></td>
             <td class="text-center">
               <%= match_bet.goals_a_if_locked %> x <%= match_bet.goals_b_if_locked %>

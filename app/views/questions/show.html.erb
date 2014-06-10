@@ -20,3 +20,37 @@
     <p><%= link_to t('.all'), questions_path %> | <%= @question.link_to_previous %> | <%= @question.link_to_next %></p>
   </div>
 </div>
+
+<div class="row">
+  <div class="small-12 column">
+    <h3><%= Bet.model_name.human(count: 2) %></h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 column">
+    <table id="question_bets_table">
+      <thead>
+        <tr>
+          <th class="text-left"><%= t('bets.show.better') %></th>
+          <th class="text-center"><%= t('bets.show.answer') %></th>
+          <th class="text-center"><%= t('bets.show.points') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @question.question_bets.each do |question_bet| %>
+          <% bet = question_bet.bet %>
+          <% user = bet.user %>
+          <tr>
+            <td>
+              <a name="<%= bet.css_id %>"></a>
+              <%= link_to user.name_or_email, bet_path(bet, anchor: @question.css_id) %>
+            </td>
+            <td class="text-left"><%= question_bet.answer_text_if_locked %></td>
+            <td class="text-center"><%= question_bet.points_with_explanation %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
