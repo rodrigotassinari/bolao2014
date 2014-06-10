@@ -16,7 +16,7 @@ pt:
       view: 'Visualizar'
       on_penaltys: 'nos pênaltis'
     match:
-      view: 'Visualizar'
+      on_penaltys: 'nos pênaltis'
     show:
       previous: 'Partida anterior'
       next: 'Próxima partida'

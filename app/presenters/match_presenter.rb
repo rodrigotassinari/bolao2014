@@ -31,6 +31,10 @@ class MatchPresenter < Presenter
     "matches_#{@subject.id}"
   end
 
+  def match_bets
+    MatchBetPresenter.map(@subject.match_bets.all)
+  end
+
   # TODO spec
   def teams_select_options(which_one)
     h.options_from_collection_for_select(Team.ordered.all, :id, :name_and_acronym, @subject.send(which_one))

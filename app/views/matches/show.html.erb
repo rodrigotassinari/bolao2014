@@ -13,3 +13,39 @@
     <p><%= link_to t('.all'), matches_path %> | <%= @match.link_to_previous %> | <%= @match.link_to_next %></p>
   </div>
 </div>
+
+<div class="row">
+  <div class="small-12 column">
+    <h3><%= Bet.model_name.human(count: 2) %></h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 column">
+    <table id="match_bets_table">
+      <thead>
+        <tr>
+          <th class="text-left"><%= t('bets.show.better') %></th>
+          <th class="text-center" colspan="3"><%= t('bets.show.guess') %></th>
+          <th class="text-center"><%= t('bets.show.points') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @match.match_bets.each do |match_bet| %>
+          <% bet = match_bet.bet %>
+          <% user = bet.user %>
+          <tr>
+            <td><%= link_to user.name_or_email, bet_path(bet) %></td>
+            <td class="text-left"><%= @match.team_a_name %></td>
+            <td class="text-center">
+              <%= match_bet.goals_a_if_locked %> x <%= match_bet.goals_b_if_locked %>
+              <%= match_bet.penalty_winner_if_locked %>
+            </td>
+            <td class="text-right"><%= @match.team_b_name %></td>
+            <td class="text-center"><%= match_bet.points_with_explanation %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
