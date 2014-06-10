@@ -4,23 +4,23 @@
 
 (more or less in order of importance)
 
-- [X] page to create question bets by the current user
-- [X] page listing all match bets by the current user
-- [X] page listing all question bets by the current user
-- [X] make user select a winner when submitting match bet in case of draw on round > group phase
-- [X] accept bet payment via PagSeguro
-- [X] match bet scoring when match is updated
-- [X] question bet scoring when question is updated
-- [X] list all bets in order of points in overall ranking
-- [X] email notification to users when their match bets are scored with points and current rank
-- [X] email notification to users when their question bets are scored with points and current rank
-- [X] re-calculate full bet score when match_bet changes
+- [x] page to create question bets by the current user
+- [x] page listing all match bets by the current user
+- [x] page listing all question bets by the current user
+- [x] make user select a winner when submitting match bet in case of draw on round > group phase
+- [x] accept bet payment via PagSeguro
+- [x] match bet scoring when match is updated
+- [x] question bet scoring when question is updated
+- [x] list all bets in order of points in overall ranking
+- [x] email notification to users when their match bets are scored with points and current rank
+- [x] email notification to users when their question bets are scored with points and current rank
+- [x] re-calculate full bet score when match_bet changes
 - [x] send email notification to users when new matches become available to bet on
-- [X] admin interface to edit matches
-- [X] admin interface to edit questions
-- [X] re-calculate full bet score when question_bet changes
-- [ ] show match_bets on match page (only of that match)
-- [ ] show question_bets on question page (only of that match)
+- [x] admin interface to edit matches
+- [x] admin interface to edit questions
+- [x] re-calculate full bet score when question_bet changes
+- [x] show match_bets on match page (only of that match)
+- [x] show question_bets on question page (only of that match)
 - [ ] allow current user to change name, avatar, time zone, locale, etc
 - [ ] improve `/matches/:id` page, with warning and link to bet on if not betted yet
 - [ ] improve `/questions/:id` page, with warning and link to bet on if not betted yet
