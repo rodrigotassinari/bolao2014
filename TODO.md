@@ -21,7 +21,7 @@
 - [x] re-calculate full bet score when question_bet changes
 - [x] show match_bets on match page (only of that match)
 - [x] show question_bets on question page (only of that match)
-- [ ] allow current user to change name, avatar, time zone, locale, etc
+- [ ] (IN PROGRESS) allow current user to change name, avatar, time zone, locale, etc
 - [ ] improve `/matches/:id` page, with warning and link to bet on if not betted yet
 - [ ] improve `/questions/:id` page, with warning and link to bet on if not betted yet
 - [ ] improve `/my_bet/matches` page
