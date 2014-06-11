@@ -36,4 +36,4 @@ pt:
       what_to_do: 'Sua aposta não é mais válida. Você não está mais participando do bolão. Por favor entre em contato caso deseje fazer outro pagamento para continuar participando do bolão.'
     cancelled:
       status_explanation: 'Seu pagamento foi cancelado no PagSeguro.'
-      what_to_do: 'Sua aposta não é mais válida. Você não está mais participando do bolão. Por favor entre em contato caso deseje fazer outro pagamento para continuar participando do bolão.'
+      what_to_do: 'Isso geralmente ocorre quando a administradora do cartão de crédito não aprova o pagamento, ou o boleto não é pago dentro do prazo estipulado. Você precisa efetuar um novo pagamento para continuar participando do bolão. Por favor entre em contato para que o novo link de pagamento seja liberado para você.'
