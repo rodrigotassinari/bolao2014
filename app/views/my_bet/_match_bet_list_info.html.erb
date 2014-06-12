@@ -1,0 +1,42 @@
+<tr>
+  <td class="text-right hide-for-small-only" colspan="1">&nbsp;</td>
+  <td class="text-left hide-for-small-only">
+    <% if match.bettable? %>
+      <span class="has-tip" title="<%= t '.you_may_change_your_bet_until', datetime: l(match.bettable_until, format: :detailed ) %>">
+        <%= l match.bettable_until, format: '%H:%M' %>
+      </span>
+    <% else %>
+      &nbsp;
+    <% end %>
+  </td>
+  <td class="text-right hide-for-small-only" colspan="2"><%= t('.your_answer') %>:</td>
+  <td class="text-center">
+    <% if match_bet %>
+      <%= match_bet.goals_a %> x <%= match_bet.goals_b %>
+      <% if match_bet.penalty_winner %>
+        <br /><%= match_bet.penalty_winner %>
+        <br /><em>(<%= t('.on_penaltys') %>)</em>
+      <% end %>
+    <% else %>
+      <em><%= t('.not_answered') %></em>
+    <% end %>
+  </td>
+  <td class="text-center">
+    <% if match_bet %>
+      <%= match_bet.points_with_explanation %> <%= t('.points') %>
+    <% else %>
+      -
+    <% end %>
+  </td>
+  <td class="text-center">
+    <% if match.bettable? %>
+      <% if match_bet %>
+        <strong><%= link_to t('.update'), my_match_bet_path(match) %></strong>
+      <% else %>
+        <strong><%= link_to t('.create'), my_match_bet_path(match) %></strong>
+      <% end %>
+    <% else %>
+      &nbsp;
+    <% end %>
+  </td>
+</tr>

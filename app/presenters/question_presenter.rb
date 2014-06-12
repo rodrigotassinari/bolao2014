@@ -47,7 +47,7 @@ class QuestionPresenter < Presenter
   end
 
   def answer_text
-    return if @subject.answer.blank?
+    return answer if @subject.answer.blank?
     case @subject.answer_type
     when 'team'
       answer_object.name_and_acronym

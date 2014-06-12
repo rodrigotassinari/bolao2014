@@ -11,11 +11,26 @@
       <dd class="<%= 'active' if current_filter.betted? %>"><%= link_to t('.betted'), my_bet_matches_path(filter: :betted) %></dd>
       <dd class="<%= 'active' if current_filter.to_bet? %>"><%= link_to t('.to_bet'), my_bet_matches_path(filter: :to_bet) %></dd>
     </dl>
+  </div>
+</div>
 
+<div class="row">
+  <div class="small-12 column">
     <% if @matches.empty? %>
       <p><%= t( current_filter.blank? ? '.none_to_show' : ".none_to_show_#{current_filter}") %>.</p>
     <% else %>
-      <%= render partial: 'match', collection: @matches %>
+      <% @matches.group_by { |m| {date: m.played_at.to_date, round: m.round_text} }.each do |grouping, matches| %>
+        <h5><%= l grouping[:date], format: :detailed %>, <%= grouping[:round] %></h5>
+          <% matches.each do |match| %>
+            <% match_bet = @match_bets.detect { |qb| qb.match_id == match.id } %>
+            <table>
+              <tbody>
+                <%= render partial: 'my_bet/match_list_info', locals: { match: match } %>
+                <%= render partial: 'my_bet/match_bet_list_info', locals: { match: match, match_bet: match_bet } %>
+              </tbody>
+            </table>
+          <% end %>
+      <% end %>
     <% end %>
   </div>
 </div>
