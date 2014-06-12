@@ -1,0 +1,17 @@
+<tr>
+  <td><%= link_to "##{match.number}", match_path(match) %></td>
+  <td class="text-left hide-for-small-only">
+    <%= l match.played_at, format: '%H:%M' %>
+  </td>
+  <td class="text-center hide-for-small-only"><%= match.team_a_flag_or_? %></td>
+  <td class="text-right"><%= match.team_a_name_or_? %></td>
+  <td class="text-center">
+    <%= match.goals_a_or_? %> x <%= match.goals_b_or_? %>
+    <% if match.with_known_penalty_goals? %>
+      <br /><%= match.penalty_goals_a_or_? %> x <%= match.penalty_goals_a_or_? %>
+      <br /><em>(<%= t('.on_penaltys') %>)</em>
+    <% end %>
+  </td>
+  <td class="text-left"><%= match.team_b_name_or_? %></td>
+  <td class="text-center hide-for-small-only"><%= match.team_b_flag_or_? %></td>
+</tr>
