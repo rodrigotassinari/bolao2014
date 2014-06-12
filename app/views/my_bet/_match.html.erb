@@ -44,13 +44,17 @@
         <%= match_bet.goals_b %>
         <%= match.team_b_name %>
         <%= match.team_b_flag %>
-        <span>(<%= link_to t('.update'), my_match_bet_path(match) %>)</span>
+        <% if match.bettable? %>
+          <span>(<%= link_to t('.update'), my_match_bet_path(match) %>)</span>
+        <% end %>
       </p>
       <p><%= t '.you_may_change_your_bet_until', datetime: l(match.bettable_until, format: :detailed ) %></p>
     <% else %>
       <p>
         <%= t '.your_answer' %>: <span class="subheader"><%= t '.not_answered' %></span>
-        <span>(<%= link_to t('.create'), my_match_bet_path(match) %>)</span>
+        <% if match.bettable? %>
+          <span>(<%= link_to t('.create'), my_match_bet_path(match) %>)</span>
+        <% end %>
       </p>
       <p><%= t '.you_may_make_your_bet_until', datetime: l(match.bettable_until, format: :detailed ) %></p>
     <% end %>
