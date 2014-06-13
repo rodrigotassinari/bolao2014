@@ -1,11 +1,11 @@
 class Bet < ActiveRecord::Base
 
   belongs_to :user
-  has_many :match_bets
-  has_many :question_bets
+  has_one :payment, dependent: :destroy
+  has_many :match_bets, dependent: :destroy
+  has_many :question_bets, dependent: :destroy
   has_many :matches, through: :match_bets
   has_many :questions, through: :question_bets
-  has_one :payment
 
   validates :user,
     presence: true

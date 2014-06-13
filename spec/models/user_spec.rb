@@ -190,4 +190,32 @@ describe User do
     end
   end
 
+  describe '#destroy' do
+    let!(:user) { create(:user) }
+    let!(:bet) { create(:bet, user: user) }
+    let!(:payment) { create(:unpaid_payment, bet: bet) }
+    let!(:match_bet) { create(:match_bet, bet: bet) }
+    let!(:question_bet) { create(:boolean_question_bet, bet: bet) }
+    it 'deletes the user' do
+      expect { user.destroy }.to change(User, :count).by(-1)
+      expect { user.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+    it 'deletes the user bet' do
+      expect { user.destroy }.to change(Bet, :count).by(-1)
+      expect { bet.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+    it 'deletes the user bet payment' do
+      expect { user.destroy }.to change(Payment, :count).by(-1)
+      expect { payment.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+    it 'deletes the user match_bets' do
+      expect { user.destroy }.to change(MatchBet, :count).by(-1)
+      expect { match_bet.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+    it 'deletes the user question_bets' do
+      expect { user.destroy }.to change(QuestionBet, :count).by(-1)
+      expect { question_bet.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
 end
