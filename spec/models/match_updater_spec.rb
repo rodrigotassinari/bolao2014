@@ -79,11 +79,13 @@ describe MatchUpdater do
         user2 = create(:user)
         UsersMailer.should_not_receive(:async_deliver)
 
-        expect(group_match).to be_bettable
-        updater = described_class.new(group_match, {'goals_a' => '2', 'goals_b' => '1'})
-        expect(updater.save).to be_true
-        expect(updater.message).to eq('Partida alterada.')
-        expect(group_match).to be_bettable
+        Timecop.freeze(group_match.played_at - 6.hours) do
+          expect(group_match).to be_bettable
+          updater = described_class.new(group_match, {'goals_a' => '2', 'goals_b' => '1'})
+          expect(updater.save).to be_true
+          expect(updater.message).to eq('Partida alterada.')
+          expect(group_match).to be_bettable
+        end
       end
       it 'does not notify users if match does not become bettable' do
         user1 = create(:admin_user)
