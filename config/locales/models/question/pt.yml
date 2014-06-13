@@ -12,6 +12,10 @@ pt:
         body_pt: Texto (português)
         played_at: Data
         answer_type: Tipo de resposta
+        answer_types:
+          team: 'Time'
+          player: 'Jogador'
+          boolean: 'Sim ou Não'
         answer: Resposta
         created_at: Cadastrada em
         updated_at: Atualizada em

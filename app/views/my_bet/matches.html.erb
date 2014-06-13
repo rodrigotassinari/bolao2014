@@ -21,15 +21,15 @@
     <% else %>
       <% @matches.group_by { |m| {date: m.played_at.to_date, round: m.round_text} }.each do |grouping, matches| %>
         <h5><%= l grouping[:date], format: :detailed %>, <%= grouping[:round] %></h5>
-          <% matches.each do |match| %>
-            <% match_bet = @match_bets.detect { |qb| qb.match_id == match.id } %>
-            <table>
-              <tbody>
-                <%= render partial: 'my_bet/match_list_info', locals: { match: match } %>
-                <%= render partial: 'my_bet/match_bet_list_info', locals: { match: match, match_bet: match_bet } %>
-              </tbody>
-            </table>
-          <% end %>
+        <% matches.each do |match| %>
+          <% match_bet = @match_bets.detect { |qb| qb.match_id == match.id } %>
+          <table>
+            <tbody>
+              <%= render partial: 'my_bet/match_list_info', locals: { match: match } %>
+              <%= render partial: 'my_bet/match_bet_list_info', locals: { match: match, match_bet: match_bet } %>
+            </tbody>
+          </table>
+        <% end %>
       <% end %>
     <% end %>
   </div>

@@ -11,11 +11,26 @@
       <dd class="<%= 'active' if current_filter.betted? %>"><%= link_to t('.betted'), my_bet_questions_path(filter: :betted) %></dd>
       <dd class="<%= 'active' if current_filter.to_bet? %>"><%= link_to t('.to_bet'), my_bet_questions_path(filter: :to_bet) %></dd>
     </dl>
+  </div>
+</div>
 
+<div class="row">
+  <div class="small-12 column">
     <% if @questions.empty? %>
       <p><%= t( current_filter.blank? ? '.none_to_show' : ".none_to_show_#{current_filter}") %>.</p>
     <% else %>
-      <%= render partial: 'question', collection: @questions %>
+      <% @questions.group_by { |q| q.answer_type }.each do |answer_type, questions| %>
+        <h5><%= t("activerecord.attributes.question.answer_types.#{answer_type}") %></h5>
+        <% questions.each do |question| %>
+          <% question_bet = @question_bets.detect { |qb| qb.question_id == question.id } %>
+          <table>
+            <tbody>
+              <%= render partial: 'my_bet/question_list_info', locals: { question: question } %>
+              <%= render partial: 'my_bet/question_bet_list_info', locals: { question: question, question_bet: question_bet } %>
+            </tbody>
+          </table>
+        <% end %>
+      <% end %>
     <% end %>
   </div>
 </div>
