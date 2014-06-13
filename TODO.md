@@ -21,19 +21,19 @@
 - [x] re-calculate full bet score when question_bet changes
 - [x] show match_bets on match page (only of that match)
 - [x] show question_bets on question page (only of that match)
-- [X] improve `/my_bet/matches` page
-- [ ] IN PROGRESS improve `/my_bet/questions` page
+- [x] improve `/my_bet/matches` page
+- [x] improve `/my_bet/questions` page
 - [ ] IN PROGRESS allow current user to change name, avatar, time zone, locale, etc
-- [ ] improve `/matches/:id` page, with warning and link to bet on if not betted yet
-- [ ] improve `/questions/:id` page, with warning and link to bet on if not betted yet
-- [ ] improve `/my_bet` page
+- [ ] graph all bets' points / rank evolution through time
+- [ ] improve `/matches/:id` page layout, with warning and link to bet on if not betted yet
+- [ ] improve `/questions/:id` page layout, with warning and link to bet on if not betted yet
+- [ ] allow users to comment on matches
+- [ ] allow users to comment on questions
 - [ ] improve match bet form on mobile browsers
 - [ ] improve question bet form on mobile browsers
 - [ ] list all bets in order of points in matches only ranking
 - [ ] list all bets in order of points in questions only ranking
-- [ ] graph all bets' points / rank evolution through time
-- [ ] allow users to comment on matches
-- [ ] allow users to comment on questions
+- [ ] improve `/my_bet` page layout
 - [ ] allow users to comment on match bets
 - [ ] allow users to comment on question bets
 - [ ] send match_bet_reminder and question_bet_reminder email notifications to users with incomplete bets x, y and z hours before lock time on each event (mailer done)
