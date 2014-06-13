@@ -48,6 +48,16 @@ class BetPresenter < Presenter
   end
 
   # TODO spec
+  def bettable_or_locked_matches_count
+    Match.with_known_teams.count
+  end
+
+  # TODO spec
+  def bettable_or_locked_questions_count
+    Question.count
+  end
+
+  # TODO spec
   def bettable_matches_count
     @subject.bettable_matches.count
   end

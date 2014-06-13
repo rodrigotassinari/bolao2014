@@ -52,6 +52,7 @@ describe QuestionUpdater do
     end
     context 'when question is changed', locale: :pt do
       it 'changes the question' do
+        boolean_question.stub(:locked?).and_return(false)
         expect(boolean_question.answer).to be_nil
         updater = described_class.new(boolean_question, {'answer' => 'true'})
         expect(updater.save).to be_true
