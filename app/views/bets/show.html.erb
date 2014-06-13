@@ -16,7 +16,7 @@
     <p class="panel radius"><%= t('.showing_only_locked_events') %></p>
 
     <h4><%= Match.model_name.human(count: 2) %></h4>
-    <p><%= @bet.matches_count %> / <%= @bet.bettable_matches_count %> (<%= @bet.match_bets_percentage %>) <%= t('.matches_betted') %>, <%= @bet.match_bets_points %> <%= t('.points').downcase %></p>
+    <p><%= @bet.matches_count %> / <%= @bet.bettable_or_locked_matches_count %> (<%= @bet.match_bets_percentage %>) <%= t('.matches_betted') %>, <%= @bet.match_bets_points %> <%= t('.points').downcase %></p>
     <table id="match_bets_table">
       <thead>
         <tr>
@@ -50,7 +50,7 @@
     </table>
 
     <h4><%= Question.model_name.human(count: 2) %></h4>
-    <p><%= @bet.questions_count %> / <%= @bet.bettable_questions_count %> (<%= @bet.question_bets_percentage %>) <%= t('.questions_betted') %>, <%= @bet.question_bets_points %> <%= t('.points').downcase %></p>
+    <p><%= @bet.questions_count %> / <%= @bet.bettable_or_locked_questions_count %> (<%= @bet.question_bets_percentage %>) <%= t('.questions_betted') %>, <%= @bet.question_bets_points %> <%= t('.points').downcase %></p>
     <table id="question_bets_table">
       <thead>
         <tr>
