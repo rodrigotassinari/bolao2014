@@ -16,6 +16,8 @@ describe BetsController do
       expect(response).to be_success
       expect(assigns(:bets).first.points).to eql(bet_2.points)
       expect(assigns(:bets).last.points).to eql(bet_1.points)
+      expect(assigns(:paid_bets_count)).to eql(0)
+      expect(assigns(:paying_bets_count)).to eql(0)
     end
   end
 

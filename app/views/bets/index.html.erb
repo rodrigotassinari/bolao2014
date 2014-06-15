@@ -7,7 +7,7 @@
 </div>
 
 <div class="row">
-  <div class="small-12 column">
+  <div class="small-9 column">
     <h3><%= t('.general_classification') %></h3>
     <table>
       <thead>
@@ -21,11 +21,12 @@
         </tr>
       </thead>
       <tbody>
-        <% index = 0 %>
+        <% index, previous_points = 0, nil %>
         <% @bets.each do |bet| %>
-          <% index += 1 %>
+          <% index += 1 if previous_points != bet.points %>
+          <% previous_points = bet.points %>
           <tr>
-            <td class="hide-for-small-only"><%= index %></td>
+            <td class="hide-for-small-only"><%= index %>º</td>
             <td><%= bet.user.name_or_email %></td>
             <td class="hide-for-small-only"><%= bet.percentage %></td>
             <td class="hide-for-small-only"><%= bet.payment_status %></td>
@@ -35,5 +36,25 @@
         <% end %>
       </tbody>
     </table>
+  </div>
+  <div class="small-3 column">
+    <h3><%= t('.prizes') %></h3>
+    <% bet = @bets.first %>
+    <ul>
+      <li>
+        <%= t('.paid_bets') %>: <%= @paid_bets_count %>
+        <% if @paying_bets_count > 0 %>
+          <ul>
+            <li><%= t('.paying_bets') %>: <%= @paying_bets_count %></li>
+          </ul>
+        <% end %>
+      </li>
+      <% if @paid_bets_count > 0 %>
+        <li>1º <%= t('.place') %>: <%= number_to_currency ((bet.prize_split[:first] / 100.0) * @paid_bets_count * bet.to_prize) %></li>
+        <li>2º <%= t('.place') %>: <%= number_to_currency ((bet.prize_split[:second] / 100.0) * @paid_bets_count * bet.to_prize) %></li>
+        <li>3º <%= t('.place') %>: <%= number_to_currency ((bet.prize_split[:third] / 100.0) * @paid_bets_count * bet.to_prize) %></li>
+      <% end %>
+    </ul>
+    <p><%= t('.if_doubt_see_rules', the_rules_link: link_to(t('.the_rules'), help_path)).html_safe %></p>
   </div>
 </div>
