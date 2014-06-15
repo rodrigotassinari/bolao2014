@@ -2,22 +2,6 @@ class Admin::MatchesController < AdminController
 
   before_action :find_match, except: [:index]
 
-  # GET /admin/matches
-  # Via: admin_matches_path
-  #
-  # Lists all matches available to the admin
-  def index
-    @_matches = Match.includes([:team_a, :team_b]).all_in_order
-    @matches = MatchPresenter.map(@_matches)
-  end
-
-  # GET /admin/matches/:id
-  # Via: admin_match_path(:id)
-  #
-  # Shows the information of one match to the admin
-  def show
-  end
-
   # GET /admin/matches/:id/edit
   # Via: edit_admin_match_path(:id)
   #
@@ -33,7 +17,7 @@ class Admin::MatchesController < AdminController
     updater = MatchUpdater.new(@_match, match_params)
     if updater.save
       flash[:success] = updater.message
-      redirect_to admin_match_path(@match)
+      redirect_to match_path(@match)
     else
       flash.now[:error] = t('.update_error')
       render :edit

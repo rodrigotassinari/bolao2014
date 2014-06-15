@@ -12,5 +12,7 @@ pt:
       all: 'Todas as perguntas'
       previous: 'Pergunta anterior'
       next: 'Próxima pergunta'
+      edit: 'Editar'
     index:
       view: 'Visualizar'
+      edit: 'Editar'

@@ -17,6 +17,9 @@
 
 <div class="row">
   <div class="small-12 column">
+    <% if admin_logged_in? %>
+      <p><%= link_to t('.edit'), edit_admin_question_path(@question), class: 'admin-action' %></p>
+    <% end %>
     <p><%= link_to t('.all'), questions_path %> | <%= @question.link_to_previous %> | <%= @question.link_to_next %></p>
   </div>
 </div>

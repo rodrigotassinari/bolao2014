@@ -78,25 +78,9 @@ class MatchPresenter < Presenter
     end
   end
 
-  def link_to_next_admin
-    if @subject.next
-      h.link_to(I18n.t('match_presenter.next_match'), r.admin_match_path(@subject.next))
-    else
-      h.content_tag(:span, I18n.t('match_presenter.no_next_match'))
-    end
-  end
-
-  def link_to_previous_admin
-    if @subject.previous
-      h.link_to(I18n.t('match_presenter.previous_match'), r.admin_match_path(@subject.previous))
-    else
-      h.content_tag(:span, I18n.t('match_presenter.no_previous_match'))
-    end
-  end
-
   def link_to_next_admin_edit
     if @subject.next
-      h.link_to(I18n.t('match_presenter.next_match'), r.edit_admin_match_path(@subject.next))
+      h.link_to(I18n.t('match_presenter.next_match'), r.edit_admin_match_path(@subject.next), class: 'admin-action')
     else
       h.content_tag(:span, I18n.t('match_presenter.no_next_match'))
     end
@@ -104,7 +88,7 @@ class MatchPresenter < Presenter
 
   def link_to_previous_admin_edit
     if @subject.previous
-      h.link_to(I18n.t('match_presenter.previous_match'), r.edit_admin_match_path(@subject.previous))
+      h.link_to(I18n.t('match_presenter.previous_match'), r.edit_admin_match_path(@subject.previous), class: 'admin-action')
     else
       h.content_tag(:span, I18n.t('match_presenter.no_previous_match'))
     end

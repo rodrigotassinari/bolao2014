@@ -14,10 +14,12 @@ pt:
   matches:
     index:
       view: 'Visualizar'
+      edit: 'Editar'
       on_penaltys: 'nos pênaltis'
     match:
       on_penaltys: 'nos pênaltis'
     show:
+      edit: 'Editar'
       previous: 'Partida anterior'
       next: 'Próxima partida'
       all: 'Todas as partidas'

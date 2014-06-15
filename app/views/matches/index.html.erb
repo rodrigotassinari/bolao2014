@@ -26,7 +26,12 @@
             </td>
             <td class="text-right"><%= match.team_b_name_or_? %></td>
             <td class="text-center hide-for-small-only"><%= match.team_b_flag_or_? %></td>
-            <td class="hide-for-small-only"><%= link_to t('.view'), match_path(match) %></td>
+            <td class="hide-for-small-only">
+              <%= link_to t('.view'), match_path(match) %>
+              <% if admin_logged_in? %>
+                <%= link_to t('.edit'), edit_admin_match_path(match), class: 'admin-action' %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>

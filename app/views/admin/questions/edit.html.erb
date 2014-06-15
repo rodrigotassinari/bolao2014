@@ -33,6 +33,6 @@
 
 <div class="row">
   <div class="small-12 column">
-    <p><%= link_to t('.all'), admin_questions_path %> | <%= link_to t('.view'), admin_question_path(@question) %> | <%= @question.link_to_previous_admin_edit %> | <%= @question.link_to_next_admin_edit %></p>
+    <p><%= link_to t('.all'), questions_path %> | <%= link_to t('.view'), question_path(@question) %> | <%= @question.link_to_previous_admin_edit %> | <%= @question.link_to_next_admin_edit %></p>
   </div>
 </div>

@@ -1,16 +1,6 @@
 pt:
   admin:
     matches:
-      index:
-        title: 'Admin :: Partidas'
-        view: 'Visualizar'
-        edit: 'Editar'
-      show:
-        title: 'Admin :: Partida'
-        edit: 'Editar'
-        all: 'Todas as partidas'
-        previous: 'Partida anterior'
-        next: 'Próxima partida'
       edit:
         title: 'Admin :: Editar Partida'
         all: 'Todas as partidas'

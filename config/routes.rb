@@ -32,8 +32,8 @@ Rails.application.routes.draw do
   put  '/my_bet/questions/:question_id' => 'question_bets#update'
 
   namespace :admin do
-    resources :matches, only: [:index, :show, :edit, :update]
-    resources :questions, only: [:index, :show, :edit, :update]
+    resources :matches, only: [:edit, :update]
+    resources :questions, only: [:edit, :update]
   end
 
   # TODO limit access to admins, see https://github.com/mperham/sidekiq/wiki/Monitoring#security

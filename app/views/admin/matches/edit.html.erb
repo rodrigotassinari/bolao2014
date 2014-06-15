@@ -42,7 +42,7 @@
           <% end %>
         </div>
       </div>
-      
+
       <% if !@match.drawable? %>
         <div class="row">
           <div class="small-6 columns">
@@ -73,6 +73,6 @@
 
 <div class="row">
   <div class="small-12 column">
-    <p><%= link_to t('.all'), admin_matches_path %> | <%= link_to t('.view'), admin_match_path(@match) %> | <%= @match.link_to_previous_admin_edit %> | <%= @match.link_to_next_admin_edit %></p>
+    <p><%= link_to t('.all'), matches_path %> | <%= link_to t('.view'), match_path(@match) %> | <%= @match.link_to_previous_admin_edit %> | <%= @match.link_to_next_admin_edit %></p>
   </div>
 </div>

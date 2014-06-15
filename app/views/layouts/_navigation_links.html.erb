@@ -15,9 +15,6 @@
       <%= link_to current_user.email, 'javascript:void(0)' %>
       <ul class="dropdown">
         <li><%= link_to t('common.settings'), 'javascript:void(0)', onclick: "alert('#{I18n.t('common.soon')}');" %></li>
-        <% if current_user.admin? %>
-          <%= render 'layouts/admin_navigation_links' %>
-        <% end %>
         <li><%= link_to t('common.logout'), logout_path %></li>
       </ul>
     </li>

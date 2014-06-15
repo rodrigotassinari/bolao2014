@@ -15,7 +15,12 @@
             <td><%= link_to "##{question.number}", question_path(question) %></td>
             <td class="text-left hide-for-small-only"><%= question.body %></td>
             <td class="text-left"><%= question.answer_text_or_? %></td>
-            <td class="hide-for-small-only"><%= link_to t('.view'), question_path(question) %></td>
+            <td class="hide-for-small-only">
+              <%= link_to t('.view'), question_path(question) %>
+              <% if admin_logged_in? %>
+                <%= link_to t('.edit'), edit_admin_question_path(question), class: 'admin-action' %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>

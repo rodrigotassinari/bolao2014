@@ -16,3 +16,11 @@
  *= require pace
 
  */
+
+a.admin-action {
+  font-weight: bold;
+  background-color: #ff0000;
+  color: #ffffff;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+}
