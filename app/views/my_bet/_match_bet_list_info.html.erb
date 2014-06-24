@@ -14,7 +14,7 @@
     <% if match_bet %>
       <%= match_bet.goals_a %> x <%= match_bet.goals_b %>
       <% if match_bet.penalty_winner %>
-        <br /><%= match_bet.penalty_winner %>
+        <br /><%= match_bet.penalty_winner.name %>
         <br /><em>(<%= t('.on_penaltys') %>)</em>
       <% end %>
     <% else %>

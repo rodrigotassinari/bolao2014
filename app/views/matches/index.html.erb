@@ -20,7 +20,7 @@
             <td class="text-center">
               <%= match.goals_a_or_? %> x <%= match.goals_b_or_? %>
               <% if match.with_known_penalty_goals? %>
-                <br /><%= match.penalty_goals_a_or_? %> x <%= match.penalty_goals_a_or_? %>
+                <br /><%= match.penalty_goals_a_or_? %> x <%= match.penalty_goals_b_or_? %>
                 <br />(<%= t('.on_penaltys') %>)
               <% end %>
             </td>
