@@ -1,23 +1,23 @@
 source 'https://rubygems.org'
 
-gem 'dotenv-rails', '0.7.0'
+gem 'dotenv-rails', '0.11.1'
 
-gem 'rails', '4.1.1'
+gem 'rails', '4.1.3'
 gem 'pg', '0.17.1'
 # Use SCSS for stylesheets
 gem 'sass-rails', '4.0.3'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '2.5.0'
+gem 'uglifier', '2.5.1'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', '0.12.1', platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails', '3.1.0'
+gem 'jquery-rails', '3.1.1'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks', '2.2.2'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '2.0.7'
+gem 'jbuilder', '2.1.1'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '3.1.7'
@@ -30,14 +30,14 @@ gem 'unicorn', '4.8.3'
 
 gem 'http_accept_language', '2.0.1'
 
-gem 'foundation-rails', '5.2.3.0'
+gem 'foundation-rails', '5.3.0.1'
 
 gem 'simple_presenter', '0.2.3'
 
-gem 'skylight', '0.3.14'
+gem 'skylight', '0.3.17'
 
 gem 'sinatra', '>= 1.3.0', require: nil
-gem 'sidekiq', '3.1.3'
+gem 'sidekiq', '3.1.4'
 
 gem 'google-analytics-turbolinks', '0.0.4'
 
@@ -57,7 +57,7 @@ group :development do
   gem 'spring', '~> 1.1'
   gem 'spring-commands-rspec', '~> 1.0'
 
-  gem 'foreman', '~> 0.64'
+  gem 'foreman', '~> 0.74'
   gem 'better_errors', '~> 1.1'
   gem 'binding_of_caller', '~> 0.7'
 
