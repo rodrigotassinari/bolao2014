@@ -45,6 +45,30 @@ describe MatchBet do
       expect(mb).to_not be_valid
       expect(mb.errors.get(:penalty_winner_id)).to eq(['deve ficar em branco'])
     end
+
+    it 'allows change before match is locked' do
+      match = create(:match, round: 'group')
+      mb = create(:match_bet, match: match, goals_a: 2, goals_b: 1)
+      Timecop.freeze(match.bettable_until - 1.minute) do
+        expect(match).to_not be_locked
+        expect(mb).to be_valid
+        mb.attributes = {goals_a: 0, goals_b: 3}
+        expect(mb).to be_valid
+        expect(mb.save).to be_true
+      end
+    end
+    it 'allows DOES NOT allow change after match is locked', locale: :pt do
+      match = create(:match, round: 'group')
+      mb = create(:match_bet, match: match, goals_a: 2, goals_b: 1)
+      Timecop.freeze(match.bettable_until + 1.minute) do
+        expect(match).to be_locked
+        expect(mb).to be_valid
+        mb.attributes = {goals_a: 0, goals_b: 3}
+        expect(mb).to_not be_valid
+        expect(mb.errors.get(:base)).to eql(["Partida está travada, aposta não pode ser alterada"])
+        expect(mb.save).to be_false
+      end
+    end
   end
 
   describe '#next_match_to_bet' do

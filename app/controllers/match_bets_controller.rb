@@ -19,7 +19,7 @@ class MatchBetsController < ApplicationController
   # TODO spec
   def create
     @_match_bet.attributes = match_bet_params
-    if @_match_bet.save
+    if !@_match.locked? && @_match_bet.save
       flash[:success] = t('.success', match_number: @_match.number)
       redirect_to_next_bettable(@_match_bet)
     else
@@ -31,7 +31,7 @@ class MatchBetsController < ApplicationController
   # Via: my_match_bet_path(:match_id)
   #
   # Updates the bet on the supplied match by the current user.
-  # TODO spec
+  # TODO finish spec
   def update
     @_match_bet.attributes = match_bet_params
     if @_match_bet.save

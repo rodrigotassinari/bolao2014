@@ -21,6 +21,8 @@ class MatchBet < ActiveRecord::Base
 
   validate :no_penalty_winner_after_groups_phase_if_no_draw
 
+  validate :no_change_after_match_locked, on: :update # TODO on creation as well (lots of tests to update)
+
   def penalty_winner
     return if penalty_winner_id.nil?
     Team.find(penalty_winner_id)
@@ -94,6 +96,15 @@ class MatchBet < ActiveRecord::Base
       previous_points,
       current_points
     )
+  end
+
+  # validate, on update
+  def no_change_after_match_locked
+    if self.match &&
+      self.match.locked? &&
+      (self.goals_a_changed? || self.goals_b_changed? || self.penalty_winner_id_changed?)
+      errors.add(:base, :locked)
+    end
   end
 
   # validate

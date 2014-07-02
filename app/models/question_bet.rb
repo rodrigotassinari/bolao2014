@@ -12,6 +12,8 @@ class QuestionBet < ActiveRecord::Base
 
   validate :answer_must_match_answer_type
 
+  validate :no_change_after_question_locked, on: :update # TODO on creation as well (lots of tests to update)
+
   def answer_object
     return if self.answer.blank?
     case self.question.answer_type
@@ -61,6 +63,15 @@ class QuestionBet < ActiveRecord::Base
   def answer_must_match_answer_type
     return unless (self.answer.present? && self.question.present?)
     self.send("answer_must_match_answer_type_#{self.question.answer_type}")
+  end
+
+  # validate, on update
+  def no_change_after_question_locked
+    if self.question &&
+      self.question.locked? &&
+      self.answer_changed?
+      errors.add(:base, :locked)
+    end
   end
 
   def answer_must_match_answer_type_team

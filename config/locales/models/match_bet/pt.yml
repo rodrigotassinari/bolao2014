@@ -17,3 +17,9 @@ pt:
         points: Pontos
         created_at: Cadastrado em
         updated_at: Atualizado em
+    errors:
+      models:
+        match_bet:
+          attributes:
+            base:
+              locked: 'Partida está travada, aposta não pode ser alterada'

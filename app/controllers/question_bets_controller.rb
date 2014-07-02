@@ -16,10 +16,10 @@ class QuestionBetsController < ApplicationController
   # Via: my_question_bet_path
   #
   # Creates a bet on the supplied question by the current user.
-  # TODO spec
+  # TODO finish spec
   def create
     @_question_bet.attributes = question_bet_params
-    if @_question_bet.save
+    if !@_question.locked? && @_question_bet.save
       flash[:success] = t('.success', question_number: @_question.number)
       redirect_to_next_bettable(@_question_bet)
     else
@@ -31,7 +31,7 @@ class QuestionBetsController < ApplicationController
   # Via: my_question_bet_path
   #
   # Updates the bet on the supplied question by the current user.
-  # TODO spec
+  # TODO finish spec
   def update
     @_question_bet.attributes = question_bet_params
     if @_question_bet.save

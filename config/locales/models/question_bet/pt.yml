@@ -14,3 +14,9 @@ pt:
         points: Pontos
         created_at: Cadastrada em
         updated_at: Atualizada em
+    errors:
+      models:
+        question_bet:
+          attributes:
+            base:
+              locked: 'Pergunta está travada, aposta não pode ser alterada'

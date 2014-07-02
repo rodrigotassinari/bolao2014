@@ -46,6 +46,49 @@ describe QuestionBet do
       qb.answer = 'true'
       expect(qb).to be_valid
     end
+
+    it 'allows creation before question is locked' do
+      question = create(:boolean_question)
+      qb = build(:boolean_question_bet, question: question, answer: 'false')
+      Timecop.freeze(question.bettable_until - 1.minute) do
+        expect(question).to_not be_locked
+        expect(qb).to be_valid
+        expect(qb.save).to be_true
+      end
+    end
+    it 'allows change before question is locked' do
+      question = create(:boolean_question)
+      qb = create(:boolean_question_bet, question: question, answer: 'false')
+      Timecop.freeze(question.bettable_until - 1.minute) do
+        expect(question).to_not be_locked
+        expect(qb).to be_valid
+        qb.attributes = {answer: 'true'}
+        expect(qb).to be_valid
+        expect(qb.save).to be_true
+      end
+    end
+    # it 'DOES NOT allow creation after question is locked', locale: :pt do
+    #   question = create(:boolean_question, answer: 'false')
+    #   qb = build(:boolean_question_bet, question: question, answer: 'false')
+    #   Timecop.freeze(question.bettable_until + 1.minute) do
+    #     expect(question).to be_locked
+    #     expect(qb).to be_valid
+    #     expect(qb.errors.get(:base)).to eql(["Pergunta está travada, aposta não pode ser alterada"])
+    #     expect(qb.save).to be_false
+    #   end
+    # end
+    it 'DOES NOT allow change after question is locked', locale: :pt do
+      question = create(:boolean_question, answer: 'false')
+      qb = create(:boolean_question_bet, question: question, answer: 'false')
+      Timecop.freeze(question.bettable_until + 1.minute) do
+        expect(question).to be_locked
+        expect(qb).to be_valid
+        qb.attributes = {answer: 'true'}
+        expect(qb).to_not be_valid
+        expect(qb.errors.get(:base)).to eql(["Pergunta está travada, aposta não pode ser alterada"])
+        expect(qb.save).to be_false
+      end
+    end
   end
 
   describe '#answer_object' do
