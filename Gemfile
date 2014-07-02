@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'dotenv-rails', '0.11.1'
 
-gem 'rails', '4.1.3'
+gem 'rails', '4.1.4'
 gem 'pg', '0.17.1'
 # Use SCSS for stylesheets
 gem 'sass-rails', '4.0.3'
